@@ -2,7 +2,7 @@ import pymysql as db
 
 local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
 con = db.connect(
-    host=local,g
+    host=local,
     user='user',
     password='qwert123',
     charset='utf8'
