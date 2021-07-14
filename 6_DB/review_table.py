@@ -10,7 +10,7 @@ date DATE NOT NULL,
 contents VARCHAR(2000),
 star_rank INT DEFAULT 0 ,
 cite VARCHAR(20),
-FOREIGN KEY(barcord_id) references product (barcord_id), 
+FOREIGN KEY(barcord_id) references product (barcord_id) ON DELETE CASCADE, 
 PRIMARY KEY(barcord_id , user_id , date)
 )"""
 

@@ -33,13 +33,16 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12760996-1a9e-4a1a-ae24-4f55d58c1d78" name="Default Changelist" comment="리뷰 간격, 마지막 리뷰 간격" />
+    <list default="true" id="12760996-1a9e-4a1a-ae24-4f55d58c1d78" name="Default Changelist" comment="리뷰 간격, 마지막 리뷰 간격">
+      <change beforePath="$PROJECT_DIR$/../6_DB/product_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/../6_DB/product_table.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../6_DB/review_table.py" beforeDir="false" afterPath="$PROJECT_DIR$/../6_DB/review_table.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Android_Avd_Gradle\.android\avd\Galaxy_S10_API_30_2.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
