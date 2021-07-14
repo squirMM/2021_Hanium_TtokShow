@@ -6,6 +6,7 @@ cre_productT = """CREATE TABLE product (
 barcord_id INT,
 name VARCHAR(255) NOT NULL,
 image_link VARCHAR(255) DEFAULT 'None',
+star_avg INT DEFAULT 0, 
 count INT DEFAULT 0,
 PRIMARY KEY (barcord_id) 
 )"""
