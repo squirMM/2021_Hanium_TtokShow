@@ -2,7 +2,7 @@ import con_db
 
 cur = con_db.connect()
 # CREATE_PRO
-cre_productT = """CREATE TABLE pro (
+cre_productT = """CREATE TABLE product (
 barcord_id INT,
 name VARCHAR(255) NOT NULL,
 image_link VARCHAR(255) DEFAULT 'None',
@@ -10,8 +10,8 @@ count INT DEFAULT 0,
 PRIMARY KEY (barcord_id) 
 )"""
 
-# DELETE TABLE
-del_productT = "DROP TABLE pro"
+# DELETE_TABLE
+del_productT = "DROP TABLE product"
 
 
 # CREATE_FUN

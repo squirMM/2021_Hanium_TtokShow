@@ -1,3 +1,3 @@
 import product_table as pro
 
-pro.cre_proT()
+pro.del_proT()
