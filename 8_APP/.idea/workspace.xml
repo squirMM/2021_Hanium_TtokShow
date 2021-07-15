@@ -33,13 +33,19 @@
     </select>
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="12760996-1a9e-4a1a-ae24-4f55d58c1d78" name="Default Changelist" comment="리뷰 간격, 마지막 리뷰 간격">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+=======
     <list default="true" id="12760996-1a9e-4a1a-ae24-4f55d58c1d78" name="Default Changelist" comment="리뷰 간격, 마지막 리뷰 간격" />
+>>>>>>> 042498757689e5934b28e78a869df4ebf769081f
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@C:\Android_Avd_Gradle\.android\avd\Galaxy_S10_API_30_2.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[VirtualDevicePath@/Users/MS/.android/avd/Galaxy_S10_API_30.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -77,6 +83,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="resourceFile" />
+        <option value="layoutResourceFile" />
       </list>
     </option>
   </component>
@@ -224,10 +231,11 @@
     <option name="LAST_COMMIT_MESSAGE" value="리뷰 간격, 마지막 리뷰 간격" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="349" y="167" key="AndroidCreateResourceFileDialog" timestamp="1625848514616">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="327" y="202" key="AndroidCreateResourceFileDialog" timestamp="1626310637512">
+      <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="349" y="167" key="AndroidCreateResourceFileDialog/0.0.1536.824@0.0.1536.824" timestamp="1625848514616" />
+    <state x="327" y="202" key="AndroidCreateResourceFileDialog/0.25.1440.875/1440.25.1180.795@0.25.1440.875" timestamp="1626310637512" />
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1625853040658">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
