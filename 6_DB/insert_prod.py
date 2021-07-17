@@ -8,17 +8,33 @@ st_ws = st_wb.active
 # DB 커넥터
 cur = conn.connect()
 
+val = []
 
-# DB에 넣어주기
-def insert_db(barcord_id, name, img_link):
-    sql = "INSERT INTO product (barcord_id,name,image_link) VALUES (%s,%s,%s)"
-    val = (barcord_id, name, img_link)
-    cur.execute(sql, val)
+
+# DB에 한번에 넣어줄수 있도록
+def mapping_sql(barcord_id, name, img_link):
+    sam = (barcord_id, name, img_link)
+    val.append(sam)
+
+
+# sql구문
+def insert_m():
+    sql = "INSERT IGNORE INTO product (barcord_id,name,image_link) VALUES (%s,%s,%s)"
+    cur.executemany(sql, val)
 
 
 # 처음 넣을 때 반복문 돌기
 def first_insert():
     for row in st_ws.rows:
         if row == 1: continue
-        insert_db(row[0].value, row[3].value, row[11].value)
+        if row[0].value is not None:
+            mapping_sql(row[0].value, row[3].value, row[11].value)
+    insert_m()
+    #conn.commit()
+
+
+# insert del
+def del_insert():
+    sql = "DELETE FROM product"
+    cur.execute(sql)
     conn.commit()
