@@ -1,7 +1,3 @@
-import con_db as conn
-
-cur = conn.connect()
-
 # CREATE_REVIEW
 cre_reviewT = """CREATE TABLE review(
 barcord_id INT NOT NULL,
@@ -19,12 +15,10 @@ del_reviewT = "DROP TABLE review"
 
 
 # CREATE_FUN
-def cre_reT():
+def cre_reT(cur):
     cur.execute(cre_reviewT)
-    conn.commit()
 
 
 # DELETE_FUN
-def del_reT():
+def del_reT(cur):
     cur.execute(del_reviewT)
-    conn.commit()

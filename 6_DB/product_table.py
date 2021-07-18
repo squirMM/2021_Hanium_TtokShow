@@ -1,6 +1,3 @@
-import con_db
-
-cur = con_db.connect()
 # CREATE_PRO
 cre_productT = """CREATE TABLE product (
 barcord_id VARCHAR(255) NOT NULL,
@@ -16,12 +13,10 @@ del_productT = "DROP TABLE product"
 
 
 # CREATE_FUN
-def cre_proT():
+def cre_proT(cur):
     cur.execute(cre_productT)
-    #con_db.commit()
 
 
 # DELETE_FUN
-def del_proT():
+def del_proT(cur):
     cur.execute(del_productT)
-    #con_db.commit()
