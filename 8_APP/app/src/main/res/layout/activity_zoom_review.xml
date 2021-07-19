@@ -37,7 +37,6 @@
         style="@style/bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-        <include layout="@layout/ho_scroll"/>
     </View>
 
 
