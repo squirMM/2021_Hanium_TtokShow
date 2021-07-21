@@ -8,8 +8,8 @@ val = []
 
 
 # DB에 한번에 넣어줄수 있도록
-def mapping_sql(barcord_id, name, img_link):
-    sam = (barcord_id, name, img_link)
+def mapping_sql(barcord_id, name, img_link, type):
+    sam = (barcord_id, name, img_link, type)
     val.append(sam)
 
 
@@ -18,8 +18,8 @@ def first_insert(cur):
     for row in st_ws.rows:
         if row == 1: continue
         if row[0].value is not None:
-            mapping_sql(row[0].value, row[3].value, row[11].value)
-    sql = "INSERT IGNORE INTO product (barcord_id,name,image_link) VALUES (%s,%s,%s)"
+            mapping_sql(row[0].value, row[3].value, row[11].value, row[15].value)
+    sql = "INSERT IGNORE INTO product (barcord_id,name,image_link ,type) VALUES (%s,%s,%s,%s)"
     cur.executemany(sql, val)
 
 

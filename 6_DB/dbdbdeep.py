@@ -1,3 +1,5 @@
+import pymysql.err
+
 import product_table as pro
 import insert_prod as insp
 import review_table as rev
@@ -13,10 +15,31 @@ con = db.connect(
     charset='utf8'
 )
 cur = con.cursor()
+# cur or con error
 
-#pro.cre_proT()
-insp.first_insert(cur)
+# pro.cre_proT(cur)
+# insp.first_insert(cur)
 
+val = ""
+try:
+    sql_p = """SELECT * FROM produc where barcord_id = %s"""
+    # 바코드 인식 에러 처리 필요
+    val = "8801062475667"
+    cur.execute(sql_p, val)
+except Exception as e:
+    print(e)
+    # 에러 발생한 경우 완전 종료 필요
+else:
+    # 쿼리 결과 반환 ->
+    result = cur.fetchone()
+try:
+    sql_r = """SELECT * FROM review where barcord_id =%s"""
+    cur.execute(sql_r, val)
+except Exception as e:
+    print(e)
+else:
+    # 쿼리 결과 반환 -> 리뷰 출력용
+    result = cur.fetchall()
 
 # DB 연결 해제
 con.commit()
