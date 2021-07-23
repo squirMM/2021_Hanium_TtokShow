@@ -17,6 +17,13 @@
         <item name ="android:layout_marginStart">24dp</item>
         <item name ="android:layout_marginEnd">24dp</item>
     </style>
+    <style name="popup_s">
+        <item name="android:background">@drawable/popup</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">258dp</item>
+        <item name="android:layout_height">160dp</item>
+    </style>
     <!--상단&하단바-->
     <style name="bar">
         <item name="android:layout_width">match_parent</item>

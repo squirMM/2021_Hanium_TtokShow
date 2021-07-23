@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="276dp"
+    android:layout_height="178dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        style="@style/popup_s">
+    </ImageView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="정보를 불러오지 못했습니다."
+        android:layout_gravity="center"
+        style="@style/textView_style"
+        />
+
+</FrameLayout>
