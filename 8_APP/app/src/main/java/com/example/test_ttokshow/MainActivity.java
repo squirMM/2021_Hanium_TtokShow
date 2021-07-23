@@ -15,8 +15,8 @@ import android.view.LayoutInflater;
 public class MainActivity extends AppCompatActivity {
 
     //int count=0;
-    //boolean visible =false;
-    ImageButton open_bu;
+    boolean visible =false;
+    Button open_bu;
     Button all_review_1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +24,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        //open_bu = (ImageButton) findViewById(R.id.open);
-        //open_bu.setOnClickListener(this::onClick) ;
+        open_bu = (Button) findViewById(R.id.open);
+        open_bu.setOnClickListener(this::onClick) ;
         all_review_1 = (Button) findViewById(R.id.all_review);
         all_review_1.setOnClickListener(this::onClick) ;
 
@@ -46,17 +46,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
+        //inflation layout
+        LinearLayout inflatedLayout = (LinearLayout)findViewById(R.id.inflatedlayout);
+        LayoutInflater inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if(!visible)
+        {
+            inflater.inflate(R.layout.inflated_layout, inflatedLayout);
+            visible = true;
+        }
+        else{
+            inflatedLayout.removeAllViews();
+            visible=false;
+        }
+
+        //all review
         BtnOnClickListener onClickListener = new BtnOnClickListener();
         Button all_review = (Button) findViewById(R.id.all_review);
         all_review.setOnClickListener(onClickListener);
 
-        //count++;
-        //if(!visible)
-        //{   LinearLayout inflatedLayout = (LinearLayout)findViewById(R.id.inflatedlayout);
-        //    LayoutInflater inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //    inflater.inflate(R.layout.inflated_layout, inflatedLayout);
-        //    visible = true;
-        //}
+
     }
 
 }

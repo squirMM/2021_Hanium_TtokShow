@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+    <Button
+        android:id="@+id/open"
+        android:layout_marginEnd="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="부가정보"
+        android:padding="0dp"
+        />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:textSize="28sp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/Item_0000"
+        style="@style/textView_style"/>
+    <!--inflation layout-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/inflatedlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="200dp"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/key"
+        android:layout_width="76dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="10dp"
+        android:textSize="28sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/inflatedlayout"
+        android:text="@string/keyword_Top"
+        style="@style/textView_style"/>
+
+    <View
+        android:id="@+id/keywordbox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/key"
+        style="@style/key_box">
+    </View>
+
+    <TextView
+        android:id="@+id/shop_R"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/keywordbox"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/head"
+        style="@style/textView_style"/>
+
+    <!--평균 별점+ 별 모양-->
+    <include layout="@layout/grade_star"
+        android:layout_height="36dp"
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        app:layout_constraintTop_toBottomOf="@id/shop_R"
+        android:id="@+id/grade" />
+
+    <Button
+        android:id="@+id/all_review"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:textSize="14sp"
+        android:layout_marginEnd="34dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/grade"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/All_review"
+        style="@style/text_button"/>
+
+    <!--스크롤 화면-->
+    <HorizontalScrollView
+        android:id="@+id/ScrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/all_review">
+
+        <include layout="@layout/scroll" />
+    </HorizontalScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
