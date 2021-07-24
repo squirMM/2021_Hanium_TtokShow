@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     boolean visible =false;
     Button open_bu;
     Button all_review_1;
-    Button tmp;
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 showDialog(); // 아래 showDialog01() 함수 호출
             }
         });
-
     }
-
-
     class BtnOnClickListener implements Button.OnClickListener{
 
         @Override
@@ -85,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
     public void showDialog(){
         dialog.show();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 //        Button yesBtn = dialog.findViewById(R.id.yesB);
 //        yesBtn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -103,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
     //hide
     public void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
