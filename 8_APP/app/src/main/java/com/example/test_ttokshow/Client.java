@@ -6,7 +6,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-    public class police {
+    public class Client {
         public static void main(String... args) {
 // 소켓을 선언한다.
             try (Socket client = new Socket()) {
