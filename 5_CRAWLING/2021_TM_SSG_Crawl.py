@@ -2,14 +2,12 @@ import time
 import urllib.request
 import urllib.parse
 import math
-import pandas as pd
 from selenium import webdriver
-import os
 
 #크롬드라이버 연결
-chrome_driver = os.path.join('chromedriver.exe')
-chrome_options = webdriver.ChromeOptions()
-driver = webdriver.Chrome(chrome_driver, options=chrome_options)
+options = webdriver.ChromeOptions()
+options.add_experimental_option("excludeSwitches", ["enable_logging"])
+driver = webdriver.Chrome(options=options)
 data_list = []
 
 product = input("검색어를 입력하시오 : ")
@@ -38,11 +36,16 @@ print("평점:", review_grade)
 
 users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
 ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per') # 평점 수집 
-reivews = driver.find_elements_by_css_selector('.desc_txt.desc') #리뷰 수집
+reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2') #리뷰 수집
 for i in range(len(users)):
     data = {}
     data['username'] = users[i].text
-    data['rating'] = ratings[i].get_attribute('style')
+    data['rating'] = ratings[i].text
+    data['rating'] = data['rating'].replace("구매 고객 평점 별 5개 중 ","")
+    data['rating'] = data['rating'].replace("개","")
+    data['review'] = reviews[i].text
+    data['review'] = data['review'].replace("사진" , "")
+    data['review'] = data['review'].replace("\\n" , "")
     print(data)
 
 '''
