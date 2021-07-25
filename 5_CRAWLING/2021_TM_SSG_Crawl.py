@@ -7,13 +7,13 @@ from selenium import webdriver
 import os
 
 #크롬드라이버 연결
-chrome_driver=os.path.join('chromedriver.exe')
+chrome_driver = os.path.join('chromedriver.exe')
 chrome_options = webdriver.ChromeOptions()
 driver = webdriver.Chrome(chrome_driver, options=chrome_options)
 data_list = []
 
-
-plusUrl = urllib.parse.quote_plus(input("검색어를 입력하시오 : "))
+product = input("검색어를 입력하시오 : ")
+plusUrl = urllib.parse.quote_plus(product)
 url = f'http://emart.ssg.com/search.ssg?target=all&query={plusUrl}&src_area=recom'
 driver.get(url)
 
@@ -35,11 +35,17 @@ product = driver.find_element_by_css_selector('.cdtl_info_tit').text
 print("상품명:",product) 
 review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
 print("평점:", review_grade)
-users = driver.find_elements_by_css_selector('.user.in') # 사용자명 수집 
-ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per') # 평점 수집 
-review = driver.find_elements_by_css_selector('.desc_txt') #리뷰 수집
-print(users, ratings, review)
 
+users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
+ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per') # 평점 수집 
+reivews = driver.find_elements_by_css_selector('.desc_txt.desc') #리뷰 수집
+for i in range(len(users)):
+    data = {}
+    data['username'] = users[i].text
+    data['rating'] = ratings[i].get_attribute('style')
+    print(data)
+
+'''
 def get_page_data(): 
     users = driver.find_elements_by_css_selector('.user.in') # 사용자명 수집 
     ratings = driver.find_elements_by_css_selector('.cdtl_txt') # 평점 수집 
@@ -50,7 +56,6 @@ def get_page_data():
             data = {} 
             data['username'] = users[index].text 
             data['rating'] = ratings[index].get_attribute('style')
-            data['review'] = review[index].text
             print(data) 
             data_list.append(data) 
 print("수집 시작") # 첫 페이지 수집하고 시작 
@@ -78,3 +83,4 @@ print("수집 종료")
 df = pd.DataFrame(data_list) 
 print(df) # 엑셀로 저장 
 df.to_excel("ssg-crawling-example.xlsx")
+'''
