@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#eeeeee">
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="196dp"
+        android:background="@drawable/popup"
+        android:elevation="15dp"
+        >
+        <View
+            android:layout_width="258dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center"
+            android:background="@drawable/popup"
+            >
+        </View>
+        <TextView
+            style="@style/textView_style"
+            android:layout_width="206dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="54dp"
+            android:text="정보를 불러오지 못했습니다."
+            android:textSize="18sp" />
+        <TextView
+            style="@style/textView_style"
+            android:layout_width="116dp"
+            android:layout_height="18dp"
+            android:text="다시 시도하시겠습니까?"
+            android:textSize="12sp"
+            android:layout_marginTop="84dp"
+            android:layout_marginStart="71dp"/>
+        <Button
+            android:id="@+id/yesB"
+            android:layout_width="62dp"
+            android:layout_height="40dp"
+            android:text="Yes"
+            android:padding="0dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginStart="54dp"
+            android:layout_gravity="start"/>
+        <Button
+            android:id="@+id/noB"
+            android:layout_width="62dp"
+            android:layout_height="40dp"
+            android:text="No"
+            android:padding="0dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginEnd="54dp"
+            android:layout_gravity="end"/>
+
+
+    </FrameLayout>
+
+</LinearLayout>
