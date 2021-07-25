@@ -6,8 +6,8 @@
         android:layout_width="258dp"
         android:layout_height="160dp"
         android:layout_gravity="center"
-        android:background="@drawable/popup"
-        >
+        android:background="@drawable/back_ground"
+        android:padding="10dp">
     </View>
     <TextView
         style="@style/textView_style"
