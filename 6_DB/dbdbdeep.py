@@ -1,9 +1,9 @@
 import pymysql.err
 
 import product_table as pro
-import insert_prod as insp
 import review_table as rev
 import pymysql as db
+import TM_SSG_Crawl_DB_Save as ssg
 
 # DB 연걸
 local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
@@ -19,8 +19,10 @@ cur = con.cursor()
 
 # pro.cre_proT(cur)
 # insp.first_insert(cur)
+ssg.crawl(cur)
 
 val = ""
+
 try:
     sql_p = """SELECT * FROM product where barcord_id = %s"""
     # 바코드 인식 에러 처리 필요
