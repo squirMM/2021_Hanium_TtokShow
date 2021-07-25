@@ -22,7 +22,7 @@ cur = con.cursor()
 
 val = ""
 try:
-    sql_p = """SELECT * FROM produc where barcord_id = %s"""
+    sql_p = """SELECT * FROM product where barcord_id = %s"""
     # 바코드 인식 에러 처리 필요
     val = "8801062475667"
     cur.execute(sql_p, val)
@@ -32,14 +32,15 @@ except Exception as e:
 else:
     # 쿼리 결과 반환 ->
     result = cur.fetchone()
-try:
-    sql_r = """SELECT * FROM review where barcord_id =%s"""
-    cur.execute(sql_r, val)
-except Exception as e:
-    print(e)
-else:
-    # 쿼리 결과 반환 -> 리뷰 출력용
-    result = cur.fetchall()
+    print(result)
+# try:
+#     sql_r = """SELECT * FROM review where barcord_id =%s"""
+#     cur.execute(sql_r, val)
+# except Exception as e:
+#     print(e)
+# else:
+#     # 쿼리 결과 반환 -> 리뷰 출력용
+#     result = cur.fetchall()
 
 # DB 연결 해제
 con.commit()
