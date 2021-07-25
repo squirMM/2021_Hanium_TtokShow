@@ -56,22 +56,26 @@ def get_page_data():
 print("수집 시작") # 첫 페이지 수집하고 시작 
 
 get_page_data() # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨. 
+print("1 page 수집 끝")
 driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click() 
 for page in range(2, total_page): 
     try:
         get_page_data()
         if page >= 2 and page < 11:
+            print(str(page) + " page 수집 끝") 
             button_index = page + 1  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
             driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
             time.sleep(1) #1 0page 수집이 끝나서 11로 넘어가기 위해서는 > 버튼을 눌러야 함. 
         else:
+            print(str(page+1) + " page 수집 끝") 
             button_index = page % 10 + 3 # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
             driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
             time.sleep(1) #1 0page 수집이 끝나서 11로 넘어가기 위해서는 > 버튼을 눌러야 함. 
-        
+
 
     except: 
         print("수집 에러") 
+print(str(page) + " page 수집 끝") 
 print("수집 종료") 
 
 
