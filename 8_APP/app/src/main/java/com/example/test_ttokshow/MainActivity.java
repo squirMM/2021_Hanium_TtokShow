@@ -46,22 +46,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                   showDialog(); // 아래 showDialog01() 함수 호출
-            }
-//            @Override
-//            public boolean onTouchEvent(MotionEvent event) {
-//                //바깥레이어 클릭시 안닫히게
-//                if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
-//                    return false;
-//                }
-//                return true;
-//            }
-//
-//            @Override
-//            public void onBackPressed() {
-//                //안드로이드 백버튼 막기
-//                return;
-//            }
-        });
+            }});
     }
     class BtnOnClickListener implements Button.OnClickListener{
         @Override
@@ -90,23 +75,36 @@ public class MainActivity extends AppCompatActivity {
 
     public void showDialog(){
         dialog.show();
+        //round 맞춰주기
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//        Button yesBtn = dialog.findViewById(R.id.yesB);
-//        yesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 원하는 기능 구현
-//                dialog.dismiss(); // 다이얼로그 닫기
-//            }
-//        });
-//        // 네 버튼
-//        dialog.findViewById(R.id.noB).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 원하는 기능 구현
-//                finish();           // 앱 종료
-//            }
-//        });
+        // 다이얼로그 밖 터치했을때 못나가게
+        dialog.setCanceledOnTouchOutside(false);
+        // 다이얼로그 뒤로가기 버튼 방지
+        dialog.setCancelable(false);
+        Button yesBtn = dialog.findViewById(R.id.yesB);
+        yesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    //TODO 액티비티 화면 재갱신 시키는 코드
+                    Intent intent = getIntent();
+                    finish(); //현재 액티비티 종료 실시
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                    startActivity(intent); //현재 액티비티 재실행 실시
+                    overridePendingTransition(0, 0); //인텐트 애니메이션 없애기
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+                dialog.dismiss(); // 다이얼로그 닫기
+            }
+        });
+        dialog.findViewById(R.id.noB).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();           // 앱 종료
+            }
+        });
 
     }
     //hide

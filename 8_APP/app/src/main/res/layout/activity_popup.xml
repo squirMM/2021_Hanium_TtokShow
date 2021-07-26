@@ -10,14 +10,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="196dp"
-        android:background="@drawable/popup"
+        android:background="@drawable/popup_nosha"
         android:elevation="15dp"
         >
         <View
             android:layout_width="258dp"
             android:layout_height="160dp"
             android:layout_gravity="center"
-            android:background="@drawable/popup"
+            android:background="@drawable/popup_nosha"
             >
         </View>
         <TextView
