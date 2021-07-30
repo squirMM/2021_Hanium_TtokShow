@@ -20,6 +20,13 @@ def crawl(cur):
     pro=cur.fetchone()
     print(pro)
 
+    pro = cur.fetchone()
+    print(pro)
+    pro = cur.fetchone()
+    print(pro)
+    pro = cur.fetchone()
+    print(pro)
+
     product = "미니스 버라이어티"
     plusUrl = urllib.parse.quote_plus(product)
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
@@ -91,7 +98,7 @@ def crawl(cur):
     print(str(page) + " page 수집 끝") 
     print("수집 종료") 
     
-    #print(data_list)
+    print(data_list)
 
     sql="INSERT IGNORE INTO review (barcord_id,user_id,star_rank,contents) VALUES (%s,%s,%s,%s)"
     cur.executemany(sql,data_list)
