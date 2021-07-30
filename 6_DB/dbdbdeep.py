@@ -18,23 +18,36 @@ cur = con.cursor()
 # cur or con error
 
 # pro.cre_proT(cur)
-# insp.first_insert(cur)
+# # insp.first_insert(cur)
+# rev.del_reT(cur)
+# rev.cre_reT(cur)
 ssg.crawl(cur)
+
+# sql_find = "SELECT barcord_id, name from product "
+# cur.execute(sql_find)
+# result = cur.fetchall()
+# cnt = 0
+# while cnt < len(result):
+#     pro = result[cnt]
+#     print(pro)
+#     ssg.crawl(cur, pro)
+#     cnt += 1
+
 
 val = ""
 
-try:
-    sql_p = """SELECT * FROM product where barcord_id = %s"""
-    # 바코드 인식 에러 처리 필요
-    val = "8801062475667"
-    cur.execute(sql_p, val)
-except Exception as e:
-    print(e)
-    # 에러 발생한 경우 완전 종료 필요
-else:
-    # 쿼리 결과 반환 ->
-    result = cur.fetchone()
-    print(result)
+# try:
+#     sql_p = """SELECT * FROM product where barcord_id = %s"""
+#     # 바코드 인식 에러 처리 필요
+#     val = "8801062475667"
+#     cur.execute(sql_p, val)
+# except Exception as e:
+#     print(e)
+#     # 에러 발생한 경우 완전 종료 필요
+# else:
+#     # 쿼리 결과 반환 ->
+#     result = cur.fetchone()
+#     print(result)
 # try:
 #     sql_r = """SELECT * FROM review where barcord_id =%s"""
 #     cur.execute(sql_r, val)
