@@ -19,8 +19,9 @@
         style="@style/textView_style"
         android:layout_width="292dp"
         android:layout_height="wrap_content"
-
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
-        tools:text="testtime" />
+        tools:text="testtime"
+        android:ellipsize="end"
+        android:maxLines="2"/>
 </FrameLayout>

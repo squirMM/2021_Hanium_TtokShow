@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,10 +16,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     boolean visible =false;
+    TextView product_name;
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +29,11 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        //Text
+        product_name.setSingleLine(true);    // 한줄로 표시하기
+        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
+        product_name.setSelected(true);      // 선택하기
 
         //inflation layout
         BtnOnClickListener onClickLis = new BtnOnClickListener();
@@ -37,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Button all_review = (Button) findViewById(R.id.all_review);
         all_review.setOnClickListener(onClickListener);
 
+        //Error Dialog
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dialog.setContentView(R.layout.error_popup); //xml 연결
@@ -125,4 +134,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-
