@@ -15,12 +15,12 @@ data_list = []
 
 def crawl(cur):
 
-    sql_find="SELECT barcord_id, name from product"
+    sql_find="SELECT barcord_id, name from product where barcord_id=8805999203461"
     cur.execute(sql_find)
     pro=cur.fetchone()
     print(pro)
 
-    product = "미니스 버라이어티"
+    product = pro[1]
     plusUrl = urllib.parse.quote_plus(product)
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
     driver.get(url)
@@ -63,7 +63,7 @@ def crawl(cur):
                 review = reviews[i].text
                 review = review.replace("사진" , "")
                 review = review.replace("\n" , "")
-                data = (user, rating, review)
+                data = (pro[0], user, rating, review, "ssg")
                 data_list.append(data)
                 print(data)
     print("수집 시작") # 첫 페이지 수집하고 시작 
@@ -93,7 +93,7 @@ def crawl(cur):
     
     #print(data_list)
 
-    sql="INSERT IGNORE INTO review (barcord_id,user_id,star_rank,contents) VALUES (%s,%s,%s,%s)"
+    sql="INSERT IGNORE INTO review (barcord_id,user_id,star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s)"
     cur.executemany(sql,data_list)
 
 
