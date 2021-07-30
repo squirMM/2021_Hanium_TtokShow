@@ -19,7 +19,7 @@ def crawl(cur):
     cur.execute(sql_find)
     pro=cur.fetchone()
     print(pro)
-    '''
+
     product = "미니스 버라이어티"
     plusUrl = urllib.parse.quote_plus(product)
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
@@ -92,11 +92,16 @@ def crawl(cur):
     print("수집 종료") 
     
     #print(data_list)
+
     sql="INSERT IGNORE INTO review (barcord_id,user_id,star_rank,contents) VALUES (%s,%s,%s,%s)"
-    cur.excutemany(sql,data_list)
-    '''
+    cur.executemany(sql,data_list)
+
+
+
+
 '''
+
     df = pd.DataFrame(data_list) 
     print(df) # 엑셀로 저장 
     df.to_excel("ssg-crawling-example.xlsx")
-    '''
+'''
