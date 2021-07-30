@@ -1,9 +1,9 @@
 # CREATE_FUN
 def cre_reT(cur):
     sql1= """CREATE TABLE review(
-    barcord_id INT NOT NULL,
+    barcord_id VARCHAR(26) NOT NULL,
     user_id VARCHAR(255) NOT NULL,
-    date DATE NOT NULL,
+    date DATE ,
     contents VARCHAR(2000),
     star_rank INT DEFAULT 0 ,
     cite VARCHAR(20),
