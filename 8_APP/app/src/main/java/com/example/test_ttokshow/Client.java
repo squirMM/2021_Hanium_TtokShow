@@ -10,10 +10,11 @@ import java.nio.ByteOrder;
         public static void main(String... args) {
 
             try (Socket client = new Socket()) {
-                InetSocketAddress ipep = new InetSocketAddress("3.144.33.17", 9999);
+                InetSocketAddress ipep = new InetSocketAddress("127.0.0.1", 9999);
+                //3.144.33.17
                 client.connect(ipep);
 
-                try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream();) {
+                try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream()) {
 
                     for (int i = 0; i < 1; i++) {
 
