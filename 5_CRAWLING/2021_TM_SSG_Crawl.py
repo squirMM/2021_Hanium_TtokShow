@@ -12,7 +12,7 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "04추 스팸6호"
+product = "아이스 브레이커스 민트"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)

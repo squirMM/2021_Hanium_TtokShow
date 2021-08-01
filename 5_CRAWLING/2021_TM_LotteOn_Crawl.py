@@ -17,30 +17,35 @@ url = f'https://www.lotteon.com/search/search/search.ecn?render=search&platform=
 driver.get(url)
 
 driver.find_element_by_css_selector('.srchProductUnitImageArea').click()
-time.sleep(5)
+time.sleep(3)
 
-driver.switch_to.window(driver.window_handles[1])
-time.sleep(5)
-print(driver.window_handles)
-review_total = driver.find_element_by_css_selector('productReview').text
-print("리뷰 개수:",review_total)
-'''
+driver.switch_to.window(driver.window_handles[-1])
+time.sleep(3)
+
+review_total = driver.find_element_by_css_selector('.reviewCount').text
+review_total = review_total.replace(" ", "")
+review_total = review_total.replace("건", "")
+
 comma = ","
 #페이지별 리뷰 개수
-review_per_page = 10 
+review_per_page = 5
 if comma in review_total:
     review_total = review_total.replace(comma,"")
-print(review_total)
 total_page = int(review_total) / review_per_page 
 total_page = math.ceil(total_page) 
-print("리뷰 페이지 수:", total_page) 
+
 
 # 상품명 확인 
-product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
+product = driver.find_element_by_css_selector('.productName').text 
 print("상품명:",product) 
-review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
-print("평점:", review_grade)
+review_grade = driver.find_element_by_css_selector('.score').text
+review_grade = review_grade.replace(" ", "")
+review_grade = review_grade.replace("/5", "")
+print(review_grade , "점")
+print(review_total , "건")
+print("리뷰 페이지 수:", total_page) 
 
+'''
 def get_page_data(): 
     numbers = driver.find_elements_by_css_selector('.number') #번호 수집
     users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
