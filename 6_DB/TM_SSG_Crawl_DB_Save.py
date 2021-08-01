@@ -4,7 +4,7 @@ import urllib.parse
 import math
 from selenium import webdriver
 import pandas as pd
-
+import sys
 # 크롬드라이버 연결
 
 options = webdriver.ChromeOptions()
@@ -22,9 +22,15 @@ def crawl(cur,pro):
     plusUrl = urllib.parse.quote_plus(product)
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
     driver.get(url)
-
-    driver.find_element_by_css_selector('.thmb').click()
-    time.sleep(1)
+    
+    try:
+        a = driver.find_element_by_css_selector('.tip_txt')
+        print(a.text)
+        driver.quit()
+        sys.exit()
+    except Exception:
+        driver.find_element_by_css_selector('.thmb').click()
+        time.sleep(1)
 
     review_total = driver.find_element_by_css_selector('.num').text
     print("리뷰 개수:", review_total)
