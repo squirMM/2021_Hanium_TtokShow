@@ -9,26 +9,39 @@ def binder(client_socket, addr):
 # 만약 접속이 끊기게 된다면 except가 발생해서 접속이 끊기게 된다.
         while True:
 # socket의 recv함수는 연결된 소켓으로부터 데이터를 받을 대기하는 함수입니다. 최초 4바이트를 대기합니다.
-            data = client_socket.recv(4);
+            #data = client_socket.recv(4);
 # 최초 4바이트는 전송할 데이터의 크기이다. 그 크기는 little big 엔디언으로 byte에서 int형식으로 변환한다.
 # C#의 BitConverter는 big엔디언으로 처리된다.
-            length = int.from_bytes(data, "little");
+            #length = int.from_bytes(data, "little");
             # 다시 데이터를 수신한다.
-            data = client_socket.recv(length);
+            #data = client_socket.recv(length);
             # 수신된 데이터를 str형식으로 decode한다.
-            msg = data.decode();
+            #msg = data.decode();
             # 수신된 메시지를 콘솔에 출력한다.
-            print('Received from', addr, msg);
+            #print('Received from', addr, msg);
             # 수신된 메시지 앞에 「echo:」 라는 메시지를 붙힌다.
-            msg = "police don't know : " + msg;
+
+            
+            msg = "아이스브레이커스#https://www.naver.com#821043411472"
+
+            
             # 바이너리(byte)형식으로 변환한다.
             data = msg.encode();
+            
+            data1 = "아이스브레이커스"
+            data1 = data1.encode();
+            length1 = len(data1);
+
+            
             # 바이너리의 데이터 사이즈를 구한다.
             length = len(data);
             # 데이터 사이즈를 little 엔디언 형식으로 byte로 변환한 다음 전송한다.
             client_socket.sendall(length.to_bytes(4, byteorder='little'));
             # 데이터를 클라이언트로 전송한다.
             client_socket.sendall(data);
+
+            #client_socket.sendall(length.to_bytes(4, byteorder='little'));
+            #client_socket.sendall(data1);
     except:
     # 접속이 끊기면 except가 발생한다.
         print("except : " , addr);
@@ -50,11 +63,4 @@ try:
         # client로 접속이 발생하면 accept가 발생한다.
         # 그럼 client 소켓과 addr(주소)를 튜플로 받는다.
         client_socket, addr = server_socket.accept();
-        th = threading.Thread(target=binder, args = (client_socket,addr));
-        # 쓰레드를 이용해서 client 접속 대기를 만들고 다시 accept로 넘어가서 다른 client를 대기한다.
-        th.start();
-except:
-    print("server");
-finally:
-# 에러가 발생하면 서버 소켓을 닫는다.
-    server_socket.close();
+        th = th
