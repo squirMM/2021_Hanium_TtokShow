@@ -4,6 +4,7 @@ import urllib.parse
 import math
 from selenium import webdriver
 import pandas as pd
+import sys
 
 #크롬드라이버 연결
 options = webdriver.ChromeOptions()
@@ -16,8 +17,14 @@ plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
 
-driver.find_element_by_css_selector('.thmb').click()
-time.sleep(1)
+try:
+    a = driver.find_element_by_css_selector('.tip_txt')
+    print(a.text)
+    driver.quit()
+    sys.exit()
+except Exception:
+    driver.find_element_by_css_selector('.thmb').click()
+    time.sleep(1)
 
 review_total = driver.find_element_by_css_selector('.num').text
 print("리뷰 개수:",review_total)
@@ -55,8 +62,8 @@ def get_page_data():
             review = reviews[i].text
             review = review.replace("사진\n" , "")
             num = (2*i+1) % 20
-            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
-            date = date.text.replace("-","")
+            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div').text
+            date = date.replace("-","")
             data = (int(number), user, int(rating), review, int(date))
             data_list.append(data)
             print(data)
