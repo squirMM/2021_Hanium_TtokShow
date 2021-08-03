@@ -3,8 +3,8 @@ import urllib.request
 import urllib.parse
 import math
 from selenium import webdriver
-import pandas as pd
-import sys
+import con_db as conn
+import re
 # 크롬드라이버 연결
 
 options = webdriver.ChromeOptions()
@@ -13,10 +13,8 @@ driver = webdriver.Chrome(options=options)
 data_list = []
 
 
-def crawl(cur,pro):
-    # sql_find = "SELECT barcord_id, name from product where barcord_id=8805999203461"
-    # cur.execute(sql_find)
-    # pro = cur.fetchone()
+def crawl(pro):
+    cur=conn.connect()
 
     product = pro[1]
     plusUrl = urllib.parse.quote_plus(product)
@@ -26,8 +24,9 @@ def crawl(cur,pro):
     try:
         a = driver.find_element_by_css_selector('.tip_txt')
         print(a.text)
-        driver.quit()
-        sys.exit()
+        return
+        # driver.quit()
+        # sys.exit()
     except Exception:
         driver.find_element_by_css_selector('.thmb').click()
         time.sleep(1)
@@ -35,6 +34,11 @@ def crawl(cur,pro):
     review_total = driver.find_element_by_css_selector('.num').text
     print("리뷰 개수:", review_total)
     comma = ","
+
+    #테스트용 코드
+    review_total = re.sub(",", "", review_total)
+    if int(review_total) >= 300 : return
+
     # 페이지별 리뷰 개수
     review_per_page = 10
     if comma in review_total:
@@ -47,9 +51,6 @@ def crawl(cur,pro):
     # 상품명 확인
     product = driver.find_element_by_css_selector('.cdtl_info_tit').text
     print("상품명:", product)
-
-    # 찾고자 하는 상품인지 확인
-    # if product in pro[1] or pro[1] in product: return
 
     review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
     print("평점:", review_grade)
@@ -101,9 +102,7 @@ def crawl(cur,pro):
     print(str(page) + " page 수집 끝")
     print("수집 종료")
 
-    # print(data_list)
-
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
-
+    conn.commit()
 

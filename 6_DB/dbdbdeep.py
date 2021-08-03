@@ -21,18 +21,7 @@ cur = con.cursor()
 # # insp.first_insert(cur)
 # rev.del_reT(cur)
 # rev.cre_reT(cur)
-ssg.crawl(cur)
-
-# sql_find = "SELECT barcord_id, name from product "
-# cur.execute(sql_find)
-# result = cur.fetchall()
-# cnt = 0
-# while cnt < len(result):
-#     pro = result[cnt]
-#     print(pro)
-#     ssg.crawl(cur, pro)
-#     cnt += 1
-
+# ssg.crawl(cur)
 
 val = ""
 
