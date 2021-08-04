@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        //Text
-        product_name.setSingleLine(true);    // 한줄로 표시하기
-        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
-        product_name.setSelected(true);      // 선택하기
+//        //Text
+//        product_name.setSingleLine(true);    // 한줄로 표시하기
+//        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
+//        product_name.setSelected(true);      // 선택하기
 
         //inflation layout
         BtnOnClickListener onClickLis = new BtnOnClickListener();
