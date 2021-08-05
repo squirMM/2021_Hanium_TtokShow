@@ -1,6 +1,8 @@
 package com.example.test_ttokshow;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 public class Total_Review extends AppCompatActivity {
     ImageButton retBox_1;
     private ListView m_oListView;
+    RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +45,12 @@ public class Total_Review extends AppCompatActivity {
             if (nDatCnt >= strDate.length) nDatCnt = 0;
         }
 
-// ListView, Adapter 생성 및 연결 ------------------------
+        // ListView, Adapter 생성 및 연결 ------------------------
         m_oListView = (ListView)findViewById(R.id.list);
         ListAdapter oAdapter = new ListAdapter(oData);
         m_oListView.setAdapter(oAdapter);
+
+
     }
     class BtnOnClickListener implements Button.OnClickListener {
         @Override

@@ -17,6 +17,7 @@
 
     <TextView
         style="@style/textView_style"
+        android:id="@+id/sContents"
         android:layout_width="292dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
