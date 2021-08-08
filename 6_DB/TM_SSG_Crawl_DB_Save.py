@@ -3,8 +3,6 @@ import urllib.request
 import urllib.parse
 import math
 from selenium import webdriver
-import con_db as conn
-import re
 # 크롬드라이버 연결
 
 options = webdriver.ChromeOptions()
@@ -13,8 +11,7 @@ driver = webdriver.Chrome(options=options)
 data_list = []
 
 
-def crawl(pro):
-    cur=conn.connect()
+def crawl(pro,cur):
 
     product = pro[1]
     plusUrl = urllib.parse.quote_plus(product)
@@ -34,10 +31,6 @@ def crawl(pro):
     review_total = driver.find_element_by_css_selector('.num').text
     print("리뷰 개수:", review_total)
     comma = ","
-
-    #테스트용 코드
-    review_total = re.sub(",", "", review_total)
-    if int(review_total) >= 300 : return
 
     # 페이지별 리뷰 개수
     review_per_page = 10
@@ -83,7 +76,10 @@ def crawl(pro):
 
     get_page_data()  # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨.
     print("1 page 수집 끝")
-    driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click()
+    try:
+        driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click()
+    except:
+        return
     for page in range(1, total_page):
         try:
             get_page_data()
@@ -104,5 +100,4 @@ def crawl(pro):
 
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
-    conn.commit()
 
