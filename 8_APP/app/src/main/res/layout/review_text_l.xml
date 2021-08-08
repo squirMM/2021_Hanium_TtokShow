@@ -24,5 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="34dp"
+        android:ellipsize="end"
+        android:maxLines="7"
         tools:text="testtime" />
 </FrameLayout>

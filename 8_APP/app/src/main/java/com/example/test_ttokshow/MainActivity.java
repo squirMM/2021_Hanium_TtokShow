@@ -8,11 +8,11 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean visible =false;
     TextView product_name;
+    ImageButton open_bu;
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,15 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-//        //Text
-//        product_name.setSingleLine(true);    // 한줄로 표시하기
-//        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
-//        product_name.setSelected(true);      // 선택하기
+        //Text
+        product_name=(TextView)findViewById(R.id.name);
+        product_name.setSingleLine(true);    // 한줄로 표시하기
+        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
+        product_name.setSelected(true);      // 선택하기
 
         //inflation layout
         BtnOnClickListener onClickLis = new BtnOnClickListener();
-        Button open_bu = (Button) findViewById(R.id.open);
+        open_bu = (ImageButton) findViewById(R.id.open);
         open_bu.setOnClickListener(onClickLis);
 
         //all review
@@ -51,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.error_popup); //xml 연결
 
         //임시 다이얼로그
-        findViewById(R.id.test_pop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                  showDialog(); // 아래 showDialog01() 함수 호출
-            }});
+//        findViewById(R.id.test_pop).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                  showDialog(); // 아래 showDialog01() 함수 호출
+//            }});
     }
     class BtnOnClickListener implements Button.OnClickListener{
         @Override
@@ -68,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.open:
                     LinearLayout inflatedLayout = (LinearLayout)findViewById(R.id.inflatedlayout);
                     LayoutInflater inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if(!visible)
+                    if(!open_bu.isSelected())
                     {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
-                        visible = true;
+                        open_bu.setSelected(true);
                     }
                     else{
                         inflatedLayout.removeAllViews();
-                        visible=false;
+                        open_bu.setSelected(false);
                     }
                     break;
             }

@@ -72,8 +72,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:letterSpacing">-0.02</item>
         <item name="android:fontFamily">@font/notosans_b</item>
-
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@drawable/btn_back</item>
         <item name="android:outlineProvider">none</item>
         <item name="android:padding">0dp</item>
     </style>

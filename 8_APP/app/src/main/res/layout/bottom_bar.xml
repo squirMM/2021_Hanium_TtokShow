@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="44dp">
+    <View
+        android:id="@+id/bottom"
+        style="@style/bar">
+    </View>
+    <ImageButton
+        android:id="@+id/home_btn"
+        android:background="@drawable/home"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="center"
+        android:padding="4dp"
+        android:contentDescription="HOME" />
+</FrameLayout>
