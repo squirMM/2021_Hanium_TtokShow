@@ -31,32 +31,12 @@ def crawl(pro):
         driver.find_element_by_css_selector('.thmb').click()
         time.sleep(1)
 
-    review_total = driver.find_element_by_css_selector('.num').text
-    print("리뷰 개수:", review_total)
-    comma = ","
+    # 상품명 확인 
+    product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
+    print("상품명:",product) 
 
-    #테스트용 코드
-    review_total = re.sub(",", "", review_total)
-    if int(review_total) >= 300 : return
-
-    # 페이지별 리뷰 개수
-    review_per_page = 10
-    if comma in review_total:
-        review_total = review_total.replace(comma, "")
-    print(review_total)
-    total_page = int(review_total) / review_per_page
-    total_page = math.ceil(total_page)
-    print("리뷰 페이지 수:", total_page)
-
-    # 상품명 확인
-    product = driver.find_element_by_css_selector('.cdtl_info_tit').text
-    print("상품명:", product)
-
-    review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
-    print("평점:", review_grade)
 
     def get_page_data():
-        numbers = driver.find_elements_by_css_selector('.number')  # 번호 수집
         users = driver.find_elements_by_css_selector('.user')  # 사용자명 수집
         ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per')  # 평점 수집
         reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2')  # 리뷰 수집
@@ -64,7 +44,6 @@ def crawl(pro):
         # 사용자명수와 평점수가 같을 경우만 수집
         if len(reviews) == len(ratings):
             for i in range(len(ratings)):
-                number = numbers[i + 1].text
                 user = users[i + 1].text
                 rating = ratings[i].text
                 rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
@@ -78,12 +57,32 @@ def crawl(pro):
                 data_tu = (pro[0], user, date, rating, review, "ssg")
                 data_list.append(data_tu)
                 print(data_tu)
+    try:
+        nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
+        print(nodata.text)
+        return
+        
+    except Exception:
+        review_total = driver.find_element_by_css_selector('.num').text
+        review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
+        print("평점:", review_grade)
 
-    print("수집 시작")  # 첫 페이지 수집하고 시작
+    print("리뷰 개수:",review_total)
+    comma = ","
+    #페이지별 리뷰 개수
+    review_per_page = 10 
+    if comma in review_total:
+    review_total.replace(comma,"")
+    print(review_total)
+    total_page = int(review_total) / review_per_page 
+    total_page = math.ceil(total_page) 
+    print("리뷰 페이지 수:", total_page) 
 
-    get_page_data()  # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨.
+    print("수집 시작") # 첫 페이지 수집하고 시작 
+    get_page_data() # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨. 
     print("1 page 수집 끝")
-    driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click()
+    driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click() 
+
     for page in range(1, total_page):
         try:
             get_page_data()
