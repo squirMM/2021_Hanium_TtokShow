@@ -18,6 +18,9 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.example.test_ttokshow.Scanner.ScannerCaptureActivity;
+import com.google.zxing.integration.android.IntentIntegrator;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView product_name;
@@ -36,15 +39,19 @@ public class MainActivity extends AppCompatActivity {
         product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
         product_name.setSelected(true);      // 선택하기
 
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+
         //inflation layout
-        BtnOnClickListener onClickLis = new BtnOnClickListener();
         open_bu = (ImageButton) findViewById(R.id.open);
-        open_bu.setOnClickListener(onClickLis);
+        open_bu.setOnClickListener(onClickListener);
 
         //all review
-        BtnOnClickListener onClickListener = new BtnOnClickListener();
         Button all_review = (Button) findViewById(R.id.all_review);
         all_review.setOnClickListener(onClickListener);
+
+        //scanner btn
+        ImageButton home = (ImageButton) findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
 
         //Error Dialog
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
@@ -79,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         open_bu.setSelected(false);
                     }
                     break;
+                case R.id.home_btn:
+                    Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
+                    startActivity(scan);
             }
         }
     }

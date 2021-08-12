@@ -24,7 +24,8 @@ def crawl(pro,cur):
         return
         # driver.quit()
         # sys.exit()
-    except Exception:
+    except Exception as e:
+        print(e)
         driver.find_element_by_css_selector('.thmb').click()
         time.sleep(1)
 
