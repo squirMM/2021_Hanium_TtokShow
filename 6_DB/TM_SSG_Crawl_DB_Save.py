@@ -71,8 +71,7 @@ def crawl(pro):
     comma = ","
     #페이지별 리뷰 개수
     review_per_page = 10 
-    if comma in review_total:
-    review_total.replace(comma,"")
+    review_total = review_total.replace(comma,"")
     print(review_total)
     total_page = int(review_total) / review_per_page 
     total_page = math.ceil(total_page) 
@@ -97,7 +96,7 @@ def crawl(pro):
                 driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click()
                 time.sleep(1)
         except Exception as e:
-            print("수집 에러")
+            print(e)
     print(str(page) + " page 수집 끝")
     print("수집 종료")
 
