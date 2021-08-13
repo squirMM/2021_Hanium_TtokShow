@@ -49,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
         //image
         iv_image = (ImageView)findViewById(R.id.keywordbox);
         String image_url_con = "https://post-phinf.pstatic.net/MjAxOTA3MDVfNDcg/MDAxNTYyMzA1MTQ0Njc0.04P0QuAk7pRDhmuLYa2Op36kmArY2gO_lwluLr7CE7og.y1dyZeUEudhu9-uTUKSUymLjC3wt8XsuRD7Zx_UoOZAg.JPEG/naver_%ED%95%B4%EB%B0%94%EB%9D%BC%EA%B8%B0_1_pixabay.jpg?type=w1200";
-        String image_url="http://gs1.koreannet.or.kr/product/info/detail/photoView.do?fileNm=8809277330016_8809277330603_1.jpg&filePath=8809277330016/8809277330603\n";
-        loadImageTask imageTask = new loadImageTask(image_url_con);
+        //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
+        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+        loadImageTask imageTask = new loadImageTask(image_url);
         imageTask.execute();
         //new DownloadFilesTask().execute("https://asddsa.soll0803.repl.co/kospi.PNG");
 
