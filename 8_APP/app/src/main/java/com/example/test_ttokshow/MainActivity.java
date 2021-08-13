@@ -24,19 +24,15 @@ import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView product_name;
-    ImageButton open_bu;
-    Dialog dialog;
-    ImageView iv_image;
-    Bitmap bitmap;
+    private TextView product_name;
+    private ImageButton open_bu;
+    private Dialog dialog;
+    private ImageView iv_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,12 +50,11 @@ public class MainActivity extends AppCompatActivity {
         iv_image = (ImageView)findViewById(R.id.keywordbox);
         String image_url_con = "https://post-phinf.pstatic.net/MjAxOTA3MDVfNDcg/MDAxNTYyMzA1MTQ0Njc0.04P0QuAk7pRDhmuLYa2Op36kmArY2gO_lwluLr7CE7og.y1dyZeUEudhu9-uTUKSUymLjC3wt8XsuRD7Zx_UoOZAg.JPEG/naver_%ED%95%B4%EB%B0%94%EB%9D%BC%EA%B8%B0_1_pixabay.jpg?type=w1200";
         String image_url="http://gs1.koreannet.or.kr/product/info/detail/photoView.do?fileNm=8809277330016_8809277330603_1.jpg&filePath=8809277330016/8809277330603\n";
-        loadImageTask imageTask = new loadImageTask(image_url);
+        loadImageTask imageTask = new loadImageTask(image_url_con);
         imageTask.execute();
         //new DownloadFilesTask().execute("https://asddsa.soll0803.repl.co/kospi.PNG");
 
         BtnOnClickListener onClickListener = new BtnOnClickListener();
-
         //inflation layout
         open_bu = (ImageButton) findViewById(R.id.open);
         open_bu.setOnClickListener(onClickListener);
