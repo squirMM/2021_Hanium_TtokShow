@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -13,19 +16,23 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
-import com.example.test_ttokshow.Scanner.ScannerCaptureActivity;
-import com.google.zxing.integration.android.IntentIntegrator;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
-    TextView product_name;
-    ImageButton open_bu;
-    Dialog dialog;
+    private TextView product_name;
+    private ImageButton open_bu;
+    private Dialog dialog;
+    private ImageView iv_image;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,8 +46,16 @@ public class MainActivity extends AppCompatActivity {
         product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
         product_name.setSelected(true);      // 선택하기
 
-        BtnOnClickListener onClickListener = new BtnOnClickListener();
+        //image
+        iv_image = (ImageView)findViewById(R.id.keywordbox);
+        String image_url_con = "https://post-phinf.pstatic.net/MjAxOTA3MDVfNDcg/MDAxNTYyMzA1MTQ0Njc0.04P0QuAk7pRDhmuLYa2Op36kmArY2gO_lwluLr7CE7og.y1dyZeUEudhu9-uTUKSUymLjC3wt8XsuRD7Zx_UoOZAg.JPEG/naver_%ED%95%B4%EB%B0%94%EB%9D%BC%EA%B8%B0_1_pixabay.jpg?type=w1200";
+        //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
+        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+        loadImageTask imageTask = new loadImageTask(image_url);
+        imageTask.execute();
+        //new DownloadFilesTask().execute("https://asddsa.soll0803.repl.co/kospi.PNG");
 
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
         //inflation layout
         open_bu = (ImageButton) findViewById(R.id.open);
         open_bu.setOnClickListener(onClickListener);
@@ -65,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 //                  showDialog(); // 아래 showDialog01() 함수 호출
 //            }});
     }
+
     class BtnOnClickListener implements Button.OnClickListener{
         @Override
         public void onClick(View view){
@@ -92,7 +108,31 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
+    public class loadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
+        private String url;
+        public loadImageTask(String url) { this.url = url; }
+        @Override
+        protected Bitmap doInBackground(Bitmap... params) {
+            Bitmap imgBitmap = null;
+            try {
+                URL url1 = new URL(url);
+                URLConnection conn = url1.openConnection();
+                conn.connect();
+                int nSize = conn.getContentLength();
+                BufferedInputStream bis = new BufferedInputStream(conn.getInputStream(), nSize);
+                imgBitmap = BitmapFactory.decodeStream(bis);
+                bis.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return imgBitmap;
+        }
+        @Override
+        protected void onPostExecute(Bitmap bit) {
+            super.onPostExecute(bit);
+            iv_image.setImageBitmap(bit);
+        }
+    }
     public void showDialog(){
         dialog.show();
         //round 맞춰주기
