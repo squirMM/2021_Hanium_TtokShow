@@ -1,7 +1,6 @@
 package com.example.test_ttokshow;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -10,8 +9,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
+
+import com.example.test_ttokshow.List.ListAdapter;
+import com.example.test_ttokshow.List.ListData;
 
 import java.util.ArrayList;
 
@@ -25,8 +26,13 @@ public class Total_Review extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_total_review);
-//        retBox_1 = (Button) findViewById(R.id.retBox);
-//        retBox_1.setOnClickListener(this::onClick) ;
+
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+
+        //ret Button
+        ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
+        retBox.setOnClickListener(onClickListener);
+
         // 데이터 1000개 생성--------------------------------.
         String[] strDate = {"2017-01-03", "1965-02-23", "2016-04-13", "2010-01-01", "2017-06-20",
                 "2012-07-08", "1980-04-14", "2016-09-26", "2014-10-11", "2010-12-24"};
@@ -63,11 +69,7 @@ public class Total_Review extends AppCompatActivity {
             }
         }
     }
-    public void onClick(View view) {
-        BtnOnClickListener onClickListener = new Total_Review.BtnOnClickListener();
-        ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
-        retBox.setOnClickListener(onClickListener);
-    }
+
     public void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(

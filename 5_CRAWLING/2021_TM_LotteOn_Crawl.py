@@ -45,7 +45,7 @@ print(review_grade , "점")
 print(review_total , "건")
 print("리뷰 페이지 수:", total_page) 
 
-'''
+
 def get_page_data(): 
     numbers = driver.find_elements_by_css_selector('.number') #번호 수집
     users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
@@ -98,4 +98,3 @@ print(data_list)
 df = pd.DataFrame(data_list) 
 print(df) # 엑셀로 저장 
 df.to_excel("ssg-crawling-example.xlsx")
-'''

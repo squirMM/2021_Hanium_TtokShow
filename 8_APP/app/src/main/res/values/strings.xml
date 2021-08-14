@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">test_ttokshow</string>
+    <string name="app_name">똑쇼</string>
     <string name="head">쇼핑몰 리뷰</string>
     <string name="keyword_Top">키워드</string>
     <string name="All_review"><u>모두보기</u></string>
-    <string name="Item_0000">아이스브레이커스</string>
+    <string name="plusInfo">부가정보</string>
 </resources>

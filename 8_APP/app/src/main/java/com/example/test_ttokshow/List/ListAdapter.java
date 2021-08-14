@@ -1,4 +1,4 @@
-package com.example.test_ttokshow;
+package com.example.test_ttokshow.List;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.example.test_ttokshow.R;
 
 import java.util.ArrayList;
 

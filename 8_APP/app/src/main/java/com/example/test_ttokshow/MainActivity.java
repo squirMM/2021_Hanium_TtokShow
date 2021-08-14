@@ -8,20 +8,23 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.example.test_ttokshow.Scanner.ScannerCaptureActivity;
+import com.google.zxing.integration.android.IntentIntegrator;
+
 public class MainActivity extends AppCompatActivity {
 
-    boolean visible =false;
     TextView product_name;
+    ImageButton open_bu;
     Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +33,25 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-//        //Text
-//        product_name.setSingleLine(true);    // 한줄로 표시하기
-//        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
-//        product_name.setSelected(true);      // 선택하기
+        //Text
+        product_name=(TextView)findViewById(R.id.name);
+        product_name.setSingleLine(true);    // 한줄로 표시하기
+        product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
+        product_name.setSelected(true);      // 선택하기
+
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
 
         //inflation layout
-        BtnOnClickListener onClickLis = new BtnOnClickListener();
-        Button open_bu = (Button) findViewById(R.id.open);
-        open_bu.setOnClickListener(onClickLis);
+        open_bu = (ImageButton) findViewById(R.id.open);
+        open_bu.setOnClickListener(onClickListener);
 
         //all review
-        BtnOnClickListener onClickListener = new BtnOnClickListener();
         Button all_review = (Button) findViewById(R.id.all_review);
         all_review.setOnClickListener(onClickListener);
+
+        //scanner btn
+        ImageButton home = (ImageButton) findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
 
         //Error Dialog
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
@@ -51,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.error_popup); //xml 연결
 
         //임시 다이얼로그
-        findViewById(R.id.test_pop).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                  showDialog(); // 아래 showDialog01() 함수 호출
-            }});
+//        findViewById(R.id.test_pop).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                  showDialog(); // 아래 showDialog01() 함수 호출
+//            }});
     }
     class BtnOnClickListener implements Button.OnClickListener{
         @Override
@@ -68,16 +76,19 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.open:
                     LinearLayout inflatedLayout = (LinearLayout)findViewById(R.id.inflatedlayout);
                     LayoutInflater inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if(!visible)
+                    if(!open_bu.isSelected())
                     {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
-                        visible = true;
+                        open_bu.setSelected(true);
                     }
                     else{
                         inflatedLayout.removeAllViews();
-                        visible=false;
+                        open_bu.setSelected(false);
                     }
                     break;
+                case R.id.home_btn:
+                    Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
+                    startActivity(scan);
             }
         }
     }

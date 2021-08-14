@@ -1,4 +1,4 @@
-package com.example.test_ttokshow;
+package com.example.test_ttokshow.List;
 
 public class ListData {
     public String StrDate;

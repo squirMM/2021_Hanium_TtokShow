@@ -12,7 +12,7 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스 브레이커스 민트"
+product = "CJ 더건강한 후랑크"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
@@ -64,12 +64,9 @@ except Exception:
     print("평점:", review_grade) 
 
 print("리뷰 개수:",review_total)
-comma = ","
 #페이지별 리뷰 개수
 review_per_page = 10 
-if comma in review_total: 
-    review_total.replace(comma,"")
-print(review_total)
+review_total = review_total.replace(",","")
 total_page = int(review_total) / review_per_page 
 total_page = math.ceil(total_page) 
 print("리뷰 페이지 수:", total_page)    
@@ -92,14 +89,10 @@ for page in range(2, total_page):
             button_index = page % 10 + 3 # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
             driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
             time.sleep(1) 
-
     except: 
         print("수집 에러") 
-print(str(page) + " page 수집 끝") 
 print("수집 종료") 
 
 print(data_list)
 
 df = pd.DataFrame(data_list) 
-print(df) # 엑셀로 저장 
-df.to_excel("ssg-crawling-example.xlsx")
