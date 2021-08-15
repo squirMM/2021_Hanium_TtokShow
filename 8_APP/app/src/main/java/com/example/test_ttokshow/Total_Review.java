@@ -16,19 +16,6 @@ import com.example.test_ttokshow.List.ListData;
 
 import java.util.ArrayList;
 
-/*
-public class ChildThread extends Thread{
-    private String[] result;
-    public void run() {
-        Client.main();
-        result = Client.getOutput();
-    }
-    public String[] getResult(){
-        return this.result;
-    }
-}
-*/
-
 public class Total_Review extends AppCompatActivity {
     ImageButton retBox_1;
     private ListView m_oListView;
@@ -47,41 +34,22 @@ public class Total_Review extends AppCompatActivity {
         //ret Button
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
-        /*
-        Client CThread = new Client();
-        CThread.start();
 
-         */
+        /*
         new Thread(){
             public void run(){
                 Client.main();
                 String[] out = Client.getOutput();
-                System.out.println("--------");
-                System.out.println(out[1]);
-                System.out.println(out[2]);
-                System.out.println("--------");
                 output = out;
             }
         }.start();
-        output[1] = "abcd";
+        output[0] = "Already";
 
-        while (output[1] == "abcd") {
+        while (output[0] == "Already") {
             continue;
         }
-        System.out.println("--------------------");
-        System.out.println(output[1]);
+        */
 
-        //System.out.println(CThread.getOutput());
-        //String[] out = CThread.getOutput();
-
-
-        //System.out.println(out[1]);
-        //out = Thread.getResult();
-
-        //}.start();
-        // 데이터 1000개 생성--------------------------------.
-        //String[] strDate = {output[1], output[6], "2016-04-13", "2010-01-01", "2017-06-20",
-        //        "2012-07-08", "1980-04-14", "2016-09-26", "2014-10-11", "2010-12-24"};
         String[] strDate = new String[(output.length/5)];
         for (int i=0; i<(output.length/5); i++){
             strDate[i] = output[5*i+1];

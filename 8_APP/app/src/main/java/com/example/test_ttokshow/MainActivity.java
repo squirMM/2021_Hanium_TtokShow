@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton open_bu;
     private Dialog dialog;
     private ImageView iv_image;
+    public String[] output = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
+        new Thread(){
+            public void run(){
+                Client.main();
+                String[] out = Client.getOutput();
+                output = out;
+            }
+        }.start();
+        output[0] = "Already";
+
+        while (output[0] == "Already") {
+            continue;
+        }
 
 
         //Text
