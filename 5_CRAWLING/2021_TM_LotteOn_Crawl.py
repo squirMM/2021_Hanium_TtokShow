@@ -4,6 +4,7 @@ import urllib.parse
 import math
 from selenium import webdriver
 import pandas as pd
+import sys
 
 #크롬드라이버 연결
 options = webdriver.ChromeOptions()
@@ -11,13 +12,19 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스 브레이커스 민트"
+product = "아이스브레이커스민트"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q={plusUrl}&mallId=1'
 driver.get(url)
 
-driver.find_element_by_css_selector('.srchProductUnitImageArea').click()
-time.sleep(3)
+try:
+    a = driver.find_element_by_css_selector('.srchResultNull.srchNullCharacter1')
+    print(a.text)
+    driver.quit()
+    sys.exit()
+except Exception:
+    driver.find_element_by_css_selector('.srchProductUnitImageArea').click()
+    time.sleep(1)
 
 driver.switch_to.window(driver.window_handles[-1])
 time.sleep(3)
@@ -38,12 +45,6 @@ total_page = math.ceil(total_page)
 # 상품명 확인 
 product = driver.find_element_by_css_selector('.productName').text 
 print("상품명:",product) 
-review_grade = driver.find_element_by_css_selector('.score').text
-review_grade = review_grade.replace(" ", "")
-review_grade = review_grade.replace("/5", "")
-print(review_grade , "점")
-print(review_total , "건")
-print("리뷰 페이지 수:", total_page) 
 
 
 def get_page_data(): 
@@ -69,6 +70,15 @@ def get_page_data():
             data = (int(number), user, int(rating), review, int(date))
             data_list.append(data)
             print(data)
+
+review_grade = driver.find_element_by_css_selector('.score').text
+review_grade = review_grade.replace(" ", "")
+review_grade = review_grade.replace("/5", "")
+print(review_grade , "점")
+print(review_total , "건")
+print("리뷰 페이지 수:", total_page) 
+
+
 print("수집 시작") # 첫 페이지 수집하고 시작 
 
 get_page_data() # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨. 
@@ -97,4 +107,3 @@ print(data_list)
 
 df = pd.DataFrame(data_list) 
 print(df) # 엑셀로 저장 
-df.to_excel("ssg-crawling-example.xlsx")
