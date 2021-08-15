@@ -1,6 +1,7 @@
 package com.example.test_ttokshow;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -9,17 +10,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
-import com.example.test_ttokshow.List.ListAdapter;
-import com.example.test_ttokshow.List.ListData;
+import com.example.test_ttokshow.Recy.Adapter;
+import com.example.test_ttokshow.Recy.ItemData;
+import com.example.test_ttokshow.Recy.ViewType;
 
 import java.util.ArrayList;
 
 public class Total_Review extends AppCompatActivity {
     ImageButton retBox_1;
-    private ListView m_oListView;
-    RecyclerView recyclerView;
     public static String[] out;
     public String[] output = new String[10];
     @Override
@@ -35,44 +34,16 @@ public class Total_Review extends AppCompatActivity {
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
 
-        /*
-        new Thread(){
-            public void run(){
-                Client.main();
-                String[] out = Client.getOutput();
-                output = out;
-            }
-        }.start();
-        output[0] = "Already";
+        Intent intent=getIntent();
+        ArrayList<ItemData> list = (ArrayList<ItemData>) intent.getSerializableExtra("Item");
 
-        while (output[0] == "Already") {
-            continue;
-        }
-        */
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        String[] strDate = new String[(output.length/5)];
-        for (int i=0; i<(output.length/5); i++){
-            strDate[i] = output[5*i+1];
-        }
-        int nDatCnt=0;
-        ArrayList<ListData> oData = new ArrayList<>();
-        for (int i=0; i<(output.length/5); i++)
-        {
-            ListData oItem = new ListData();
-            oItem.StrCite_name = output[5*i+4];
-            oItem.StrContents = output[5*i+2];
-            oItem.StrStar_rank = output[5*i+3] + "점";
-            oItem.StrId = output[5*i];
-            oItem.StrDate = strDate[nDatCnt++];
+        //recyclerView.smoothScrollBy(0, 800);
 
-            oData.add(oItem);
-            if (nDatCnt >= strDate.length) nDatCnt = 0;
-        }
-
-        // ListView, Adapter 생성 및 연결 ------------------------
-        m_oListView = (ListView)findViewById(R.id.list);
-        ListAdapter oAdapter = new ListAdapter(oData);
-        m_oListView.setAdapter(oAdapter);
+        Adapter adapter = new Adapter(ViewType.large,list);
+        recyclerView.setAdapter(adapter);
 
 
     }

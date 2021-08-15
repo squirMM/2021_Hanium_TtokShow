@@ -1,6 +1,8 @@
 package com.example.test_ttokshow;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,10 +24,15 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.widget.TextView;
 
+import com.example.test_ttokshow.Recy.Adapter;
+import com.example.test_ttokshow.Recy.ItemData;
+import com.example.test_ttokshow.Recy.ViewType;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton open_bu;
     private Dialog dialog;
     private ImageView iv_image;
+    private ItemData item;
+    public ArrayList<ItemData> list_s;
     public String[] output = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +64,16 @@ public class MainActivity extends AppCompatActivity {
             continue;
         }
 
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        list_s = new ArrayList<>();
+        for (int i=0; i<(output.length/5); i++) {
+            item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
+            list_s.add(item);
+        }
+        Adapter adapter = new Adapter(ViewType.small,list_s);
+        recyclerView.setAdapter(adapter);
 
         //Text
         product_name=(TextView)findViewById(R.id.name);
@@ -103,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.all_review:
                     Intent intent = new Intent(getApplicationContext(), Total_Review.class);
+                    intent.putExtra("Item", list_s);
                     startActivity(intent);
                     break;
                 case R.id.open:
@@ -187,10 +207,7 @@ public class MainActivity extends AppCompatActivity {
     public void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
-                // Set the content to appear under the system bars so that the
-                // content doesn't resize when the system bars hide and show.
-                // Hide the nav bar and status bar
-                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
+                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
