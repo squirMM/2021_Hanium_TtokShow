@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView product_name;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+
 
         //Text
         product_name=(TextView)findViewById(R.id.name);

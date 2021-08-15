@@ -16,10 +16,25 @@ import com.example.test_ttokshow.List.ListData;
 
 import java.util.ArrayList;
 
+/*
+public class ChildThread extends Thread{
+    private String[] result;
+    public void run() {
+        Client.main();
+        result = Client.getOutput();
+    }
+    public String[] getResult(){
+        return this.result;
+    }
+}
+*/
+
 public class Total_Review extends AppCompatActivity {
     ImageButton retBox_1;
     private ListView m_oListView;
     RecyclerView recyclerView;
+    public static String[] out;
+    public String[] output = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,19 +47,54 @@ public class Total_Review extends AppCompatActivity {
         //ret Button
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
+        /*
+        Client CThread = new Client();
+        CThread.start();
 
+         */
+        new Thread(){
+            public void run(){
+                Client.main();
+                String[] out = Client.getOutput();
+                System.out.println("--------");
+                System.out.println(out[1]);
+                System.out.println(out[2]);
+                System.out.println("--------");
+                output = out;
+            }
+        }.start();
+        output[1] = "abcd";
+
+        while (output[1] == "abcd") {
+            continue;
+        }
+        System.out.println("--------------------");
+        System.out.println(output[1]);
+
+        //System.out.println(CThread.getOutput());
+        //String[] out = CThread.getOutput();
+
+
+        //System.out.println(out[1]);
+        //out = Thread.getResult();
+
+        //}.start();
         // 데이터 1000개 생성--------------------------------.
-        String[] strDate = {"2017-01-03", "1965-02-23", "2016-04-13", "2010-01-01", "2017-06-20",
-                "2012-07-08", "1980-04-14", "2016-09-26", "2014-10-11", "2010-12-24"};
+        //String[] strDate = {output[1], output[6], "2016-04-13", "2010-01-01", "2017-06-20",
+        //        "2012-07-08", "1980-04-14", "2016-09-26", "2014-10-11", "2010-12-24"};
+        String[] strDate = new String[(output.length/5)];
+        for (int i=0; i<(output.length/5); i++){
+            strDate[i] = output[5*i+1];
+        }
         int nDatCnt=0;
         ArrayList<ListData> oData = new ArrayList<>();
-        for (int i=0; i<1000; ++i)
+        for (int i=0; i<(output.length/5); i++)
         {
             ListData oItem = new ListData();
-            oItem.StrCite_name = "데이터 " + (i+1);
-            oItem.StrContents = (i+1)+"째 내용";
-            oItem.StrStar_rank = "1";
-            oItem.StrId = "id"+(i+1);
+            oItem.StrCite_name = output[5*i+4];
+            oItem.StrContents = output[5*i+2];
+            oItem.StrStar_rank = output[5*i+3] + "점";
+            oItem.StrId = output[5*i];
             oItem.StrDate = strDate[nDatCnt++];
 
             oData.add(oItem);

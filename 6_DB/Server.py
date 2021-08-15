@@ -11,7 +11,6 @@ db = pymysql.connect(
     charset='utf8'
 )
 curs = db.cursor()
-
 sql = """select * from review"""
 curs.execute(sql)
 select =list(curs.fetchall())
