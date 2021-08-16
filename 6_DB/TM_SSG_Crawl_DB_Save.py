@@ -31,7 +31,10 @@ def crawl(pro,cur):
 
     # 상품명 확인 
     product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
-    print("상품명:",product) 
+    print("상품명:",product)
+    price = driver.find_element_by_css_selector('.ssg_price').text 
+    price = price.replce(",","")
+    print("가격:",price)
 
     def get_page_data():
         users = driver.find_elements_by_css_selector('.user')  # 사용자명 수집
@@ -54,12 +57,15 @@ def crawl(pro,cur):
                 data_tu = (pro[0], user, date, rating, review, "ssg")
                 data_list.append(data_tu)
                 print(data_tu)
-    try:
+    try: #리뷰 없을 때
         nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
         print(nodata.text)
         return
         
-    except Exception:
+    except Exception: #리뷰 있을 때
+        # 최신순 클릭
+        driver.find_element_by_css_selector('.cdtl_opt').click()
+        driver.find_element_by_xpath('//*[@id="cmt_select_sort"]/div/div/ul/li[2]').click()
         review_total = driver.find_element_by_css_selector('.num').text
         review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
         print("평점:", review_grade)
@@ -74,26 +80,28 @@ def crawl(pro,cur):
     print("리뷰 페이지 수:", total_page) 
 
     print("수집 시작") # 첫 페이지 수집하고 시작 
-    get_page_data() # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨. 
-    print("1 page 수집 끝")
-
-    driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click() 
-    for page in range(1, total_page):
+    get_page_data()
+    for page in range(0, total_page):
         try:
-            get_page_data()
-            if page >= 1 and page < 11:
-                print(str(page) + " page 수집 끝")
-                button_index = page + 1  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭
+            if page == 0:
+                print("1 page 수집 끝")
+                driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click()
+                time.sleep(1)
+                get_page_data()
+            elif page > 0 and page < 10:
+                print(str(page+1) + " page 수집 끝")
+                button_index = page + 2  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭
                 driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click()
                 time.sleep(1)
+                get_page_data()
             else:
                 print(str(page + 1) + " page 수집 끝")
                 button_index = page % 10 + 3  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭
                 driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click()
                 time.sleep(1)
+                get_page_data()
         except Exception as e:
             print(e)
-    print(str(page) + " page 수집 끝")
     print("수집 종료")
 
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
