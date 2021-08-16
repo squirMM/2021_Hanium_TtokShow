@@ -13,6 +13,8 @@ class App:
         self.window.title("Read ESP32-CAM")
         self.buffer = b''
         url = "http://118.38.174.163:81/stream" #테스트 후 주소 변경할것
+        #url = "http://172.30.1.48:81/stream"  # 테스트 후 주소 변경할것
+
         self.stream = urlopen(url)
 
         self.canvas = Canvas(window, width = self.width, height = self.height)

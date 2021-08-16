@@ -98,7 +98,7 @@ void setup() {
           s->set_gainceiling(s, (gainceiling_t)6);
         }
         // drop down frame size for higher initial frame rate
-        s->set_framesize(s, FRAMESIZE_UXGA);
+        s->set_framesize(s, FRAMESIZE_XGA);
       
       #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
         s->set_vflip(s, 1);
