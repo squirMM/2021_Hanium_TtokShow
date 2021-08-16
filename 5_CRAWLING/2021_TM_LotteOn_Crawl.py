@@ -13,14 +13,14 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스브레이커스민트"
+product = "아이스 브레이커스 민트"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q={plusUrl}&mallId=1'
 driver.get(url)
 
 try:
     a = driver.find_element_by_css_selector('.srchResultNull.srchNullCharacter1')
-    print(a.text)
+    print("해당 상품 없음")
     driver.quit()
     sys.exit()
 except Exception:
@@ -28,13 +28,14 @@ except Exception:
     time.sleep(1)
 
 driver.switch_to.window(driver.window_handles[-1])
-time.sleep(3)
+time.sleep(1)
 
 # 상품명, 가격 확인 
 product = driver.find_element_by_css_selector('.productName').text 
 print("상품명:",product) 
 price = driver.find_element_by_css_selector('.price').text
 price = price.replace("\n원","")
+price = price.replace(",", "")
 print("가격:",price)
 
 def get_page_data(): 
@@ -83,12 +84,12 @@ print("리뷰 페이지 수:", total_page)
 
 
 print("수집 시작") # 첫 페이지 수집하고 시작 
-
-for page in range(1, total_page+1):
-        get_page_data() # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨. 
-        print(str(page)+"page 수집 끝")
+get_page_data()
+for page in range(0, total_page-1):
+        print(str(page+1)+"page 수집 끝")
         driver.find_element_by_css_selector('.next').click() 
         time.sleep(1)
+        get_page_data()
 print(str(page) + " page 수집 끝") 
 print("수집 종료") 
 print(data_list)

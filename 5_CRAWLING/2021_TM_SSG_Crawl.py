@@ -17,18 +17,22 @@ plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
 
-try:
-    a = driver.find_element_by_css_selector('.tip_txt')
-    print(a.text)
+a = driver.find_element_by_css_selector('.csrch_top.v2').text
+if "상품이 없습니다." in a:
+    print("해당 상품 없음")
     driver.quit()
     sys.exit()
-except Exception:
-    driver.find_element_by_css_selector('.thmb').click()
-    time.sleep(1)
+
+driver.find_element_by_css_selector('.thmb').click()
+time.sleep(1)
 
 # 상품명 확인 
 product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
-print("상품명:",product) 
+print("상품명:",product)
+price = driver.find_element_by_css_selector('.ssg_price').text 
+price = price.replace(",","")
+print("가격:",price) 
+
 
 def get_page_data(): 
     numbers = driver.find_elements_by_css_selector('.number') #번호 수집
