@@ -18,16 +18,14 @@ def crawl(pro,cur):
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
     driver.get(url)
     
-    try:
-        a = driver.find_element_by_css_selector('.tip_txt')
-        print(a.text)
+    a = driver.find_element_by_css_selector('.tip_txt').text
+    if "상품이 없습니다." in a:
+        print(a)
         return
         # driver.quit()
         # sys.exit()
-    except Exception as e:
-        print(e)
-        driver.find_element_by_css_selector('.thmb').click()
-        time.sleep(1)
+    driver.find_element_by_css_selector('.thmb').click()
+    time.sleep(1)
 
     # 상품명 확인 
     product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
@@ -69,8 +67,8 @@ def crawl(pro,cur):
         review_total = driver.find_element_by_css_selector('.num').text
         review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
         print("평점:", review_grade)
-
-    print("리뷰 개수:",review_total)
+        print("리뷰 개수:",review_total)
+    
     #페이지별 리뷰 개수
     review_per_page = 10 
     review_total = review_total.replace(",","")
