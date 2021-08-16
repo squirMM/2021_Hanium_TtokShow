@@ -75,23 +75,26 @@ total_page = math.ceil(total_page)
 print("리뷰 페이지 수:", total_page)    
 
 print("수집 시작") # 첫 페이지 수집하고 시작 
-for page in range(1, total_page): 
+get_page_data()
+for page in range(0, total_page): 
     try:
-        get_page_data()
-        if page == 1:
+        if page == 0:
             print("1 page 수집 끝")
             driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click()
             time.sleep(1)
-        elif page > 1 and page < 11:
-            print(str(page) + " page 수집 끝") 
-            button_index = page + 1  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
+            get_page_data()
+        elif page > 0 and page < 10:
+            print(str(page+1) + " page 수집 끝") 
+            button_index = page + 2  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
             driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
             time.sleep(1)
+            get_page_data()
         else:
             print(str(page+1) + " page 수집 끝") 
             button_index = page % 10 + 3 # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
             driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
-            time.sleep(1) 
+            time.sleep(1)
+            get_page_data() 
     except: 
         print("수집 에러") 
 print("수집 종료") 
