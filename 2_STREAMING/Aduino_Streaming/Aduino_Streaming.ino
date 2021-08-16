@@ -69,11 +69,11 @@ void setup() {
         //                      for larger pre-allocated frame buffer.
         if(psramFound()){
           config.frame_size = FRAMESIZE_XGA;
-          config.jpeg_quality = 10;
+          config.jpeg_quality = 24;
           config.fb_count = 2;
         } else {
           config.frame_size = FRAMESIZE_XGA;
-          config.jpeg_quality = 12;
+          config.jpeg_quality = 24;
           config.fb_count = 1;
         }
       
@@ -98,7 +98,7 @@ void setup() {
           s->set_gainceiling(s, (gainceiling_t)6);
         }
         // drop down frame size for higher initial frame rate
-        s->set_framesize(s, FRAMESIZE_XGA);
+        s->set_framesize(s, FRAMESIZE_SVGA);
       
       #if defined(CAMERA_MODEL_M5STACK_WIDE) || defined(CAMERA_MODEL_M5STACK_ESP32CAM)
         s->set_vflip(s, 1);

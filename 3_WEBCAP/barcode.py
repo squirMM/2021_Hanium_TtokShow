@@ -1,7 +1,7 @@
 import pyzbar.pyzbar as pyzbar
 import cv2
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture('http://118.38.174.163:81/stream')
 
 i = 0
 while(cap.isOpened()):
@@ -24,6 +24,7 @@ while(cap.isOpened()):
 
     text = '%s (%s)' % (barcode_data, barcode_type)
     cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
+    print('code : '+text)
 
   cv2.imshow('img', img)
 
