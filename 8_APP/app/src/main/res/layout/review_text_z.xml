@@ -18,6 +18,8 @@
 
     <TextView
         style="@style/textView_style"
+        android:id="@+id/contents"
+        android:transitionName="contents"
         android:layout_width="292dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 
 import com.example.test_ttokshow.Recy.Adapter;
 import com.example.test_ttokshow.Recy.ItemData;
+import com.example.test_ttokshow.Recy.RecyclerDeco;
 import com.example.test_ttokshow.Recy.ViewType;
 
 import java.util.ArrayList;
@@ -40,7 +41,10 @@ public class Total_Review extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //recyclerView.smoothScrollBy(0, 800);
+        RecyclerDeco decoration_Height = new RecyclerDeco(0,0,14,14);
+        recyclerView.addItemDecoration(decoration_Height);
+
+        recyclerView.smoothScrollBy(0, 672);
 
         Adapter adapter = new Adapter(ViewType.large,list);
         recyclerView.setAdapter(adapter);

@@ -13,6 +13,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,8 +24,10 @@ import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.test_ttokshow.Recy.Adapter;
+import com.example.test_ttokshow.Recy.RecyclerDeco;
 import com.example.test_ttokshow.Recy.ItemData;
 import com.example.test_ttokshow.Recy.ViewType;
 
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView iv_image;
     private ItemData item;
     public ArrayList<ItemData> list_s;
+    public ArrayList<ItemData> list;
+    private static final String TAG = "MainActivity";
     public String[] output = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +72,29 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
+        RecyclerDeco decoration_Width = new RecyclerDeco(20,50,0,0);
+        recyclerView.addItemDecoration(decoration_Width);
+
         list_s = new ArrayList<>();
+        list = new ArrayList<>();
         for (int i=0; i<(output.length/5); i++) {
             item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
-            list_s.add(item);
+            if(i<10)list_s.add(item);
+            list.add(item);
         }
         Adapter adapter = new Adapter(ViewType.small,list_s);
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int pos)
+            {
+//                ItemData item=list_s.get(pos);
+//                Intent intent =new Intent(getApplicationContext(), Zoom_Review.class);
+//                intent.putExtra("item",item);
+//                startActivity(intent);
+                Toast.makeText(MainActivity.this, String.valueOf(pos), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "메인에서 건드린 포지션 값 : " + pos);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         //Text
@@ -122,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.all_review:
                     Intent intent = new Intent(getApplicationContext(), Total_Review.class);
-                    intent.putExtra("Item", list_s);
+                    intent.putExtra("Item", list);
                     startActivity(intent);
                     break;
                 case R.id.open:
