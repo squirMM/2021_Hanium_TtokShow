@@ -60,7 +60,7 @@ def crawl(pro,cur):
                 if hours in date:
                     date = str(datetime.date.today())
                     date = date.replace("-", "")
-                data_tu = (user, int(rating), review, int(date))
+                data_tu = (pro[0], user, date, rating, review, "롯데")
                 data_list.append(data_tu)
                 print(data_tu)
 
