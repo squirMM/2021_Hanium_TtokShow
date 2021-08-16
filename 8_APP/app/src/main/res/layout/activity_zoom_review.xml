@@ -37,9 +37,12 @@
         style="@style/bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-        <include layout="@layout/ho_scroll"/>
     </View>
 
-
+    <include layout="@layout/bottom_bar"
+        android:id="@+id/bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="44dp"
+        android:layout_width="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

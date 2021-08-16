@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
     >
-    <ImageButton
+    <View
         style="@style/box_5">
-    </ImageButton>
+    </View>
 
     <include layout="@layout/info_review"
         android:id="@+id/per_info"

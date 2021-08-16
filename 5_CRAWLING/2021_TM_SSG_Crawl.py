@@ -1,85 +1,105 @@
 import time
-import urllib.request 
+import urllib.request
+import urllib.parse
 import math
-import pandas as pd
-from bs4 import BeautifulSoup
-from pandas import DataFrame
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import os
-
+import pandas as pd
+import sys
 
 #크롬드라이버 연결
-chrome_driver=os.path.join('chromedriver')
-chrome_options = webdriver.ChromeOptions()
-driver = webdriver.Chrome(chrome_driver, options=chrome_options)
+options = webdriver.ChromeOptions()
+options.add_experimental_option("excludeSwitches", ["enable_logging"])
+driver = webdriver.Chrome(options=options)
 data_list = []
 
-plusUrl = urllib.parse.quote_plus(input('검색어를 입력하시오 : '))
-url = f'http://emart.ssg.com/search.ssg?target=all&query={plusUrl}&src_area=recom'
+product = "아이스 브레이커스 민트"
+plusUrl = urllib.parse.quote_plus(product)
+url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
 
-driver.find_element_by_css_selector('.thmb').click()
-time.sleep(2)
-
-review_total = driver.find_element_by_css_selector('.num').text 
-review_total = review_total.replace(",","")
-print("리뷰 개수:",review_total)
-
-#페이지별 리뷰 개수
-review_per_page = 10 
-total_page = int(review_total) / review_per_page 
-total_page = math.ceil(total_page) 
-print("리뷰 페이지 수:", total_page) 
+try:
+    a = driver.find_element_by_css_selector('.tip_txt')
+    print(a.text)
+    driver.quit()
+    sys.exit()
+except Exception:
+    driver.find_element_by_css_selector('.thmb').click()
+    time.sleep(1)
 
 # 상품명 확인 
 product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
 print("상품명:",product) 
-review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
-print("평점:", review_grade)
-
 
 def get_page_data(): 
-    users = driver.find_elements_by_css_selector('.user.in') # 사용자명 수집 
+    numbers = driver.find_elements_by_css_selector('.number') #번호 수집
+    users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
     ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per') # 평점 수집 
-    review = driver.find_elements_by_css_selector('.desc_txt') #리뷰 수집
-    # 사용자명수와 평점수가 같을 경우만 수집 
-    if len(users) == len(ratings): 
-        for index in range(len(users)): 
-            data = {} 
-            data['username'] = users[index].text 
-            data['rating'] = int(ratings[index].get_attribute('style')) / 20
-            data['review'] = review[index].text
-            print(data) 
-            data_list.append(data) 
+    reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2') #리뷰 수집
+    
+    # 리뷰개수와 평점수가 같을 경우만 수집 
+    if len(reviews) == len(ratings):
+        for i in range(len(ratings)):
+            number = numbers[i+1].text
+            user = users[i+1].text
+            rating = ratings[i].text
+            rating = rating.replace("구매 고객 평점 별 5개 중 ","")
+            rating = rating.replace("개","")
+            rating = int(rating)
+            review = reviews[i].text
+            review = review.replace("사진\n" , "")
+            num = (2*i+1) % 20
+            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div').text
+            date = date.replace("-","")
+            data = (int(number), user, int(rating), review, int(date))
+            data_list.append(data)
+            print(data)
+try: # 리뷰 없을때
+    nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
+    print(nodata.text)
+    driver.quit()
+    sys.exit()
+except Exception: # 리뷰 있을때
+    # 최신순 클릭
+    driver.find_element_by_css_selector('.cdtl_opt').click()
+    driver.find_element_by_xpath('//*[@id="cmt_select_sort"]/div/div/ul/li[2]').click()
+    review_total = driver.find_element_by_css_selector('.num').text 
+    review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
+    print("평점:", review_grade) 
+
+print("리뷰 개수:",review_total)
+#페이지별 리뷰 개수
+review_per_page = 10 
+review_total = review_total.replace(",","")
+total_page = int(review_total) / review_per_page 
+total_page = math.ceil(total_page) 
+print("리뷰 페이지 수:", total_page)    
 
 print("수집 시작") # 첫 페이지 수집하고 시작 
-
-get_page_data() # 버튼을 눌러서 페이지를 이동해 가면서 계속 수집. # 예외처리를 해줘야 함. 하지 않으면 중지됨. 
-
-for page in range(1, total_page): 
-    try: 
-        print(str(page) + " page 수집 끝") 
-        if(button_index % 10 == 1):
-            continue
-        button_index = page # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
-        print("한태희 개새끼1")
-        driver.find_element_by_xpath(f"//*[@id='comment_navi_area']/a[{button_index}]").click() 
-        print("한태희 개새끼2")
-        time.sleep(5) #1 0page 수집이 끝나서 11로 넘어가기 위해서는 > 버튼을 눌러야 함. 
-        if(page % 10 == 0): 
-            driver.find_element_by_css_selector('.btn_next').click() 
-            time.sleep(5) # 해당 페이지 데이터 수집
-         
-        get_page_data()
+get_page_data()
+for page in range(0, total_page): 
+    try:
+        if page == 0:
+            print("1 page 수집 끝")
+            driver.find_element_by_xpath('//*[@id="comment_navi_area"]/a[1]').click()
+            time.sleep(1)
+            get_page_data()
+        elif page > 0 and page < 10:
+            print(str(page+1) + " page 수집 끝") 
+            button_index = page + 2  # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
+            driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
+            time.sleep(1)
+            get_page_data()
+        else:
+            print(str(page+1) + " page 수집 끝") 
+            button_index = page % 10 + 3 # 데이터 수집이 끝난 뒤 다음 페이지 버튼을 클릭 
+            driver.find_element_by_xpath(f'//*[@id="comment_navi_area"]/a[{button_index}]').click() 
+            time.sleep(1)
+            get_page_data() 
     except: 
         print("수집 에러") 
-print(str(page) + " page 수집 끝") 
 print("수집 종료") 
 
-df = pd.DataFrame(data_list) 
-print(df) # 엑셀로 저장 
-df.to_excel("ssg-crawling-example.xlsx")
+print(data_list)
 
-//*[@id="comment_navi_area"]/a[1]
-//*[@id="comment_navi_area"]/a[2]
+df = pd.DataFrame(data_list) 
+

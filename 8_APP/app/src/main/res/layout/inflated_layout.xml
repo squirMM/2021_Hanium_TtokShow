@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--정보 공개-->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="312dp"
     android:layout_height="210dp"
     android:background="@color/white">
@@ -11,4 +12,5 @@
         android:text="test time"
         android:textSize="30sp"
         style="@style/textView_style"/>
-</FrameLayout>
+
+</LinearLayout>
