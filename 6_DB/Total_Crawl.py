@@ -1,3 +1,5 @@
+import time
+
 import TM_SSG_Crawl_DB_Save as ssg
 import TM_LotteOn_Crawl_DB_Save as lotte
 import pymysql as db
