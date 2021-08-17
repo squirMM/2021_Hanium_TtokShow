@@ -54,7 +54,8 @@ def crawl(pro,cur):
                 date = date.text.replace("-", "")
                 data_tu = (pro[0], user, date, rating, review, "ssg")
                 data_list.append(data_tu)
-                print(data_tu)
+                #print(data_tu)
+                print("\r {0}".format(data_tu), end="")
     try: #리뷰 없을 때
         nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
         print(nodata.text)
