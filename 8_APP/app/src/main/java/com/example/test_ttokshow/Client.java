@@ -33,15 +33,7 @@ import java.nio.ByteOrder;
                         for (i=0; i<output.length;){
                             System.out.println(output[i++]);
 
-                        }/*
-                        System.out.println("-----");
-                        String[] test = getOutput();
-                        System.out.println(test[0]); // 이름
-                        System.out.println(test[1]); // 날짜
-                        System.out.println(test[2]); // 내용
-                        System.out.println(test[3]); // 별점
-                        System.out.println(test[4]); // 위치
-                        */
+                        }
                     }
 
                 }
