@@ -69,7 +69,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         if (Integer.parseInt(item.getSgrade()) > 4){
             holder.imageView.setImageResource(R.drawable.aver5);
         }
-
+        else if (Integer.parseInt(item.getSgrade()) > 3){
+            holder.imageView.setImageResource(R.drawable.aver4);
+        }
+        else if (Integer.parseInt(item.getSgrade()) > 2) {
+            holder.imageView.setImageResource(R.drawable.aver3);
+        }
+        else if (Integer.parseInt(item.getSgrade()) > 1){
+            holder.imageView.setImageResource(R.drawable.aver2);
+        }
+        else if (Integer.parseInt(item.getSgrade()) > 0){
+            holder.imageView.setImageResource(R.drawable.aver1);
+        }
 
 
 

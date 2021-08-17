@@ -10,16 +10,21 @@ db = pymysql.connect(
     charset='utf8'
 )
 curs = db.cursor()
-sql = """select * from review"""
-curs.execute(sql)
-select =list(curs.fetchall())
+bar = '0'
+while bar == '0':
+    test = cv.getBarcode()
+    bar = test[0:13]
+print(bar)
+sql = """select * from review where barcord_id = %s order by date desc"""
+curs.execute(sql, [bar])
+select = list(curs.fetchmany(1000))
 db.commit()
-test = cv.getBarcode()
 sendD=[]
 for i in range(len(select)):
     for j in range(1,len(select[i])):
         sendD.append(str(select[i][j]))
-sendD = "#".join(sendD)
+sendD = '#'.join(sendD)
+
 
 def binder(client_socket, addr):
     print('Connected by', addr);
