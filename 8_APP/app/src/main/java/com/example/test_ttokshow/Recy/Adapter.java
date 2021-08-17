@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private ViewType sel_type;
     private Intent intent;
     public Adapter(ViewType sel_type,ArrayList<ItemData> itemData) {
-        this.sel_type=sel_type;
+        this.sel_type = sel_type;
         this.itemData = itemData;
     }
     public interface OnItemClickListener {
@@ -65,6 +66,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         holder.date.setText(item.getSdate());
         holder.contents.setText(item.getScontents());
 
+        if (Integer.parseInt(item.getSgrade()) > 4){
+            holder.imageView.setImageResource(R.drawable.aver5);
+        }
+
+
+
 
     }
 
@@ -79,6 +86,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         TextView id;
         TextView cite;
         TextView rank;
+        ImageView imageView;
         public ViewHolder(@NonNull final View itemView) {
             super(itemView);
             contents = itemView.findViewById(R.id.contents);
@@ -86,6 +94,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             id = itemView.findViewById(R.id.reviewId);
             cite = itemView.findViewById(R.id.cite);
             rank = itemView.findViewById(R.id.grade_num);
+
+            imageView = itemView.findViewById(R.id.per_grade);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

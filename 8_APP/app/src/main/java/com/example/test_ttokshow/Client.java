@@ -30,10 +30,7 @@ import java.nio.ByteOrder;
 
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
-                        for (i=0; i<output.length;){
-                            System.out.println(output[i++]);
 
-                        }
                     }
 
                 }

@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -58,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         list_s = new ArrayList<>();
         list = new ArrayList<>();
+        ImageView imageView1;
+        imageView1 = (ImageView) findViewById(R.id.imageView11);
+        imageView1.setImageResource(R.drawable.aver3);
+
 
         new Thread(){
             public void run(){
