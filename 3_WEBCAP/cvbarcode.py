@@ -28,7 +28,7 @@ def getBarcode():
             print('code : ' + text)
             return text
 
-        cv2.imshow('img', img)
+        #cv2.imshow('img', img)
 
         key = cv2.waitKey(1)
         if key == ord('q'):
@@ -39,3 +39,4 @@ def getBarcode():
 
     cap.release()
     cv2.destroyAllWindows()
+getBarcode()

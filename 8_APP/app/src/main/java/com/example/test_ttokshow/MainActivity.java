@@ -59,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         list_s = new ArrayList<>();
         list = new ArrayList<>();
-        ImageView imageView1;
-        imageView1 = (ImageView) findViewById(R.id.imageView11);
-        imageView1.setImageResource(R.drawable.aver3);
-
 
         new Thread(){
             public void run(){

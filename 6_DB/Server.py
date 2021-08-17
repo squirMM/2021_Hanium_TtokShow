@@ -1,7 +1,6 @@
 import socket, threading;
 import pymysql
-
-# DB 연걸
+import cvbarcode as cv
 local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
 db = pymysql.connect(
     host=local,
@@ -15,6 +14,7 @@ sql = """select * from review"""
 curs.execute(sql)
 select =list(curs.fetchall())
 db.commit()
+test = cv.getBarcode()
 sendD=[]
 for i in range(len(select)):
     for j in range(1,len(select[i])):
