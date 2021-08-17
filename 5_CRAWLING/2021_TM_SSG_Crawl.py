@@ -12,7 +12,7 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스 브레이커스 민트"
+product = "CJ 더 건강한 후랑크"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
@@ -39,10 +39,10 @@ def get_page_data():
     users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
     ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per') # 평점 수집 
     reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2') #리뷰 수집
-    
+    print(len(numbers), len(users), len(ratings), len(reviews))
     # 리뷰개수와 평점수가 같을 경우만 수집 
-    if len(reviews) == len(ratings):
-        for i in range(len(ratings)):
+    if len(reviews) == 10:
+        for i in range(len(reviews)):
             number = numbers[i+1].text
             user = users[i+1].text
             rating = ratings[i].text
@@ -51,6 +51,7 @@ def get_page_data():
             rating = int(rating)
             review = reviews[i].text
             review = review.replace("사진\n" , "")
+            review = review.replace("비디오\n" , "")
             num = (2*i+1) % 20
             date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div').text
             date = date.replace("-","")

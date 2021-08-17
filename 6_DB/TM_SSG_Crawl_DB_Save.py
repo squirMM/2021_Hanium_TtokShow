@@ -40,8 +40,8 @@ def crawl(pro,cur):
         reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2')  # 리뷰 수집
 
         # 사용자명수와 평점수가 같을 경우만 수집
-        if len(reviews) == len(ratings):
-            for i in range(len(ratings)):
+        if len(reviews) == 10:
+            for i in range(len(reviews)):
                 user = users[i + 1].text
                 rating = ratings[i].text
                 rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
@@ -49,6 +49,7 @@ def crawl(pro,cur):
                 rating = int(rating)
                 review = reviews[i].text
                 review = review.replace("사진\n", "")
+                review = review.replace("비디오\n", "")
                 num = (2 * i + 1) % 20
                 date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
                 date = date.text.replace("-", "")
