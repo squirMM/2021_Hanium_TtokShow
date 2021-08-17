@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -97,6 +98,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setAdapter(adapter);
+
+        RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
+        //ratingBar.setNumStars(3);
 
         //Text
         product_name=(TextView)findViewById(R.id.name);
