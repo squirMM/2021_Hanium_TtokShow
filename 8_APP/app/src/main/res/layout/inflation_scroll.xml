@@ -29,7 +29,7 @@
         android:singleLine="true"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
-        android:text="Police Don't know Police Don't know"
+        android:text="ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ"
         style="@style/textView_style"/>
     <!--inflation layout-->
     <LinearLayout
