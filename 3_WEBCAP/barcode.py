@@ -1,39 +1,43 @@
 import pyzbar.pyzbar as pyzbar
 import cv2
 
-cap = cv2.VideoCapture('http://118.38.174.163:81/stream')
+def getBarcode():
+    cap = cv2.VideoCapture('http://118.38.174.163:81/stream')
 
-i = 0
-while(cap.isOpened()):
-  ret, img = cap.read()
+    i = 0
+    while (cap.isOpened()):
+        ret, img = cap.read()
 
-  if not ret:
-    continue
+        if not ret:
+            continue
 
-  gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-     
-  decoded = pyzbar.decode(gray)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-  for d in decoded: 
-    x, y, w, h = d.rect
+        decoded = pyzbar.decode(gray)
 
-    barcode_data = d.data.decode("utf-8")
-    barcode_type = d.type
+        for d in decoded:
+            x, y, w, h = d.rect
 
-    cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
+            barcode_data = d.data.decode("utf-8")
+            barcode_type = d.type
 
-    text = '%s (%s)' % (barcode_data, barcode_type)
-    cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
-    print('code : '+text)
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 0, 255), 2)
 
-  cv2.imshow('img', img)
+            text = '%s (%s)' % (barcode_data, barcode_type)
+            cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
+            print('code : ' + text)
+            return text
 
-  key = cv2.waitKey(1)
-  if key == ord('q'):
-    break
-  elif key == ord('s'):
-    i += 1
-    cv2.imwrite('zbar.jpg' % i, img)
+        cv2.imshow('img', img)
 
-cap.release()
-cv2.destroyAllWindows()
+        key = cv2.waitKey(1)
+        if key == ord('q'):
+            break
+        elif key == ord('s'):
+            i += 1
+            cv2.imwrite('zbar.jpg' % i, img)
+
+    cap.release()
+    cv2.destroyAllWindows()
+
+getBarcode()
