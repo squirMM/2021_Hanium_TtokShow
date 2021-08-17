@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<>();
 
         new Thread(){
+            @Override
             public void run(){
                 Client.main();
                 String[] out = Client.getOutput();
