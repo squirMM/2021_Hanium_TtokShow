@@ -79,7 +79,11 @@
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">#EAEAEA</item>
     </style>
+    <!--
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowActivityTransitions">true</item>
+    </style>
+    -->
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
     </style>
 </resources>

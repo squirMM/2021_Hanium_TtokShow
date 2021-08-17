@@ -36,7 +36,7 @@ public class Total_Review extends AppCompatActivity {
         retBox.setOnClickListener(onClickListener);
 
         Intent intent=getIntent();
-        ArrayList<ItemData> list = (ArrayList<ItemData>) intent.getSerializableExtra("Item");
+        ArrayList<ItemData> list = (ArrayList<ItemData>)intent.getSerializableExtra("Item");
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
