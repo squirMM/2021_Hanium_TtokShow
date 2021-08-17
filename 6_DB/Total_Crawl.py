@@ -26,8 +26,8 @@ cnt =num
 while cnt < len(result):
     pro = result[cnt]
     print(pro)
-    #ssg.crawl(pro, cur)
-    lotte.crawl(pro,cur)
+    ssg.crawl(pro, cur)
+    #lotte.crawl(pro,cur)
     con.commit()
     cnt+=1
 

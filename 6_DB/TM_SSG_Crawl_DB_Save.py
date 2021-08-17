@@ -31,7 +31,7 @@ def crawl(pro,cur):
     product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
     print("상품명:",product)
     price = driver.find_element_by_css_selector('.ssg_price').text 
-    price = price.replce(",","")
+    price = price.replace(",","")
     print("가격:",price)
 
     def get_page_data():
