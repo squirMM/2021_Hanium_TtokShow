@@ -49,25 +49,30 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<ItemData> list;
     private static final String TAG = "MainActivity";
     public String[] output = new String[10];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        list_s = new ArrayList<>();
+        list = new ArrayList<>();
 
         new Thread(){
             public void run(){
                 Client.main();
                 String[] out = Client.getOutput();
                 output = out;
+                for (int i=0; i<(output.length/5); i++) {
+                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
+                    if(i<10)list_s.add(item);
+                    list.add(item);
+                }
             }
         }.start();
         output[0] = "Already";
 
-        while (output[0] == "Already") {
-            continue;
-        }
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
@@ -75,14 +80,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerDeco decoration_Width = new RecyclerDeco(20,50,0,0);
         recyclerView.addItemDecoration(decoration_Width);
 
-        list_s = new ArrayList<>();
-        list = new ArrayList<>();
-        for (int i=0; i<(output.length/5); i++) {
-            item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
-            if(i<10)list_s.add(item);
-            list.add(item);
-        }
         Adapter adapter = new Adapter(ViewType.small,list_s);
+
         adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
             @Override
             public void onItemClick(int pos)
@@ -130,12 +129,17 @@ public class MainActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dialog.setContentView(R.layout.error_popup); //xml 연결
 
+        while (output[0] == "Already") {
+            continue;
+        }
+
         //임시 다이얼로그
 //        findViewById(R.id.test_pop).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                  showDialog(); // 아래 showDialog01() 함수 호출
 //            }});
+
     }
 
     class BtnOnClickListener implements Button.OnClickListener{
