@@ -18,17 +18,6 @@
         style="@style/textView_style"/>
     <!--별 모양-->
     <!--
-    <ImageView
-        android:id="@+id/star"
-        android:layout_width="120dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/aver3">
-    </ImageView>
-    -->
     <com.hedgehog.ratingbar.RatingBar
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
@@ -36,15 +25,25 @@
         android:layout_gravity="center"
         app:starImageHeight="28dp"
         app:starImageWidth="28dp"
-        android:isIndicator="true"
-        android:numStars="5"
-        android:max="5"
-        android:stepSize="0.25"
         hedgehog:clickable="false"
-        hedgehog:halfstart="true"
         hedgehog:starCount="5"
+        hedgehog:halfstart="true"
         hedgehog:starEmpty="@drawable/ic_star_empty"
-        hedgehog:starFill="@drawable/ic_star_fill" />
+        hedgehog:starFill="@drawable/ic_star_fill"
+        hedgehog:starHalf="@drawable/ic_star_half" />
+-->
+
+    <RatingBar
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:progressTint="@color/red"
+        android:progressBackgroundTint="@color/black"
+        android:max="5"
+        android:stepSize="0.1"
+       />
     <!--사람 모양-->
     <ImageView
         android:id="@+id/person"

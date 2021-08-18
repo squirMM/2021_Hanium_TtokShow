@@ -99,8 +99,16 @@ public class MainActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
 
-        RatingBar ratingBar = (RatingBar)findViewById(R.id.ratingBar);
-        //ratingBar.setNumStars(3);
+        /**custom star*/
+//        RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
+//        mRatingBar.setStarCount(5);
+//        mRatingBar.setStar(2.5f);
+        /**Normal star*/
+        RatingBar ratingBar =(RatingBar)findViewById(R.id.ratingBar) ;
+        ratingBar.setMax(5);
+        float rat= (float) 3.5;
+        ratingBar.setRating(rat);
+        ratingBar.setStepSize(0.1f);
 
         //Text
         product_name=(TextView)findViewById(R.id.name);
