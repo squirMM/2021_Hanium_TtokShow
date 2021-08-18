@@ -1,37 +1,42 @@
 import socket, threading;
 import pymysql
 import cvbarcode as cv
-local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
-db = pymysql.connect(
-    host=local,
-    user='user',
-    db='ttockshow',
-    password='qwert123',
-    charset='utf8'
-)
-curs = db.cursor()
-bar = '0'
-while bar == '0':
-    test = cv.getBarcode()
-    bar = test[0:13]
-print(bar)
-sql = """select * from review where barcord_id = %s order by date desc"""
-curs.execute(sql, [bar])
-select = list(curs.fetchmany(1000))
-db.commit()
-sendD=[]
-for i in range(len(select)):
-    for j in range(1,len(select[i])):
-        sendD.append(str(select[i][j]))
-sendD = '#'.join(sendD)
 
+def barcode(bar):
+    local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
+    db = pymysql.connect(
+        host=local,
+        user='user',
+        db='ttockshow',
+        password='qwert123',
+        charset='utf8'
+    )
+    curs = db.cursor()
+    curs2 = db.cursor()
+    sendD = []
+    while bar == 'Start':
+        bar = cv.getBarcode()
+    bar = bar[0:13]
+    sql = """select user_id, date, contents, star_rank, cite from review where barcord_id = %s order by date desc"""
+    sql2 = """select barcord_id, name, image_link, star_avg, count from product where barcord_id = %s """
+    curs.execute(sql, [bar])
+    curs2.execute(sql2,[bar])
+    select = list(curs.fetchall())
+    selectp = list(curs2.fetchmany(10))
+    db.commit()
+    for i in range(len(selectp[0])):
+        sendD.append(str(selectp[0][i]))
+    for i in range(len(select)):
+        for j in range(len(select[i])):
+            sendD.append(str(select[i][j]))
+    sendD = '#'.join(sendD)
+    return sendD
 
 def binder(client_socket, addr):
     print('Connected by', addr);
     try:
         while True:
-
-            msg = sendD
+            msg = barcode('8801007160337')
             data = msg.encode();
 
             data1 = "아이스브레이커스"
