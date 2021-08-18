@@ -10,11 +10,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,14 +22,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.view.LayoutInflater;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test_ttokshow.Recy.Adapter;
+import com.example.test_ttokshow.Recy.OnReviewItemClickListener;
 import com.example.test_ttokshow.Recy.RecyclerDeco;
 import com.example.test_ttokshow.Recy.ItemData;
 import com.example.test_ttokshow.Recy.ViewType;
+import com.hedgehog.ratingbar.RatingBar;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         }.start();
         output[0] = "Already";
 
-
+        /**Recycler view*/
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
@@ -84,47 +83,37 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(decoration_Width);
 
         Adapter adapter = new Adapter(ViewType.small,list_s);
-
-        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int pos)
-            {
-//                ItemData item=list_s.get(pos);
-//                Intent intent =new Intent(getApplicationContext(), Zoom_Review.class);
-//                intent.putExtra("item",item);
-//                startActivity(intent);
-                Toast.makeText(MainActivity.this, String.valueOf(pos), Toast.LENGTH_SHORT).show();
-                Log.e(TAG, "메인에서 건드린 포지션 값 : " + pos);
-            }
-        });
         recyclerView.setAdapter(adapter);
 
-        /**custom star*/
-//        RatingBar mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-//        mRatingBar.setStarCount(5);
-//        mRatingBar.setStar(2.5f);
-        /**Normal star*/
-        RatingBar ratingBar =(RatingBar)findViewById(R.id.ratingBar) ;
-        ratingBar.setMax(5);
-        float rat= (float) 3.5;
-        ratingBar.setRating(rat);
-        ratingBar.setStepSize(0.1f);
+        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
+            @Override
+            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
+                ItemData item = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
+            }
+        });
 
-        //Text
+
+        /**custom star*/
+        RatingBar mRatingBar =findViewById(R.id.ratingBar);
+        mRatingBar.setStarCount(5);
+        mRatingBar.setStar(2.8f);
+
+        /**Text*/
         product_name=(TextView)findViewById(R.id.name);
         product_name.setSingleLine(true);    // 한줄로 표시하기
         product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
         product_name.setSelected(true);      // 선택하기
 
-        //image
+        /**image*/
         iv_image = (ImageView)findViewById(R.id.keywordbox);
         String image_url_con = "https://post-phinf.pstatic.net/MjAxOTA3MDVfNDcg/MDAxNTYyMzA1MTQ0Njc0.04P0QuAk7pRDhmuLYa2Op36kmArY2gO_lwluLr7CE7og.y1dyZeUEudhu9-uTUKSUymLjC3wt8XsuRD7Zx_UoOZAg.JPEG/naver_%ED%95%B4%EB%B0%94%EB%9D%BC%EA%B8%B0_1_pixabay.jpg?type=w1200";
         //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
         String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
         loadImageTask imageTask = new loadImageTask(image_url);
         imageTask.execute();
-        //new DownloadFilesTask().execute("https://asddsa.soll0803.repl.co/kospi.PNG");
 
+        /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
         //inflation layout
         open_bu = (ImageButton) findViewById(R.id.open);
@@ -138,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         ImageButton home = (ImageButton) findViewById(R.id.home_btn);
         home.setOnClickListener(onClickListener);
 
-        //Error Dialog
+        /**Error Dialog*/
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dialog.setContentView(R.layout.error_popup); //xml 연결
@@ -185,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public class loadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
-        private String url;
+        private final String url;
         public loadImageTask(String url) { this.url = url; }
         @Override
         protected Bitmap doInBackground(Bitmap... params) {

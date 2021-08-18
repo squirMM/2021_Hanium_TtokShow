@@ -10,18 +10,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.test_ttokshow.Recy.Adapter;
 import com.example.test_ttokshow.Recy.ItemData;
+import com.example.test_ttokshow.Recy.OnReviewItemClickListener;
 import com.example.test_ttokshow.Recy.RecyclerDeco;
 import com.example.test_ttokshow.Recy.ViewType;
+import com.hedgehog.ratingbar.RatingBar;
 
 import java.util.ArrayList;
 
 public class Total_Review extends AppCompatActivity {
-    ImageButton retBox_1;
-    public static String[] out;
-    public String[] output = new String[10];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +29,12 @@ public class Total_Review extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_total_review);
 
+        /**custom star*/
+        RatingBar mRatingBar =findViewById(R.id.ratingBar);
+        mRatingBar.setStarCount(5);
+        mRatingBar.setStar(2.8f);
+
+        /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
 
         //ret Button
@@ -49,6 +55,12 @@ public class Total_Review extends AppCompatActivity {
         Adapter adapter = new Adapter(ViewType.large,list);
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
+            @Override
+            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
+                ItemData item = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),"아이템 선택 " + item.getSId(), Toast.LENGTH_LONG).show(); }
+        });
 
     }
     class BtnOnClickListener implements Button.OnClickListener {

@@ -7,38 +7,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.test_ttokshow.R;
-import com.example.test_ttokshow.Zoom_Review;
 
 import java.util.ArrayList;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> implements OnReviewItemClickListener {
 
     private ArrayList<ItemData> itemData;
     private ViewType sel_type;
     private Intent intent;
+    // 리스너 객체 참조를 저장하는 변수
+    private OnReviewItemClickListener listener;
+
     public Adapter(ViewType sel_type,ArrayList<ItemData> itemData) {
         this.sel_type = sel_type;
         this.itemData = itemData;
     }
-    public interface OnItemClickListener {
-        void onItemClick(int pos);
-    }
-
-    // 리스너 객체 참조를 저장하는 변수
-    private OnItemClickListener mListener = null ;
-
     // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.mListener = listener ;
+    public void setOnItemClickListener(OnReviewItemClickListener listener) {
+        this.listener = listener ;
     }
-
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if(listener != null){ listener.onItemClick(holder,view,position); }
+    }
 
     @NonNull
     @Override
@@ -48,11 +45,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(sel_type==ViewType.small) {
             view = inflater.inflate(R.layout.recycle_s, parent, false);
-            return new ViewHolder(view);
+            return new ViewHolder(view,this);
         }
         else if(sel_type==ViewType.large){
             view = inflater.inflate(R.layout.recycle, parent, false);
-            return new ViewHolder(view);
+            return new ViewHolder(view,this);
         }
         return null;
     }
@@ -91,6 +88,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return itemData.size();
     }
 
+    public ItemData getItem(int position){ return itemData.get(position); }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView contents;
         TextView date;
@@ -98,7 +97,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         TextView cite;
         TextView rank;
         ImageView imageView;
-        public ViewHolder(@NonNull final View itemView) {
+        public ViewHolder(@NonNull final View itemView, final OnReviewItemClickListener mListener) {
             super(itemView);
             contents = itemView.findViewById(R.id.contents);
             date = itemView.findViewById(R.id.review_date);
@@ -112,14 +111,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    if (pos != RecyclerView.NO_POSITION) {
-                        if (mListener != null) {
-                            mListener.onItemClick(pos);
-                        }
+                    if (mListener != null) {
+                        mListener.onItemClick(ViewHolder.this, v, pos);
                     }
                 }
             });
         }
 
     }
+
 }
