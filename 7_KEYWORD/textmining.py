@@ -43,16 +43,20 @@ def visualize(noun_list):
     wc.generate_from_frequencies(dict(noun_list))
     wc.to_file('keyword.png')
 
-if __name__=="__main__":
+def excuteMining(maxLen,barcode):
     review_list = [x[0] for x in fetchReview(str(8801007160337))]
     print("fetch done.")
-    #print(review_list)
+    # print(review_list)
     strReview = " ".join(review_list)
     print("string done.")
-    #print(strReview)
-    if len(strReview)>100000:
-        strReview = strReview[-100000:-1]
+    # print(strReview)
+    if len(strReview) > maxLen:
+        strReview = strReview[-maxLen:-1]
     print(strReview)
     visualize(get_noun(strReview))
-    #newVisualize(get_noun(strReview))
+    # newVisualize(get_noun(strReview))
     print("visualization done. :)")
+
+if __name__=="__main__":
+    #순차적으로 돌아가게 수정해야함
+    excuteMining(100000,8801007160337)  #리뷰내용최대길이(전체리뷰합친길이), 바코드번호
