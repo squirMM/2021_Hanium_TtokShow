@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:text="1"
         android:textSize="14sp"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="5dp"
         android:layout_gravity="center"
         style="@style/textView_style"/>
     <TextView
@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="쿠팡"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:layout_gravity="center"
-        android:layout_marginStart="2dp"
+        android:layout_marginStart="5dp"
         style="@style/textView_style"/>
     <TextView
         android:id="@+id/reviewId"
@@ -34,16 +34,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="miy***"
-        android:textSize="12sp"
-        android:layout_marginStart="2dp"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
         style="@style/textView_style"/>
     <TextView
         android:id="@+id/review_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="12sp"
-        android:layout_marginStart="2dp"
+        android:textSize="14sp"
+        android:layout_marginStart="5dp"
         android:text="2021.5.21"
         style="@style/textView_style"/>
 </LinearLayout>

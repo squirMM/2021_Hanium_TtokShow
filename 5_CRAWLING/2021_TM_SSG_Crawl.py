@@ -12,33 +12,37 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스 브레이커스 민트"
+product = "CJ 더 건강한 후랑크"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
 
-try:
-    a = driver.find_element_by_css_selector('.tip_txt')
-    print(a.text)
+a = driver.find_element_by_css_selector('.csrch_top.v2').text
+if "상품이 없습니다." in a:
+    print("해당 상품 없음")
     driver.quit()
     sys.exit()
-except Exception:
-    driver.find_element_by_css_selector('.thmb').click()
-    time.sleep(1)
+
+driver.find_element_by_css_selector('.thmb').click()
+time.sleep(1)
 
 # 상품명 확인 
 product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
-print("상품명:",product) 
+print("상품명:",product)
+price = driver.find_element_by_css_selector('.ssg_price').text 
+price = price.replace(",","")
+print("가격:",price) 
+
 
 def get_page_data(): 
     numbers = driver.find_elements_by_css_selector('.number') #번호 수집
     users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
     ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per') # 평점 수집 
     reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2') #리뷰 수집
-    
+    print(len(numbers), len(users), len(ratings), len(reviews))
     # 리뷰개수와 평점수가 같을 경우만 수집 
-    if len(reviews) == len(ratings):
-        for i in range(len(ratings)):
+    if len(reviews) == 10:
+        for i in range(len(reviews)):
             number = numbers[i+1].text
             user = users[i+1].text
             rating = ratings[i].text
@@ -47,6 +51,7 @@ def get_page_data():
             rating = int(rating)
             review = reviews[i].text
             review = review.replace("사진\n" , "")
+            review = review.replace("비디오\n" , "")
             num = (2*i+1) % 20
             date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div').text
             date = date.replace("-","")

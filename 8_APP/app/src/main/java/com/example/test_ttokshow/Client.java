@@ -11,7 +11,7 @@ import java.nio.ByteOrder;
 
 
             try (Socket client = new Socket()) {
-                InetSocketAddress ipep = new InetSocketAddress("3.144.33.17", 9999);
+                InetSocketAddress ipep = new InetSocketAddress("127.0.0.1", 9999);
                 //3.144.33.17
                 client.connect(ipep);
 
@@ -30,18 +30,8 @@ import java.nio.ByteOrder;
 
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
-                        for (i=0; i<output.length;){
-                            System.out.println(output[i++]);
+                        System.out.println(output[1]);
 
-                        }/*
-                        System.out.println("-----");
-                        String[] test = getOutput();
-                        System.out.println(test[0]); // 이름
-                        System.out.println(test[1]); // 날짜
-                        System.out.println(test[2]); // 내용
-                        System.out.println(test[3]); // 별점
-                        System.out.println(test[4]); // 위치
-                        */
                     }
 
                 }

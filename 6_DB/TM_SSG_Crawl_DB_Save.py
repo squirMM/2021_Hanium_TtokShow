@@ -18,22 +18,20 @@ def crawl(pro,cur):
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
     driver.get(url)
     
-    try:
-        a = driver.find_element_by_css_selector('.tip_txt')
-        print(a.text)
+    a = driver.find_element_by_css_selector('.csrch_top.v2').text
+    if "상품이 없습니다." in a:
+        print(a)
         return
         # driver.quit()
         # sys.exit()
-    except Exception as e:
-        print(e)
-        driver.find_element_by_css_selector('.thmb').click()
-        time.sleep(1)
+    driver.find_element_by_css_selector('.thmb').click()
+    time.sleep(1)
 
     # 상품명 확인 
     product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
     print("상품명:",product)
     price = driver.find_element_by_css_selector('.ssg_price').text 
-    price = price.replce(",","")
+    price = price.replace(",","")
     print("가격:",price)
 
     def get_page_data():
@@ -42,8 +40,8 @@ def crawl(pro,cur):
         reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2')  # 리뷰 수집
 
         # 사용자명수와 평점수가 같을 경우만 수집
-        if len(reviews) == len(ratings):
-            for i in range(len(ratings)):
+        if len(reviews) == 10:
+            for i in range(len(reviews)):
                 user = users[i + 1].text
                 rating = ratings[i].text
                 rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
@@ -51,12 +49,14 @@ def crawl(pro,cur):
                 rating = int(rating)
                 review = reviews[i].text
                 review = review.replace("사진\n", "")
+                review = review.replace("비디오\n", "")
                 num = (2 * i + 1) % 20
                 date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
                 date = date.text.replace("-", "")
                 data_tu = (pro[0], user, date, rating, review, "ssg")
                 data_list.append(data_tu)
-                print(data_tu)
+                #print(data_tu)
+                print("\r {0}".format(data_tu), end="")
     try: #리뷰 없을 때
         nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
         print(nodata.text)
@@ -69,8 +69,8 @@ def crawl(pro,cur):
         review_total = driver.find_element_by_css_selector('.num').text
         review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
         print("평점:", review_grade)
-
-    print("리뷰 개수:",review_total)
+        print("리뷰 개수:",review_total)
+    
     #페이지별 리뷰 개수
     review_per_page = 10 
     review_total = review_total.replace(",","")

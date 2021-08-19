@@ -29,7 +29,7 @@
         android:singleLine="true"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
-        android:text="Police Don't know Police Don't know"
+        android:text="ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ"
         style="@style/textView_style"/>
     <!--inflation layout-->
     <LinearLayout
@@ -96,6 +96,7 @@
         style="@style/text_button"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:splitMotionEvents="false"
         android:layout_width="match_parent"
         android:layout_height="84dp"
         app:layout_constraintTop_toBottomOf="@id/all_review"

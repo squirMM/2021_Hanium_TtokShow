@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:hedgehog="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="36dp"
     android:orientation="horizontal">
@@ -12,21 +13,24 @@
         android:layout_height="24dp"
         android:textSize="24sp"
         android:layout_marginStart="34dp"
-
         android:layout_gravity="center"
         tools:text= "3.0/5"
         style="@style/textView_style"/>
     <!--별 모양-->
-    <ImageView
-        android:id="@+id/star"
-        android:layout_width="120dp"
-        android:layout_height="24dp"
+    <com.hedgehog.ratingbar.RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="6dp"
-        android:layout_marginBottom="2dp"
-        android:src="@drawable/aver3">
-    </ImageView>
+        app:starImageHeight="28dp"
+        app:starImageWidth="28dp"
+        hedgehog:clickable="false"
+        hedgehog:starCount="5"
+        hedgehog:halfstart="true"
+        hedgehog:starEmpty="@drawable/ic_star_empty"
+        hedgehog:starFill="@drawable/ic_star_fill"
+        hedgehog:starHalf="@drawable/ic_star_half" />
+
     <!--사람 모양-->
     <ImageView
         android:id="@+id/person"
