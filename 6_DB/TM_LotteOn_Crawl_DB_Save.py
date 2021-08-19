@@ -95,7 +95,7 @@ def crawl(pro,cur):
             get_page_data()
     print(str(page) + " page 수집 끝") 
     print("수집 종료") 
-
+    driver.close()
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
 
