@@ -51,7 +51,7 @@ def excuteMining(maxLen,barcode):
     print("string done.")
     # print(strReview)
     if len(strReview) > maxLen:
-        strReview = strReview[-maxLen:-1]
+        strReview = strReview[0:maxLen]
     print(strReview)
     visualize(get_noun(strReview))
     # newVisualize(get_noun(strReview))
