@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "900783390085",
+    "project_id": "ttks-161718",
+    "storage_bucket": "ttks-161718.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:900783390085:android:4b49607d2a0973712a18ec",
+        "android_client_info": {
+          "package_name": "com.example.test_ttokshow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "900783390085-la00ll3dfu0jomg9366q7fhlbahovv09.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.test_ttokshow",
+            "certificate_hash": "616eb80fab6defaf02188cb0a699d6516bc6159e"
+          }
+        },
+        {
+          "client_id": "900783390085-98frnv809ojae1r9d7754jucj50v0era.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDasWmad7_afqJQdqZzgrVA3o0d0IInE04"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "900783390085-98frnv809ojae1r9d7754jucj50v0era.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

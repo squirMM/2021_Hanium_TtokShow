@@ -30,6 +30,13 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".Zoom_Review" />
         <activity android:name=".Total_Review" />
+        <service
+            android:name=".PushAlarm.MyFirebaseMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
-
 </manifest>

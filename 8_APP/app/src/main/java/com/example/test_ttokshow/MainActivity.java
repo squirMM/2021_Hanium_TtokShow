@@ -1,11 +1,8 @@
 package com.example.test_ttokshow;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -13,6 +10,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,16 +19,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.content.Intent;
-import android.view.LayoutInflater;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.test_ttokshow.Recy.Adapter;
-import com.example.test_ttokshow.Recy.OnReviewItemClickListener;
-import com.example.test_ttokshow.Recy.RecyclerDeco;
-import com.example.test_ttokshow.Recy.ItemData;
-import com.example.test_ttokshow.Recy.ViewType;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.test_ttokshow.Recy.ItemData;;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
 import com.hedgehog.ratingbar.RatingBar;
 
 import java.io.BufferedInputStream;
@@ -57,41 +52,52 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        /**Push Alarm*/
+        Intent intent = getIntent();
+        if(intent != null) {//푸시알림을 선택해서 실행한것이 아닌경우 예외처리
+            String notificationData = intent.getStringExtra("test");
+            if(notificationData != null)
+                Log.d("FCM_TEST", notificationData);
+        }
+
+        //System.out.println("token : "+ FirebaseInstanceId.getInstance().getToken());
+
         list_s = new ArrayList<>();
         list = new ArrayList<>();
 
-        new Thread(){
-            @Override
-            public void run(){
-                Client.main();
-                String[] out = Client.getOutput();
-                output = out;
-                for (int i=1; i<(output.length/5); i++) {
-                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
-                    if(i<10)list_s.add(item);
-                    list.add(item);
-                }
-            }
-        }.start();
-        output[0] = "Already";
-
-        /**Recycler view*/
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-
-        RecyclerDeco decoration_Width = new RecyclerDeco(20,50,0,0);
-        recyclerView.addItemDecoration(decoration_Width);
-
-        Adapter adapter = new Adapter(ViewType.small,list_s);
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
-            @Override
-            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
-                ItemData item = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
-            }
-        });
+//        new Thread(){
+//            @Override
+//            public void run(){
+//                Client.main();
+//                String[] out = Client.getOutput();
+//                output = out;
+//                for (int i=1; i<(output.length/5); i++) {
+//                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
+//                    if(i<10)list_s.add(item);
+//                    list.add(item);
+//                }
+//            }
+//        }.start();
+//        output[0] = "Already";
+//
+//        /**Recycler view*/
+//        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+//
+//        RecyclerDeco decoration_Width = new RecyclerDeco(20,50,0,0);
+//        recyclerView.addItemDecoration(decoration_Width);
+//
+//        Adapter adapter = new Adapter(ViewType.small,list_s);
+//        recyclerView.setAdapter(adapter);
+//
+//        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
+//            @Override
+//            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
+//                ItemData item = adapter.getItem(position);
+//                Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
 
         /**custom star*/
