@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity {
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dialog.setContentView(R.layout.error_popup); //xml 연결
-
         while (output[0] == "Already") {
             continue;
         }

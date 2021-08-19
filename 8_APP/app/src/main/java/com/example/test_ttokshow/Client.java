@@ -11,7 +11,7 @@ import java.nio.ByteOrder;
 
 
             try (Socket client = new Socket()) {
-                InetSocketAddress ipep = new InetSocketAddress("127.0.0.1", 9999);
+                InetSocketAddress ipep = new InetSocketAddress("3.144.33.17", 9999);
                 //3.144.33.17
                 client.connect(ipep);
 
@@ -30,7 +30,7 @@ import java.nio.ByteOrder;
 
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
-                        System.out.println(output[1]);
+                        System.out.println(output[10]);
 
                     }
 
