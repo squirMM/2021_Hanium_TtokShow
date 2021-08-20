@@ -19,6 +19,7 @@ public class ScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
+
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(ScannerCaptureActivity.class);
         integrator.initiateScan();
@@ -28,12 +29,18 @@ public class ScannerActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
         Log.d("onActivityResult", "onActivityResult: .");
+
+        Intent scan = getIntent();
+
         if (resultCode == Activity.RESULT_OK) {
             IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
             String re = scanResult.getContents();
             String message = re;
             Log.d("onActivityResult", "onActivityResult: ." + re);
             Toast.makeText(this, re, Toast.LENGTH_LONG).show();
+            setResult(Integer.parseInt(re));
+            finish();
         }
+
     }
 }

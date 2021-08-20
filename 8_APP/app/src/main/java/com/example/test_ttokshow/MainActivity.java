@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<ItemData> list;
     private static final String TAG = "MainActivity";
     public String[] output = new String[10];
+    public String re = "test";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     class BtnOnClickListener implements Button.OnClickListener{
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.all_review:
                     Intent intent = new Intent(getApplicationContext(), Total_Review.class);
@@ -154,23 +155,23 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.open:
-                    LinearLayout inflatedLayout = (LinearLayout)findViewById(R.id.inflatedlayout);
-                    LayoutInflater inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if(!open_bu.isSelected())
-                    {
+                    LinearLayout inflatedLayout = (LinearLayout) findViewById(R.id.inflatedlayout);
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    if (!open_bu.isSelected()) {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
                         open_bu.setSelected(true);
-                    }
-                    else{
+                    } else {
                         inflatedLayout.removeAllViews();
                         open_bu.setSelected(false);
                     }
                     break;
                 case R.id.home_btn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
-                    startActivity(scan);
+                    startActivityForResult(scan, 0);
+
             }
         }
+
     }
     public class loadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
         private final String url;

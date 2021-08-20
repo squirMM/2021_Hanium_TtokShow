@@ -29,7 +29,7 @@
         android:singleLine="true"
         android:ellipsize="marquee"
         android:marqueeRepeatLimit="marquee_forever"
-        android:text="ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ"
+        android:text="테스트테스트테스트테스트테스트"
         style="@style/textView_style"/>
     <!--inflation layout-->
     <LinearLayout
