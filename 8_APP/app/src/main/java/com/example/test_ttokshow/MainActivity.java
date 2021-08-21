@@ -24,8 +24,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.test_ttokshow.Recy.Adapter;
 import com.example.test_ttokshow.Recy.ItemData;;
+import com.example.test_ttokshow.Recy.OnReviewItemClickListener;
+import com.example.test_ttokshow.Recy.RecyclerDeco;
+import com.example.test_ttokshow.Recy.ViewType;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +44,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -59,35 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        /**Push Alarm*/
-        Intent intent = getIntent();
-        if(intent != null) {//푸시알림을 선택해서 실행한것이 아닌경우 예외처리
-            String notificationData = intent.getStringExtra("test");
-            if(notificationData != null)
-                Log.d("FCM_TEST", notificationData);
-        }
         list_s = new ArrayList<>();
         list = new ArrayList<>();
-        Task<String> tmp=FirebaseMessaging.getInstance().getToken();
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
-
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d(TAG, msg);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-        System.out.println("token!!!"+tmp);
 
 //        new Thread(){
 //            @Override
@@ -103,24 +83,36 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }.start();
 //        output[0] = "Already";
-//
-//        /**Recycler view*/
-//        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
-//
-//        RecyclerDeco decoration_Width = new RecyclerDeco(20,50,0,0);
-//        recyclerView.addItemDecoration(decoration_Width);
-//
-//        Adapter adapter = new Adapter(ViewType.small,list_s);
-//        recyclerView.setAdapter(adapter);
-//
-//        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
-//            @Override
-//            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
-//                ItemData item = adapter.getItem(position);
-//                Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
-//            }
-//        });
+
+        //TODO Thread 오류 해결 필요
+        /**Test code*/
+        for (int i=1; i<100; i++) {
+            Random random = new Random();
+            random.setSeed(System.currentTimeMillis());
+            String num=  Integer.toString (random.nextInt(5)+1);
+            //String Sgrade, String Scite, String SId,String Sdate,String Scontents
+            item= new ItemData(num,String.valueOf(random.nextInt(112-65+1)+65),String.valueOf(random.nextInt(112-65+1)+65),String.valueOf(random.nextInt(112-65+1)+65),String.valueOf(random.nextInt(112-65+1)+65));
+            if(i<10)list_s.add(item);
+            list.add(item);
+        }
+
+        /**Recycler view*/
+        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        RecyclerDeco decoration_Width = new RecyclerDeco(26,26,0,0);
+        recyclerView.addItemDecoration(decoration_Width);
+
+        Adapter adapter = new Adapter(ViewType.small,list_s);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
+            @Override
+            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
+                ItemData item = adapter.getItem(position);
+                Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
+            }
+        });
 
 
         /**custom star*/

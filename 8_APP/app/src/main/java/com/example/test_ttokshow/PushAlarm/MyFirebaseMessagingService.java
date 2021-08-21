@@ -15,6 +15,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.test_ttokshow.MainActivity;
@@ -30,16 +31,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        super.onMessageReceived(remoteMessage);
-
+        if (remoteMessage != null && remoteMessage.getData().size() > 0) {
+            sendNotification(remoteMessage);
+        }
+        else{handleNow();}
+    }
+    private void handleNow() {
+        Log.d(TAG, "Short lived task is done.");
+    }
+    private void sendNotification(RemoteMessage remoteMessage){
         String title = remoteMessage.getData().get("title");//firebase에서 보낸 메세지의 title
         String body = remoteMessage.getData().get("body");//firebase에서 보낸 메세지의 내용
-        String test = remoteMessage.getData().get("test");
 
         Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("test", test);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        int color=ContextCompat.getColor(this, R.color.red);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
@@ -59,7 +67,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             //푸시알림을 Builder를 이용하여 만듭니다.
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, channel)
-                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setSmallIcon(R.drawable.ic_launcher_foreground)
+                            .setColor(color)
                             .setContentTitle(title)//푸시알림의 제목
                             .setContentText(body)//푸시알림의 내용
                             .setChannelId(channel)
@@ -75,7 +84,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         } else {
             NotificationCompat.Builder notificationBuilder =
                     new NotificationCompat.Builder(this, "")
-                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setSmallIcon(R.drawable.ic_launcher_foreground)
+                            .setColor(color)
                             .setContentTitle(title)
                             .setContentText(body)
                             .setAutoCancel(true)
@@ -90,36 +100,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
     }
 
-    private void handleNow() {
-        Log.d(TAG, "Short lived task is done.");
-    }
-    private void sendNotification(Map<String, String> data){
-        int noti_id = 1;
-        String getMessage = "";
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("notification_id", 0);
-        // Push로 받은 데이터를 그대로 다시 intent에 넣어준다.
-        if (data != null && data.size() >0) {
-            for(String key : data.keySet()){
-                getMessage = data.get(key);
-                intent.putExtra(key, getMessage); }
-        }
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , intent, PendingIntent.FLAG_ONE_SHOT);
-        //String channelId = getString(R.string.default_notification_channel_id);
-        String channelId = "-ChannerID";
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, channelId) .setSmallIcon(R.mipmap.ic_launcher) .setContentTitle("FCM Message Test !") .setContentText(getMessage) .setAutoCancel(true) .setSound(defaultSoundUri) .setContentIntent(pendingIntent);
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        // Notification 채널을 설정합니다.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(channelId, "Channel human readable title", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationManager.createNotificationChannel(channel);
-        }
-        notificationManager.notify(noti_id, notificationBuilder.build());
-    }
-
     public void onNewToken(String refreshedToken) {
         super.onNewToken(refreshedToken);
         Log.e(TAG, "Refreshed token: " + refreshedToken);
@@ -127,6 +107,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendRegistrationToServer(String token) {
+        //TODO 여기서 서버에 넣어주면 되는듯? 새로운 토큰이 생성될때만 뜨더라
         Log.e(TAG, "here ! sendRegistrationToServer! token is " + token); }
 
 }

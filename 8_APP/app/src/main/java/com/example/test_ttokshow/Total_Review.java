@@ -29,6 +29,9 @@ public class Total_Review extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_total_review);
 
+        Intent intent=getIntent();
+        ArrayList<ItemData> list = (ArrayList<ItemData>)intent.getSerializableExtra("Item");
+
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
@@ -41,16 +44,16 @@ public class Total_Review extends AppCompatActivity {
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
 
-        Intent intent=getIntent();
-        ArrayList<ItemData> list = (ArrayList<ItemData>)intent.getSerializableExtra("Item");
-
+        /**Recycler View*/
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerView.scrollToPosition(0);
 
         RecyclerDeco decoration_Height = new RecyclerDeco(0,0,14,14);
         recyclerView.addItemDecoration(decoration_Height);
 
-        recyclerView.smoothScrollBy(0, 672);
+        //recyclerView.smoothScrollBy(0, 672);
 
         Adapter adapter = new Adapter(ViewType.large,list);
         recyclerView.setAdapter(adapter);
