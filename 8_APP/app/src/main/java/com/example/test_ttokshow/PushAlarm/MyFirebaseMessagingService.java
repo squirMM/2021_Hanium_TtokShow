@@ -28,34 +28,72 @@ import java.util.Map;
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
 
-    @Override public void onMessageReceived(RemoteMessage remoteMessage) {
-         //Handle FCM Message
-        Log.e(TAG, remoteMessage.getFrom());
-         //Check if message contains a data payload.
-         if (remoteMessage.getData().size() > 0){
-            Log.e(TAG, "Message data payload: " + remoteMessage.getData());
-            handleNow();
-         }
-         //Check if message contains a notification payload.
-         if (remoteMessage.getNotification() != null){
-         Log.e(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-         String getMessage = remoteMessage.getNotification().getBody();
-         if(TextUtils.isEmpty(getMessage)) { Log.e(TAG, "ERR: Message data is empty..."); }
-         else {
-             Map<String, String> mapMessage = new HashMap<>();
-             assert getMessage != null; mapMessage.put("key", getMessage );
-             sendNotification(mapMessage);
-             //Broadcast Data Sending Test
-             Intent intent = new Intent("alert_data");
-             intent.putExtra("msg", getMessage);
-         LocalBroadcastManager.getInstance(this).sendBroadcast(intent); }
-         }
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        super.onMessageReceived(remoteMessage);
+
+        String title = remoteMessage.getData().get("title");//firebase에서 보낸 메세지의 title
+        String body = remoteMessage.getData().get("body");//firebase에서 보낸 메세지의 내용
+        String test = remoteMessage.getData().get("test");
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("test", test);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            String channel = "채널";
+            String channel_nm = "채널명";
+
+            NotificationManager notichannel = (android.app.NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel channelMessage = new NotificationChannel(channel, channel_nm,
+                    android.app.NotificationManager.IMPORTANCE_DEFAULT);
+            channelMessage.setDescription("채널에 대한 설명.");
+            channelMessage.enableLights(true);
+            channelMessage.enableVibration(true);
+            channelMessage.setShowBadge(false);
+            channelMessage.setVibrationPattern(new long[]{1000, 1000});
+            notichannel.createNotificationChannel(channelMessage);
+
+            //푸시알림을 Builder를 이용하여 만듭니다.
+            NotificationCompat.Builder notificationBuilder =
+                    new NotificationCompat.Builder(this, channel)
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setContentTitle(title)//푸시알림의 제목
+                            .setContentText(body)//푸시알림의 내용
+                            .setChannelId(channel)
+                            .setAutoCancel(true)//선택시 자동으로 삭제되도록 설정.
+                            .setContentIntent(pendingIntent)//알림을 눌렀을때 실행할 인텐트 설정.
+                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notificationManager.notify(9999, notificationBuilder.build());
+
+        } else {
+            NotificationCompat.Builder notificationBuilder =
+                    new NotificationCompat.Builder(this, "")
+                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setContentTitle(title)
+                            .setContentText(body)
+                            .setAutoCancel(true)
+                            .setContentIntent(pendingIntent)
+                            .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
+
+            NotificationManager notificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+            notificationManager.notify(9999, notificationBuilder.build());
+
+        }
     }
 
     private void handleNow() {
         Log.d(TAG, "Short lived task is done.");
     }
-private void sendNotification(Map<String, String> data){
+    private void sendNotification(Map<String, String> data){
         int noti_id = 1;
         String getMessage = "";
         Intent intent = new Intent(this, MainActivity.class);

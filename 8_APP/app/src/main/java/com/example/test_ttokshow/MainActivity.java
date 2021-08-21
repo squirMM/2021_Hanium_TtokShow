@@ -20,11 +20,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.test_ttokshow.Recy.ItemData;;
-import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.installations.FirebaseInstallations;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.hedgehog.ratingbar.RatingBar;
 
 import java.io.BufferedInputStream;
@@ -60,11 +66,28 @@ public class MainActivity extends AppCompatActivity {
             if(notificationData != null)
                 Log.d("FCM_TEST", notificationData);
         }
-
-        //System.out.println("token : "+ FirebaseInstanceId.getInstance().getToken());
-
         list_s = new ArrayList<>();
         list = new ArrayList<>();
+        Task<String> tmp=FirebaseMessaging.getInstance().getToken();
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+
+                        // Log and toast
+                        String msg = getString(R.string.msg_token_fmt, token);
+                        Log.d(TAG, msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+        System.out.println("token!!!"+tmp);
 
 //        new Thread(){
 //            @Override
