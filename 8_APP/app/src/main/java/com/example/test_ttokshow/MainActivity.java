@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
                 ItemData item = adapter.getItem(position);
+                item.getSId();
                 Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
             }
         });
