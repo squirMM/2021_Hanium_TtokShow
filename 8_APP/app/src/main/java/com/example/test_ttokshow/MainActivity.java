@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -22,20 +21,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.test_ttokshow.Recy.Adapter;
-import com.example.test_ttokshow.Recy.ItemData;;
+import com.example.test_ttokshow.Recy.ItemData;
 import com.example.test_ttokshow.Recy.OnReviewItemClickListener;
 import com.example.test_ttokshow.Recy.RecyclerDeco;
 import com.example.test_ttokshow.Recy.ViewType;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.installations.FirebaseInstallations;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.hedgehog.ratingbar.RatingBar;
 
@@ -104,16 +98,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(decoration_Width);
 
         Adapter adapter = new Adapter(ViewType.small,list_s);
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
             @Override
-            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
-                ItemData item = adapter.getItem(position);
-                item.getSId();
-                Toast.makeText(getApplicationContext(),"왜 ㅜㅜ", Toast.LENGTH_LONG).show();
+            public void onItemClick(View v, int position) {
+                ItemData item = adapter.getItemPos(position);
+                Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
+                intent_Z.putExtra("Activity","Main");
+                intent_Z.putExtra("Item", item);
+                startActivity(intent_Z);
             }
         });
+        recyclerView.setAdapter(adapter);
 
 
         /**custom star*/

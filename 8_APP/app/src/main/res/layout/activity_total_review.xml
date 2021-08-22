@@ -12,7 +12,7 @@
         android:id="@+id/name2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:layout_marginStart="34dp"
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,15 +28,32 @@
         app:layout_constraintStart_toStartOf="parent"
         android:id="@+id/grade"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:paddingBottom="160dp"
-        android:clipToPadding="false"
-        android:splitMotionEvents="false"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/grade"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/recyclerView"/>
+        android:orientation="vertical"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:scrollbarThumbVertical="@color/_black"
+            android:scrollbars="vertical"
+            android:scrollbarFadeDuration="0"
+            android:paddingTop="4dp"
+            android:paddingBottom="160dp"
+            android:clipToPadding="false"
+            android:splitMotionEvents="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerView">
+        </androidx.recyclerview.widget.RecyclerView>
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
 
     <include layout="@layout/bottom_bar"
         android:id="@+id/bottom"

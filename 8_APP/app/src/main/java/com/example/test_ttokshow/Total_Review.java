@@ -5,11 +5,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.test_ttokshow.Recy.Adapter;
@@ -22,6 +25,11 @@ import com.hedgehog.ratingbar.RatingBar;
 import java.util.ArrayList;
 
 public class Total_Review extends AppCompatActivity {
+    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private ArrayList<ItemData> list;
+    private int num=0;
+    private Adapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +38,7 @@ public class Total_Review extends AppCompatActivity {
         setContentView(R.layout.activity_total_review);
 
         Intent intent=getIntent();
-        ArrayList<ItemData> list = (ArrayList<ItemData>)intent.getSerializableExtra("Item");
+        list = (ArrayList<ItemData>)intent.getSerializableExtra("Item");
 
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
@@ -45,7 +53,7 @@ public class Total_Review extends AppCompatActivity {
         retBox.setOnClickListener(onClickListener);
 
         /**Recycler View*/
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         recyclerView.scrollToPosition(0);
@@ -55,15 +63,38 @@ public class Total_Review extends AppCompatActivity {
 
         //recyclerView.smoothScrollBy(0, 672);
 
-        Adapter adapter = new Adapter(ViewType.large,list);
+        adapter = new Adapter(ViewType.large);
+        getItem();
+        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                // 클릭했을때 원하는데로 처리해주는 부분
+                ItemData item = adapter.getItemPos(position);
+                System.out.println("click "+item);
+                Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
+                intent_Z.putExtra("Activity","Total");
+                intent_Z.putExtra("Item", item);
+                startActivity(intent_Z);
+            }
+        });
         recyclerView.setAdapter(adapter);
 
-        adapter.setOnItemClickListener(new OnReviewItemClickListener() {
+
+        /**Progress bar + Recycler View*/
+        progressBar = (ProgressBar) findViewById(R.id.progressbar);
+        //progressBar.setVisibility(View.GONE);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
             @Override
-            public void onItemClick(Adapter.ViewHolder holder, View view, int position) {
-                ItemData item = adapter.getItem(position);
-                Toast.makeText(getApplicationContext(),"아이템 선택 " + item.getSId(), Toast.LENGTH_LONG).show(); }
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (!recyclerView.canScrollVertically(1)) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    getItem();
+                }
+            }
         });
+
+
 
     }
     class BtnOnClickListener implements Button.OnClickListener {
@@ -77,7 +108,21 @@ public class Total_Review extends AppCompatActivity {
             }
         }
     }
-
+    private void getItem(){
+        int end = Math.min(num + 25, list.size());
+        for(int i=num; i<end;i++) {
+            ItemData tmp= list.get(i);
+            adapter.addItem(tmp);
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                adapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+            }
+        },1000);
+        num=end;
+    }
     public void hideNavigationBar() {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
