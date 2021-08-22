@@ -12,7 +12,7 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "CJ 더 건강한 후랑크"
+product = "CJ제일제당 전립소 쏘팔메토"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
@@ -26,14 +26,12 @@ if "상품이 없습니다." in a:
 driver.find_element_by_css_selector('.thmb').click()
 time.sleep(1)
 
-# 상품명 확인 
 product = driver.find_element_by_css_selector('.cdtl_info_tit').text 
 print("상품명:",product)
 price = driver.find_element_by_css_selector('.ssg_price').text 
 price = price.replace(",","")
 print("가격:",price) 
-
-
+    
 def get_page_data(): 
     numbers = driver.find_elements_by_css_selector('.number') #번호 수집
     users = driver.find_elements_by_css_selector('.user') # 사용자명 수집 
@@ -41,37 +39,44 @@ def get_page_data():
     reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2') #리뷰 수집
     print(len(numbers), len(users), len(ratings), len(reviews))
     # 리뷰개수와 평점수가 같을 경우만 수집 
-    if len(reviews) == 10:
-        for i in range(len(reviews)):
-            number = numbers[i+1].text
-            user = users[i+1].text
-            rating = ratings[i].text
-            rating = rating.replace("구매 고객 평점 별 5개 중 ","")
-            rating = rating.replace("개","")
-            rating = int(rating)
-            review = reviews[i].text
-            review = review.replace("사진\n" , "")
-            review = review.replace("비디오\n" , "")
-            num = (2*i+1) % 20
-            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div').text
-            date = date.replace("-","")
-            data = (int(number), user, int(rating), review, int(date))
-            data_list.append(data)
-            print(data)
+    for i in range(len(reviews)):
+        number = numbers[i+1].text
+        user = users[i+1].text
+        rating = ratings[i].text
+        rating = rating.replace("구매 고객 평점 별 5개 중 ","")
+        rating = rating.replace("개","")
+        rating = int(rating)
+        review = reviews[i].text
+        review = review.replace("사진\n" , "")
+        review = review.replace("비디오\n" , "")
+        num = (2*i+1) % 20
+        date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div').text
+        date = date.replace("-","")
+        data = (int(number), user, int(rating), review, int(date))
+        data_list.append(data)
+        print(data)
+
 try: # 리뷰 없을때
-    nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
-    print(nodata.text)
+    review_none = driver.find_element_by_css_selector('.cdtl_review_txt').text 
+    print(review_none)
     driver.quit()
     sys.exit()
 except Exception: # 리뷰 있을때
-    # 최신순 클릭
     driver.find_element_by_css_selector('.cdtl_opt').click()
     driver.find_element_by_xpath('//*[@id="cmt_select_sort"]/div/div/ul/li[2]').click()
+     
+try: #리뷰 게시가 안되어있을때
+    table = driver.find_element_by_class_name('cdtl_cmt_tbl')
+    nodata = table.find_element_by_tag_name('p').text
+    print(nodata)
+    driver.quit()
+    sys.exit()
+except Exception:
     review_total = driver.find_element_by_css_selector('.num').text 
+    print("리뷰 개수:",review_total)
     review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
-    print("평점:", review_grade) 
+    print("평점:", review_grade)
 
-print("리뷰 개수:",review_total)
 #페이지별 리뷰 개수
 review_per_page = 10 
 review_total = review_total.replace(",","")
@@ -107,4 +112,3 @@ print("수집 종료")
 print(data_list)
 
 df = pd.DataFrame(data_list) 
-

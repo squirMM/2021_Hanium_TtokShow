@@ -20,7 +20,7 @@ def crawl(pro,cur):
     
     a = driver.find_element_by_css_selector('.csrch_top.v2').text
     if "상품이 없습니다." in a:
-        print(a)
+        print("해당 상품 없음")
         return
         # driver.quit()
         # sys.exit()
@@ -38,38 +38,44 @@ def crawl(pro,cur):
         users = driver.find_elements_by_css_selector('.user')  # 사용자명 수집
         ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per')  # 평점 수집
         reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2')  # 리뷰 수집
-
-        # 사용자명수와 평점수가 같을 경우만 수집
-        if len(reviews) == 10:
-            for i in range(len(reviews)):
-                user = users[i + 1].text
-                rating = ratings[i].text
-                rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
-                rating = rating.replace("개", "")
-                rating = int(rating)
-                review = reviews[i].text
-                review = review.replace("사진\n", "")
-                review = review.replace("비디오\n", "")
-                num = (2 * i + 1) % 20
-                date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
-                date = date.text.replace("-", "")
-                data_tu = (pro[0], user, date, rating, review, "ssg")
-                data_list.append(data_tu)
-                #print(data_tu)
-                print("\r {0}".format(data_tu), end="")
+        for i in range(len(reviews)):
+            user = users[i + 1].text
+            rating = ratings[i].text
+            rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
+            rating = rating.replace("개", "")
+            rating = int(rating)
+            review = reviews[i].text
+            review = review.replace("사진\n", "")
+            review = review.replace("비디오\n", "")
+            num = (2 * i + 1) % 20
+            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
+            date = date.text.replace("-", "")
+            data_tu = (pro[0], user, date, rating, review, "ssg")
+            data_list.append(data_tu)
+            #print(data_tu)
+            print("\r {0}".format(data_tu), end="")
+    
     try: #리뷰 없을 때
-        nodata = driver.find_element_by_css_selector(".cdtl_tx_nodata")
-        print(nodata.text)
+        review_none = driver.find_element_by_css_selector('.cdtl_review_txt').text 
+        print(review_none)
         return
         
     except Exception: #리뷰 있을 때
         # 최신순 클릭
         driver.find_element_by_css_selector('.cdtl_opt').click()
         driver.find_element_by_xpath('//*[@id="cmt_select_sort"]/div/div/ul/li[2]').click()
-        review_total = driver.find_element_by_css_selector('.num').text
+    
+    
+    try: #리뷰 게시가 안되어있을때
+        table = driver.find_element_by_class_name('cdtl_cmt_tbl')
+        nodata = table.find_element_by_tag_name('p').text
+        print(nodata)
+        return
+    except Exception:
+        review_total = driver.find_element_by_css_selector('.num').text 
+        print("리뷰 개수:",review_total)
         review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
         print("평점:", review_grade)
-        print("리뷰 개수:",review_total)
     
     #페이지별 리뷰 개수
     review_per_page = 10 

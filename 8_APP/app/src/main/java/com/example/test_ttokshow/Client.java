@@ -12,12 +12,8 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-
-
+        private static String[] output;
+        public static void main(String... args) {
             try (Socket client = new Socket()) {
                 InetSocketAddress ipep = new InetSocketAddress("3.144.33.17", 9999);
                 //3.144.33.17
@@ -41,6 +37,10 @@ import java.nio.ByteOrder;
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
                         System.out.println(output[0]);
+                        System.out.println(output[1]);
+                        System.out.println(output[2]);
+                        System.out.println(output[3]);
+                        System.out.println(output[4]);
 
                     }
 
@@ -48,9 +48,7 @@ import java.nio.ByteOrder;
             } catch (Throwable e) {
                 e.printStackTrace();
             }
-            finish();
         }
-        private static String[] output;
         static String[] getOutput(){
             return output;
         }

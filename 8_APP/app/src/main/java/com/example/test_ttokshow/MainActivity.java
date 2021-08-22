@@ -49,7 +49,6 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private TextView product_name;
     private ImageButton open_bu;
     private Dialog dialog;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private ItemData item;
     public ArrayList<ItemData> list_s;
     public ArrayList<ItemData> list;
+    public ArrayList<ItemData> list_d;
     private static final String TAG = "MainActivity";
     public String[] output = new String[10];
 
@@ -66,18 +66,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
 
         list_s = new ArrayList<>();
         list = new ArrayList<>();
+        list_d = new ArrayList<>();
 
         new Thread(){
             @Override
             public void run(){
-                Intent client = new Intent(getApplicationContext(),Client.class);
-                startActivity(client);
+                Client.main();
                 String[] out = Client.getOutput();
                 output = out;
+                item = new ItemData(output[0],output[1],output[2],output[3],output[4]);
+                list_d.add(item);
                 for (int i=1; i<(output.length/5); i++) {
                     item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
                     if(i<10)list_s.add(item);
@@ -87,11 +90,26 @@ public class MainActivity extends AppCompatActivity {
         }.start();
         output[0] = "Already";
 
+        /**Button*/
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+        //inflation layout
+        open_bu = (ImageButton) findViewById(R.id.open);
+        open_bu.setOnClickListener(onClickListener);
+
+        //all review
+        Button all_review = (Button) findViewById(R.id.all_review);
+        all_review.setOnClickListener(onClickListener);
+
+        //scanner btn
+        ImageButton home = (ImageButton) findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
+
         while (output[0] == "Already") {
             continue;
         }
 
-
+        product_name= (TextView)findViewById(R.id.name);
+        product_name.setText(output[1]);
 
         /**Recycler view*/
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
@@ -116,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        mRatingBar.setStar(2.8f);
+        mRatingBar.setStar(Float.parseFloat(output[3]));
 
         /**Text*/
         product_name=(TextView)findViewById(R.id.name);
@@ -126,25 +144,13 @@ public class MainActivity extends AppCompatActivity {
 
         /**image*/
         iv_image = (ImageView)findViewById(R.id.keywordbox);
-        String image_url_con = "https://post-phinf.pstatic.net/MjAxOTA3MDVfNDcg/MDAxNTYyMzA1MTQ0Njc0.04P0QuAk7pRDhmuLYa2Op36kmArY2gO_lwluLr7CE7og.y1dyZeUEudhu9-uTUKSUymLjC3wt8XsuRD7Zx_UoOZAg.JPEG/naver_%ED%95%B4%EB%B0%94%EB%9D%BC%EA%B8%B0_1_pixabay.jpg?type=w1200";
+        String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
         //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
         String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
-        loadImageTask imageTask = new loadImageTask(image_url);
+        loadImageTask imageTask = new loadImageTask(image_url_con);
         imageTask.execute();
 
-        /**Button*/
-        BtnOnClickListener onClickListener = new BtnOnClickListener();
-        //inflation layout
-        open_bu = (ImageButton) findViewById(R.id.open);
-        open_bu.setOnClickListener(onClickListener);
 
-        //all review
-        Button all_review = (Button) findViewById(R.id.all_review);
-        all_review.setOnClickListener(onClickListener);
-
-        //scanner btn
-        ImageButton home = (ImageButton) findViewById(R.id.home_btn);
-        home.setOnClickListener(onClickListener);
 
         /**Error Dialog*/
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
@@ -183,6 +189,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.home_btn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
+
+
             }
         }
 
