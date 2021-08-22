@@ -35,8 +35,8 @@ def barcode(bar):
 def binder(client_socket, addr):
     print('Connected by', addr);
     try:
+        msg = barcode('8801007160337')
         while True:
-            msg = barcode('8801007160337')
             data = msg.encode();
 
             data1 = "아이스브레이커스"
