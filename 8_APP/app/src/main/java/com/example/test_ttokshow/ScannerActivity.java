@@ -38,7 +38,7 @@ public class ScannerActivity extends AppCompatActivity {
             String message = re;
             Log.d("onActivityResult", "onActivityResult: ." + re);
             Toast.makeText(this, re, Toast.LENGTH_LONG).show();
-            setResult(Integer.parseInt(re));
+            ((Barcode)getApplication()).setID(re);
             finish();
         }
 

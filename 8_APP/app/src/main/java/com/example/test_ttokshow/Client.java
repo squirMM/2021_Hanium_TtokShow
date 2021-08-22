@@ -1,13 +1,18 @@
 package com.example.test_ttokshow;
 
+import android.app.Application;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-    public class Client{
-        public static void main(String... args) {
+    public class Client extends AppCompatActivity {
+        public void main(String... args) {
+
 
 
             try (Socket client = new Socket()) {
@@ -20,6 +25,8 @@ import java.nio.ByteOrder;
                     for (int i = 0; i < 1; i++) {
 
                         byte[] data = new byte[4];
+
+                        sender.write(data,0,4);
                         receiver.read(data, 0, 4);
                         ByteBuffer bu = ByteBuffer.wrap(data);
                         bu.order(ByteOrder.LITTLE_ENDIAN);
