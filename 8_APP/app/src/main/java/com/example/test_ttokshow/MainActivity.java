@@ -49,7 +49,7 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    // Police don't know
     private TextView product_name;
     private ImageButton open_bu;
     private Dialog dialog;
