@@ -1,6 +1,7 @@
 package com.example.test_ttokshow;
 
 import android.app.Application;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +12,9 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
-        public void main(String... args) {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
 
 
 
@@ -45,6 +48,7 @@ import java.nio.ByteOrder;
             } catch (Throwable e) {
                 e.printStackTrace();
             }
+            finish();
         }
         private static String[] output;
         static String[] getOutput(){

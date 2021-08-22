@@ -1,25 +1,14 @@
 <component name="libraryTable">
   <library name="Gradle: com.hedgehog.ratingbar:app:1.1.2@aar">
     <CLASSES>
-<<<<<<< HEAD
-      <root url="jar://$USER_HOME$/Android_Avd_Gradle/.gradle/caches/transforms-2/files-2.1/6347a8b96f5c752ec200a4d7ccd98717/jetified-app-1.1.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/Android_Avd_Gradle/.gradle/caches/transforms-2/files-2.1/6347a8b96f5c752ec200a4d7ccd98717/jetified-app-1.1.2/res" />
-      <root url="file://$USER_HOME$/Android_Avd_Gradle/.gradle/caches/transforms-2/files-2.1/6347a8b96f5c752ec200a4d7ccd98717/jetified-app-1.1.2/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6347a8b96f5c752ec200a4d7ccd98717/jetified-app-1.1.2/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6347a8b96f5c752ec200a4d7ccd98717/jetified-app-1.1.2/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/6347a8b96f5c752ec200a4d7ccd98717/jetified-app-1.1.2/AndroidManifest.xml" />
-=======
-      <root url="file://$PROJECT_DIR$/../../../../Android_Avd_Gradle/.gradle/caches/transforms-2/files-2.1/c28421c641ae67d29d683106f0dab424/jetified-app-1.1.2/res" />
-      <root url="file://$PROJECT_DIR$/../../../../Android_Avd_Gradle/.gradle/caches/transforms-2/files-2.1/c28421c641ae67d29d683106f0dab424/jetified-app-1.1.2/AndroidManifest.xml" />
-      <root url="jar://$PROJECT_DIR$/../../../../Android_Avd_Gradle/.gradle/caches/transforms-2/files-2.1/c28421c641ae67d29d683106f0dab424/jetified-app-1.1.2/jars/classes.jar!/" />
->>>>>>> 78e13123f703506bb09707066617bb415d7c0f0b
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c28421c641ae67d29d683106f0dab424/jetified-app-1.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c28421c641ae67d29d683106f0dab424/jetified-app-1.1.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c28421c641ae67d29d683106f0dab424/jetified-app-1.1.2/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$USER_HOME$/Android_Avd_Gradle/.gradle/caches/modules-2/files-2.1/com.hedgehog.ratingbar/app/1.1.2/d8a5f253698c2bc85d1c806893573a3bd7f01c35/app-1.1.2-javadoc.jar!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hedgehog.ratingbar/app/1.1.2/d8a5f253698c2bc85d1c806893573a3bd7f01c35/app-1.1.2-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/Android_Avd_Gradle/.gradle/caches/modules-2/files-2.1/com.hedgehog.ratingbar/app/1.1.2/aa7529f2a9ec50ed3f4f7a54225a1e46557f4bb8/app-1.1.2-sources.jar!/" />
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hedgehog.ratingbar/app/1.1.2/aa7529f2a9ec50ed3f4f7a54225a1e46557f4bb8/app-1.1.2-sources.jar!/" />
     </SOURCES>
   </library>

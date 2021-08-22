@@ -17,6 +17,7 @@
         <activity android:name=".HomeActivity">
         </activity>
         <activity android:name=".ScannerActivity" />
+        <activity android:name=".Client"/>
         <activity android:name=".MainActivity">
 
             <intent-filter>
