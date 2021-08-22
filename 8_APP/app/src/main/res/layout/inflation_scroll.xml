@@ -96,6 +96,9 @@
         style="@style/text_button"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:clipToPadding="false"
+        android:paddingRight="12dp"
+        android:paddingLeft="12dp"
         android:splitMotionEvents="false"
         android:layout_width="match_parent"
         android:layout_height="84dp"
