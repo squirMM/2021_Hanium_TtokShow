@@ -1,5 +1,6 @@
 package com.example.test_ttokshow;
 
+import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public String[] output = new String[10];
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,32 +71,27 @@ public class MainActivity extends AppCompatActivity {
         list_s = new ArrayList<>();
         list = new ArrayList<>();
 
-//        new Thread(){
-//            @Override
-//            public void run(){
-//                Client.main();
-//                String[] out = Client.getOutput();
-//                output = out;
-//                for (int i=1; i<(output.length/5); i++) {
-//                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
-//                    if(i<10)list_s.add(item);
-//                    list.add(item);
-//                }
-//            }
-//        }.start();
-//        output[0] = "Already";
+        new Thread(){
+            @Override
+            public void run(){
+                Intent client = new Intent(getApplicationContext(),Client.class);
+                startActivity(client);
+                String[] out = Client.getOutput();
+                output = out;
+                for (int i=1; i<(output.length/5); i++) {
+                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
+                    if(i<10)list_s.add(item);
+                    list.add(item);
+                }
+            }
+        }.start();
+        output[0] = "Already";
 
-        //TODO Thread 오류 해결 필요
-        /**Test code*/
-        for (int i=1; i<100; i++) {
-            Random random = new Random();
-            random.setSeed(System.currentTimeMillis());
-            String num=  Integer.toString (random.nextInt(5)+1);
-            //String Sgrade, String Scite, String SId,String Sdate,String Scontents
-            item= new ItemData(num,String.valueOf(random.nextInt(112-65+1)+65),String.valueOf(random.nextInt(112-65+1)+65),String.valueOf(random.nextInt(112-65+1)+65),String.valueOf(random.nextInt(112-65+1)+65));
-            if(i<10)list_s.add(item);
-            list.add(item);
+        while (output[0] == "Already") {
+            continue;
         }
+
+
 
         /**Recycler view*/
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
@@ -153,10 +150,6 @@ public class MainActivity extends AppCompatActivity {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 타이틀 제거
         dialog.setContentView(R.layout.error_popup); //xml 연결
 
-        while (output[0] == "Already") {
-            continue;
-        }
-
         //임시 다이얼로그
 //        findViewById(R.id.test_pop).setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -168,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
     class BtnOnClickListener implements Button.OnClickListener{
         @Override
-        public void onClick(View view){
+        public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.all_review:
                     Intent intent = new Intent(getApplicationContext(), Total_Review.class);
@@ -176,14 +169,12 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     break;
                 case R.id.open:
-                    LinearLayout inflatedLayout = (LinearLayout)findViewById(R.id.inflatedlayout);
-                    LayoutInflater inflater =  (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    if(!open_bu.isSelected())
-                    {
+                    LinearLayout inflatedLayout = (LinearLayout) findViewById(R.id.inflatedlayout);
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    if (!open_bu.isSelected()) {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
                         open_bu.setSelected(true);
-                    }
-                    else{
+                    } else {
                         inflatedLayout.removeAllViews();
                         open_bu.setSelected(false);
                     }
@@ -193,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(scan);
             }
         }
+
     }
     public class loadImageTask extends AsyncTask<Bitmap, Void, Bitmap> {
         private final String url;
