@@ -50,7 +50,7 @@ public class Total_Review extends AppCompatActivity {
 
         recyclerView.scrollToPosition(0);
 
-        RecyclerDeco decoration_Height = new RecyclerDeco(0,0,14,14);
+        RecyclerDeco decoration_Height = new RecyclerDeco(0,0,2,2);
         recyclerView.addItemDecoration(decoration_Height);
 
         //recyclerView.smoothScrollBy(0, 672);

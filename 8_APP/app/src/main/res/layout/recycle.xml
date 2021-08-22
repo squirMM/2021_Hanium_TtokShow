@@ -6,7 +6,6 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/white"
         >
         <ImageButton
@@ -19,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="34dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             />
 
         <TextView
@@ -29,10 +28,10 @@
             android:layout_width="292dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="34dp"
             android:ellipsize="end"
-            android:maxLines="7"
-            tools:text="testtime" />
+            android:maxLines="4"
+             />
     </FrameLayout>
 
 </LinearLayout>

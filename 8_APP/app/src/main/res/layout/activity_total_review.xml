@@ -29,7 +29,7 @@
         android:id="@+id/grade"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:paddingBottom="156dp"
+        android:paddingBottom="160dp"
         android:clipToPadding="false"
         android:splitMotionEvents="false"
         android:layout_width="match_parent"
