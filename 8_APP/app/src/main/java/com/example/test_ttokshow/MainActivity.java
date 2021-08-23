@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<ItemData> list_d;
     private static final String TAG = "MainActivity";
     public String[] output = new String[10];
+    public static Boolean client = true;
 
 
     @Override
@@ -66,23 +67,26 @@ public class MainActivity extends AppCompatActivity {
         list_s = new ArrayList<>();
         list = new ArrayList<>();
         list_d = new ArrayList<>();
-
-        new Thread(){
-            @Override
-            public void run(){
-                Client.main();
-                String[] out = Client.getOutput();
-                output = out;
-                item = new ItemData(output[0],output[1],output[2],output[3],output[4]);
-                list_d.add(item);
-                for (int i=1; i<(output.length/5); i++) {
-                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
-                    if(i<10)list_s.add(item);
-                    list.add(item);
+        if (client)
+            output[0] = "Already";
+        if (client) {
+            new Thread() {
+                @Override
+                public void run() {
+                    Client.main();
+                    String[] out = Client.getOutput();
+                    output = out;
+                    item = new ItemData(output[0], output[1], output[2], output[3], output[4]);
+                    list_d.add(item);
+                    for (int i = 1; i < (output.length / 5); i++) {
+                        item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
+                        if (i < 10) list_s.add(item);
+                        list.add(item);
+                    }
+                    client = false;
                 }
-            }
-        }.start();
-        output[0] = "Already";
+            }.start();
+       }
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();

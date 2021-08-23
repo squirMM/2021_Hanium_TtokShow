@@ -38,9 +38,11 @@ public class ScannerActivity extends AppCompatActivity {
             String message = re;
             Log.d("onActivityResult", "onActivityResult: ." + re);
             Toast.makeText(this, re, Toast.LENGTH_LONG).show();
-            ((Barcode)getApplication()).setID(re);
-            Client.send = ((Barcode)getApplication()).getID();
-            Client.cam = Boolean.TRUE;
+            // ((Barcode)getApplication()).setID(re);
+            // Client.send = ((Barcode)getApplication()).getID();
+            Client.send = re;
+            Client.cam = true;
+            //MainActivity.client = Boolean.TRUE;
             finish();
         }
 

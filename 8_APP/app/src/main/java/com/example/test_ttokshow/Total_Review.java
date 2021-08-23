@@ -102,9 +102,7 @@ public class Total_Review extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.retButton:
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    break;
+                    finish();
             }
         }
     }
