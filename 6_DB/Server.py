@@ -37,8 +37,14 @@ def binder(client_socket, addr):
     try:
         msg = barcode('8801007160337')
         while True:
-            data = msg.encode();
+            #data = client_socket.recv(4);
+            #length = int.from_bytes(data, "little")
+            #data = client_socket.recv(length)
+            #msg = data.decode()
+            #print(msg)
 
+            data = msg.encode();
+            
             data1 = "아이스브레이커스"
             data1 = data1.encode();
             length1 = len(data1);

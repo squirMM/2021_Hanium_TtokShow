@@ -44,6 +44,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private TextView product_name;
+    private TextView grade_float;
     private ImageButton open_bu;
     private Dialog dialog;
     private ImageView iv_image;
@@ -106,8 +107,11 @@ public class MainActivity extends AppCompatActivity {
             continue;
         }
 
-        product_name= (TextView)findViewById(R.id.name);
+        product_name = (TextView)findViewById(R.id.name);
         product_name.setText(output[1]);
+        //grade_float = (TextView)findViewById(R.id.grade);
+        //grade_float.setText(output[3]);
+
 
         /**Recycler view*/
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
@@ -134,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
         mRatingBar.setStar(Float.parseFloat(output[3]));
+        Total_Review.averStar = Float.parseFloat(output[3]);
 
         /**Text*/
         product_name=(TextView)findViewById(R.id.name);
@@ -188,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.home_btn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
+
 
 
             }
