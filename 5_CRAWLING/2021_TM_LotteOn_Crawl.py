@@ -13,7 +13,7 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스 브레이커스 민트"
+product = "CJ제일제당 전립소 쏘팔메토 30G"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q={plusUrl}&mallId=1'
 driver.get(url)
@@ -90,9 +90,9 @@ for page in range(0, total_page-1):
         driver.find_element_by_css_selector('.next').click() 
         time.sleep(1)
         get_page_data()
-print(str(page) + " page 수집 끝") 
 print("수집 종료") 
 print(data_list)
 
 df = pd.DataFrame(data_list) 
 print(df) 
+driver.close()

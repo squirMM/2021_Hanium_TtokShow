@@ -1,6 +1,9 @@
 package com.example.test_ttokshow.Recy;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Rect;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
