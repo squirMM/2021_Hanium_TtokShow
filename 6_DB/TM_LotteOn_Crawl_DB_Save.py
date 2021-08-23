@@ -46,23 +46,21 @@ def crawl(pro,cur):
         reviews = driver.find_elements_by_css_selector('.texting') #리뷰 수집
         dates = driver.find_elements_by_css_selector('.date') #날짜 수집
         hours = "시간 전"
-        
-        if len(users) == len(reviews):
-            for i in range(len(users)):
-                user = users[i].text
-                rating = ratings[i+2].text
-                rating = rating.replace("평점","")
-                rating = int(rating)
-                review = reviews[i].text
-                review = review.replace("\n"," ")
-                date = dates[i].text
-                date = date.replace(".","")
-                if hours in date:
-                    date = str(datetime.date.today())
-                    date = date.replace("-", "")
-                data_tu = (pro[0], user, date, rating, review, "롯데")
-                data_list.append(data_tu)
-                print(data_tu)
+        for i in range(len(users)):
+            user = users[i].text
+            rating = ratings[i+2].text
+            rating = rating.replace("평점","")
+            rating = int(rating)
+            review = reviews[i].text
+            review = review.replace("\n"," ")
+            date = dates[i].text
+            date = date.replace(".","")
+            if hours in date:
+                date = str(datetime.date.today())
+                date = date.replace("-", "")
+            data_tu = (pro[0], user, date, rating, review, "롯데")
+            data_list.append(data_tu)
+            print(data_tu)
 
     try: # 리뷰 없을때
         nodata = driver.find_element_by_css_selector(".dataNull.default")
@@ -89,13 +87,13 @@ def crawl(pro,cur):
     print("수집 시작") # 첫 페이지 수집하고 시작
     get_page_data()
     for page in range(0, total_page-1):
-            print(str(page)+"page 수집 끝")
+            print(str(page+1)+"page 수집 끝")
             driver.find_element_by_css_selector('.next').click() 
             time.sleep(1)
             get_page_data()
-    print(str(page) + " page 수집 끝") 
     print("수집 종료") 
     driver.close()
+    
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
 

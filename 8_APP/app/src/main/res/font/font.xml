@@ -4,7 +4,7 @@
     <font
         android:font="@font/notosans_b"
         android:fontStyle="normal"
-        android:fontWeight="300" />
+        android:fontWeight="500" />
 
     <!--regular-->
     <font

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.test_ttokshow.Recy.ItemData;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 
 public class Zoom_Review extends AppCompatActivity {
 
+    private String From;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +25,34 @@ public class Zoom_Review extends AppCompatActivity {
         setContentView(R.layout.activity_zoom_review);
 
         Intent intent=getIntent();
+        From=intent.getExtras().getString("Activity");
         ItemData list = (ItemData) intent.getSerializableExtra("Item");
 
-        TextView con =findViewById(R.id.contents);
-        con.setText(list.getScontents());
+        /**Button*/
+        BtnOnClickListener onClickListener = new BtnOnClickListener();
+
+        //ret Button
+        ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
+        retBox.setOnClickListener(onClickListener);
+    }
+
+    class BtnOnClickListener implements Button.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.retButton:
+                    if(From.equals("Main")){
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    else if(From.equals("Total")){
+                        Intent intent = new Intent(getApplicationContext(), Total_Review.class);
+                        startActivity(intent);
+                        break;
+                    }
+            }
+        }
     }
 
     public void hideNavigationBar() {
