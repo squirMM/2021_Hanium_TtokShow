@@ -43,7 +43,7 @@ import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-    private TextView product_name;
+    private static TextView product_name;
     private TextView grade_float;
     private TextView person_many;
     private ImageButton open_bu;
@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
             continue;
         }
 
+        staticItem myApp = (staticItem)getApplicationContext();
+        myApp.setState(output[3],output[1],output.length/5 - 1);
+
+
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
         //inflation layout
@@ -110,12 +114,13 @@ public class MainActivity extends AppCompatActivity {
             continue;
         }
 
+        /**Text View*/
         product_name = (TextView)findViewById(R.id.name);
-        product_name.setText(output[1]);
+        product_name.setText(myApp.getProName());
         grade_float = (TextView)findViewById(R.id.gradef);
-        grade_float.setText(output[3]+"/5");
+        grade_float.setText(myApp.getAvg()+"/5");
         person_many = (TextView)findViewById(R.id.cnt_per);
-        person_many.setText(Integer.toString(output.length/5 - 1)+"명");
+        person_many.setText(Integer.toString(myApp.getCnt())+"명");
 
 
 
@@ -132,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(View v, int position) {
                 ItemData item = adapter.getItemPos(position);
                 Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
-                intent_Z.putExtra("Activity","Main");
                 intent_Z.putExtra("Item", item);
                 startActivity(intent_Z);
             }
@@ -143,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        mRatingBar.setStar(Float.parseFloat(output[3]));
+        //mRatingBar.setStar(Float.parseFloat(output[3]));
+        mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
         Total_Review.averStar = Float.parseFloat(output[3]);
 
         /**Text*/

@@ -1,7 +1,7 @@
 from pyfcm import FCMNotification
 
 APIKEY = "AAAA0brfvYU:APA91bG31YupO8cjeVl669-duqw_kjRE1XSUdLl0dS9PhPL9YDN1D164W6Hurr9JCUbWgK5Wa9WZ4luNt9UMcccP0XVlNMgvfyaiudeAQcHscCaIu7AZAuB5wZna1uUfr8mM66whRKqx"
-TOKEN = "fhAkx5wDReqLsBykAZeg_J:APA91bGw05xXEsHZlXf8QADx9CAHkY-PKCQNrRnzUhQRuOI-xKRcvbSXO6w7PBkVHvvb9y3WiHhp-z0jJLbv7IiT1asViWGqRSp0c7h7WYVZLrwz0yfKKwLp6etthZLGPX-w6ExYEoJo"
+TOKEN = "fvZEUEdZTmCJxeoI3ORBaX:APA91bHkPONeVihrXQYD96YB11xhoQGU4-NKgXW9mmAlTtCLLwKZ3-IgdaGz6D_HINEwpJqKLZFw3SE6AjgqoCmDITcZnobJxl9dO0OPsBs8RK49JHI-at3O7FoomBEsKAVW70eOpSTn"
 
 # 파이어베이스 콘솔에서 얻어 온 서버 키를 넣어 줌
 push_service = FCMNotification(APIKEY)

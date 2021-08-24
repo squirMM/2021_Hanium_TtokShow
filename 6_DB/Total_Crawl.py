@@ -15,7 +15,11 @@ con = db.connect(
 
 cur=con.cursor()
 
-sql_find = "SELECT barcord_id, name ,ssg , lotte from product "
+#sql_find = "SELECT barcord_id, name ,ssg , lotte from product "
+sql_find = """select review.barcord_id ,product.name ,product.ssg , product.lotte ,count(review.barcord_id) as 'count'
+from product inner join review
+on product.barcord_id = review.barcord_id
+group by review.barcord_id """
 cur.execute(sql_find)
 result = cur.fetchall()
 print(result)

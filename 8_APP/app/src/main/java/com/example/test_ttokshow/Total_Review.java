@@ -12,7 +12,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.content.Intent;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test_ttokshow.Recy.Adapter;
@@ -30,6 +32,8 @@ public class Total_Review extends AppCompatActivity {
     private ArrayList<ItemData> list;
     private int num=0;
     private Adapter adapter;
+    private TextView person_many;
+    private TextView grade_float;
     public static Float averStar;
     static String pm;
     static String rf;
@@ -43,10 +47,20 @@ public class Total_Review extends AppCompatActivity {
         Intent intent=getIntent();
         list = (ArrayList<ItemData>)intent.getSerializableExtra("Item");
 
+        staticItem myApp = (staticItem)getApplicationContext();
+
+        View grade =(View)findViewById(R.id.grade_total);
+
+        /**Text View*/
+        grade_float = (TextView)findViewById(R.id.gradef);
+        grade_float.setText(myApp.getAvg()+"/5");
+        person_many = (TextView)findViewById(R.id.cnt_per);
+        person_many.setText(Integer.toString(myApp.getCnt())+"명");
+
         /**custom star*/
-        RatingBar mRatingBar =findViewById(R.id.ratingBar);
+        RatingBar mRatingBar =grade.findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        mRatingBar.setStar(averStar);
+        mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
@@ -75,7 +89,6 @@ public class Total_Review extends AppCompatActivity {
                 ItemData item = adapter.getItemPos(position);
                 System.out.println("click "+item);
                 Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
-                intent_Z.putExtra("Activity","Total");
                 intent_Z.putExtra("Item", item);
                 startActivity(intent_Z);
             }

@@ -16,7 +16,12 @@ import java.util.ArrayList;
 
 public class Zoom_Review extends AppCompatActivity {
 
-    private String From;
+    private TextView product_name;
+    private TextView content;
+    private TextView grade;
+    private TextView cite;
+    private TextView id;
+    private TextView date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +30,23 @@ public class Zoom_Review extends AppCompatActivity {
         setContentView(R.layout.activity_zoom_review);
 
         Intent intent=getIntent();
-        From=intent.getExtras().getString("Activity");
         ItemData list = (ItemData) intent.getSerializableExtra("Item");
+
+        staticItem myApp = (staticItem)getApplicationContext();
+
+        /**Text*/
+        product_name = (TextView)findViewById(R.id.name);
+        product_name.setText(myApp.getProName());
+        content=(TextView)findViewById(R.id.contents);
+        content.setText(list.getScontents());
+        grade=(TextView)findViewById(R.id.grade_num);
+        grade.setText(list.getSgrade());
+        cite=(TextView)findViewById(R.id.cite);
+        cite.setText(list.getScite());
+        id=(TextView)findViewById(R.id.reviewId);
+        id.setText(list.getSId());
+        date=(TextView)findViewById(R.id.review_date);
+        date.setText(list.getSdate());
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
@@ -34,6 +54,8 @@ public class Zoom_Review extends AppCompatActivity {
         //ret Button
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
+
+
     }
 
     class BtnOnClickListener implements Button.OnClickListener {
@@ -41,16 +63,7 @@ public class Zoom_Review extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.retButton:
-                    if(From.equals("Main")){
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
-                        break;
-                    }
-                    else if(From.equals("Total")){
-                        Intent intent = new Intent(getApplicationContext(), Total_Review.class);
-                        startActivity(intent);
-                        break;
-                    }
+                    finish();
             }
         }
     }
