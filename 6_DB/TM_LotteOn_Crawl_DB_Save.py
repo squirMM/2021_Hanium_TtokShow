@@ -62,7 +62,7 @@ def crawl(pro,cur):
 
     #페이지별 리뷰 개수
     review_per_page = 5
-    total_page = review_total / review_per_page 
+    total_page = (review_total-count) / review_per_page 
     total_page = math.ceil(total_page) 
     print("긁어올때 필요한 페이지 수:", total_page)    
 

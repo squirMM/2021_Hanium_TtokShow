@@ -38,7 +38,7 @@ def crawl(pro,cur):
     try: # 리뷰 없을때
         table = driver.find_element_by_class_name('productReviewWrap')
         nodata = table.find_element_by_tag_name('p').text
-        print(nodata.text)
+        print(nodata)
         return
         #driver.quit()
         #sys.exit()
