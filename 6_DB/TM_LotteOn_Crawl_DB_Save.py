@@ -19,7 +19,7 @@ def crawl(pro,cur):
     url = f'https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q={plusUrl}&mallId=1'
     driver.get(url)
     
-    count = 515 # 여기에 Count 넣어야해
+    count = pro[3] # 여기에 Count 넣어야해
     
     try:
         a = driver.find_element_by_css_selector('.srchResultNull.srchNullCharacter1')

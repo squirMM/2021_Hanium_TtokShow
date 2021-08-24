@@ -18,7 +18,7 @@ def crawl(pro,cur):
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
     driver.get(url)
 
-    count = 2330 # 여기에 Count 넣어야해
+    count = pro[2] # 여기에 Count 넣어야해
     
     a = driver.find_element_by_css_selector('.csrch_top.v2').text
     if "상품이 없습니다." in a:

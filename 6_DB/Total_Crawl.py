@@ -15,7 +15,7 @@ con = db.connect(
 
 cur=con.cursor()
 
-sql_find = "SELECT barcord_id, name from product "
+sql_find = "SELECT barcord_id, name ,ssg , lotte from product "
 cur.execute(sql_find)
 result = cur.fetchall()
 print(result)
