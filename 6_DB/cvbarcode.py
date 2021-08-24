@@ -2,7 +2,7 @@ import pyzbar.pyzbar as pyzbar
 import cv2
 
 def getBarcode():
-    cap = cv2.VideoCapture('http://118.38.174.163:81/stream')
+    cap = cv2.VideoCapture('http://172.20.10.6:81/stream')
 
     i = 0
     while (cap.isOpened()):
