@@ -45,6 +45,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     private TextView product_name;
     private TextView grade_float;
+    private TextView person_many;
     private ImageButton open_bu;
     private Dialog dialog;
     private ImageView iv_image;
@@ -77,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
                     Client.main();
                     String[] out = Client.getOutput();
                     output = out;
-                    item = new ItemData(output[0], output[1], output[2], output[3], output[4]);
-                    list_d.add(item);
                     for (int i = 1; i < (output.length / 5); i++) {
                         item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
                         if (i < 10) list_s.add(item);
@@ -112,8 +111,11 @@ public class MainActivity extends AppCompatActivity {
 
         product_name = (TextView)findViewById(R.id.name);
         product_name.setText(output[1]);
-        //grade_float = (TextView)findViewById(R.id.grade);
-        //grade_float.setText(output[3]);
+        grade_float = (TextView)findViewById(R.id.gradef);
+        grade_float.setText(output[3]+"/5");
+        person_many = (TextView)findViewById(R.id.cnt_per);
+        person_many.setText(Integer.toString(output.length/5 - 1)+"명");
+
 
 
         /**Recycler view*/
