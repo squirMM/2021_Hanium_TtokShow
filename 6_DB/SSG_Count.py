@@ -37,11 +37,10 @@ def crawl(pro,cur):
         return
         
     except Exception: #리뷰 있을 때
-        # 최신순 클릭
-        driver.find_element_by_css_selector('.cdtl_opt').click()
-        driver.find_element_by_xpath('//*[@id="cmt_select_sort"]/div/div/ul/li[2]').click()
-    
-    
+        price = driver.find_element_by_css_selector('.ssg_price').text 
+        price = price.replace(",","")
+        print("가격:",price) 
+        
     try: #리뷰 게시가 안되어있을때
         table = driver.find_element_by_class_name('cdtl_cmt_tbl')
         nodata = table.find_element_by_tag_name('p').text
