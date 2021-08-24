@@ -1,9 +1,5 @@
 import pymysql.err
-
-import product_table as pro
-import review_table as rev
 import pymysql as db
-import TM_SSG_Crawl_DB_Save as ssg
 
 # DB 연걸
 local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
@@ -15,15 +11,14 @@ con = db.connect(
     charset='utf8'
 )
 cur = con.cursor()
-# cur or con error
 
-# pro.cre_proT(cur)
-# # insp.first_insert(cur)
-# rev.del_reT(cur)
-# rev.cre_reT(cur)
-# ssg.crawl(cur)
+sql_mining="""ALTER TABLE product ADD COLUMN mining VARCHAR(255) DEFAULT 'None'"""
+sql_ssg="""ALTER TABLE product ADD COLUMN ssg INT DEFAULT 0"""
+sql_lotte="""ALTER TABLE product ADD COLUMN lotte INT DEFAULT 0"""
 
-val = ""
+cur.execute(sql_mining)
+cur.execute(sql_ssg)
+cur.execute(sql_lotte)
 
 # try:
 #     sql_p = """SELECT * FROM product where barcord_id = %s"""

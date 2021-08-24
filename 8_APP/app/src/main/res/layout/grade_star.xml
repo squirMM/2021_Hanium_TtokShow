@@ -30,7 +30,6 @@
         hedgehog:starEmpty="@drawable/ic_star_empty"
         hedgehog:starFill="@drawable/ic_star_fill"
         hedgehog:starHalf="@drawable/ic_star_half" />
-
     <!--사람 모양-->
     <ImageView
         android:id="@+id/person"
@@ -48,6 +47,5 @@
         android:textSize="18sp"
         android:layout_gravity="center"
         tools:text="100명">
-
     </TextView>
 </LinearLayout>
