@@ -149,12 +149,12 @@ public class MainActivity extends AppCompatActivity {
 
         /**image*/
         //iv_image = (ImageView)findViewById(R.id.keywordbox);
-        pro_image=(ImageView)findViewById(R.id.productImg);
+
         String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
         //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
-        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
-        loadImageTask imageTask = new loadImageTask(image_url_con);
-        imageTask.execute();
+//        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+//        loadImageTask imageTask = new loadImageTask(image_url_con);
+//        imageTask.execute();
 
 
         /**Error Dialog*/
@@ -186,6 +186,10 @@ public class MainActivity extends AppCompatActivity {
                     if (!open_bu.isSelected()) {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
                         open_bu.setSelected(true);
+                        pro_image=(ImageView)findViewById(R.id.productImggggg);
+                        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+                        loadImageTask imageTask = new loadImageTask(image_url);
+                        imageTask.execute();
                     } else {
                         inflatedLayout.removeAllViews();
                         open_bu.setSelected(false);
