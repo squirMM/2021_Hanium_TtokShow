@@ -19,7 +19,6 @@ public class ScannerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
-
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setCaptureActivity(ScannerCaptureActivity.class);
         integrator.initiateScan();
@@ -38,7 +37,9 @@ public class ScannerActivity extends AppCompatActivity {
             String message = re;
             Log.d("onActivityResult", "onActivityResult: ." + re);
             Toast.makeText(this, re, Toast.LENGTH_LONG).show();
-            ((Barcode)getApplication()).setID(re);
+            Client.send = re;
+            Client.cam = true;
+            MainActivity.client = true;
             finish();
         }
 

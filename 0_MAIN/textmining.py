@@ -14,13 +14,13 @@ con = db.connect(
     charset='utf8'
 )
 
-cur=con.cursor()
+cur_tm=con.cursor()
 
 def fetchReview(codeNum):
-    police = """select contents from review where barcord_id = %s"""
-    cur.execute(police, [codeNum])
-    dontknow = list(cur.fetchall())
-    return dontknow
+    sel_rev = """select contents from review where barcord_id = %s"""
+    cur_tm.execute(sel_rev, [codeNum])
+    rev = list(cur_tm.fetchall())
+    return rev
 
 def get_noun(news):
     okt = Okt()
@@ -44,19 +44,28 @@ def visualize(noun_list):
     wc.to_file('keyword.png')
 
 def excuteMining(maxLen,barcode):
-    review_list = [x[0] for x in fetchReview(str(8801007160337))]
+    review_list = [x[0] for x in fetchReview(barcode)]
     print("fetch done.")
     # print(review_list)
     strReview = " ".join(review_list)
     print("string done.")
     # print(strReview)
     if len(strReview) > maxLen:
-        strReview = strReview[-maxLen:-1]
+        strReview = strReview[0:maxLen]
     print(strReview)
     visualize(get_noun(strReview))
     # newVisualize(get_noun(strReview))
     print("visualization done. :)")
 
 if __name__=="__main__":
-    #순차적으로 돌아가게 수정해야함
-    excuteMining(100000,8801007160337)  #리뷰내용최대길이(전체리뷰합친길이), 바코드번호
+    sql="""select barcord_id from review group by barcord_id"""
+    cur_tm.execute(sql)
+    result=cur_tm.fetchall()
+    #cnt=0
+    num=int(input("NUM : "))
+    cnt=num
+    while(cnt<len(result)):
+        pro=result[cnt]
+        print(pro[0])
+        excuteMining(100000,pro[0])  # #리뷰내용최대길이(전체리뷰합친길이), 바코드번호
+        cnt+=1

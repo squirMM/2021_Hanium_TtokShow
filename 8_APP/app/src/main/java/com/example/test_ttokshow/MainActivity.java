@@ -44,6 +44,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private TextView product_name;
+    private TextView grade_float;
     private ImageButton open_bu;
     private Dialog dialog;
     private ImageView iv_image;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public ArrayList<ItemData> list_d;
     private static final String TAG = "MainActivity";
     public String[] output = new String[10];
+    public static Boolean client = true;
 
 
     @Override
@@ -66,23 +68,26 @@ public class MainActivity extends AppCompatActivity {
         list_s = new ArrayList<>();
         list = new ArrayList<>();
         list_d = new ArrayList<>();
-
-        new Thread(){
-            @Override
-            public void run(){
-                Client.main();
-                String[] out = Client.getOutput();
-                output = out;
-                item = new ItemData(output[0],output[1],output[2],output[3],output[4]);
-                list_d.add(item);
-                for (int i=1; i<(output.length/5); i++) {
-                    item= new ItemData(output[5*i+3],output[5*i+4],output[5*i],output[5*i+1],output[5*i+2]);
-                    if(i<10)list_s.add(item);
-                    list.add(item);
+        if (client)
+            output[0] = "Already";
+        if (client) {
+            new Thread() {
+                @Override
+                public void run() {
+                    Client.main();
+                    String[] out = Client.getOutput();
+                    output = out;
+                    item = new ItemData(output[0], output[1], output[2], output[3], output[4]);
+                    list_d.add(item);
+                    for (int i = 1; i < (output.length / 5); i++) {
+                        item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
+                        if (i < 10) list_s.add(item);
+                        list.add(item);
+                    }
+                    client = false;
                 }
-            }
-        }.start();
-        output[0] = "Already";
+            }.start();
+       }
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
@@ -102,8 +107,11 @@ public class MainActivity extends AppCompatActivity {
             continue;
         }
 
-        product_name= (TextView)findViewById(R.id.name);
+        product_name = (TextView)findViewById(R.id.name);
         product_name.setText(output[1]);
+        //grade_float = (TextView)findViewById(R.id.grade);
+        //grade_float.setText(output[3]);
+
 
         /**Recycler view*/
         RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
@@ -130,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
         mRatingBar.setStar(Float.parseFloat(output[3]));
+        Total_Review.averStar = Float.parseFloat(output[3]);
 
         /**Text*/
         product_name=(TextView)findViewById(R.id.name);
@@ -184,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.home_btn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
+
 
 
             }

@@ -30,6 +30,7 @@ public class Total_Review extends AppCompatActivity {
     private ArrayList<ItemData> list;
     private int num=0;
     private Adapter adapter;
+    public static Float averStar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +44,7 @@ public class Total_Review extends AppCompatActivity {
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        mRatingBar.setStar(2.8f);
+        mRatingBar.setStar(averStar);
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
@@ -102,9 +103,7 @@ public class Total_Review extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.retButton:
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                    break;
+                    finish();
             }
         }
     }
