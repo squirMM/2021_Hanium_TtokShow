@@ -49,9 +49,8 @@ def crawl(pro,cur):
         return
     except Exception:
         review_total = driver.find_element_by_css_selector('.num').text 
+        review_total = int(review_total.replace(",",""))
         print("리뷰 개수:",review_total)
-        review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
-        print("평점:", review_grade)
-
+        
     query_ssg = """UPDATE product SET ssg=%s WHERE barcord_id=%s """
     cur.execute(query_ssg, (review_total, pro[0]))

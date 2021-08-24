@@ -36,7 +36,8 @@ def crawl(pro,cur):
     product = driver.find_element_by_css_selector('.productName').text 
     print("상품명:",product) 
     try: # 리뷰 없을때
-        nodata = driver.find_element_by_css_selector(".dataNull.default")
+        table = driver.find_element_by_class_name('productReviewWrap')
+        nodata = table.find_element_by_tag_name('p').text
         print(nodata.text)
         return
         #driver.quit()
@@ -44,6 +45,7 @@ def crawl(pro,cur):
     except Exception: # 리뷰 있을때
         review_total = driver.find_element_by_css_selector('.reviewCount').text 
         review_total = review_total.replace("건","")
+        review_total = int(review_total.replace(",",""))
         print("리뷰 개수:",review_total)
 
     query_lotte="""UPDATE product SET lotte=%s WHERE barcord_id=%s """
