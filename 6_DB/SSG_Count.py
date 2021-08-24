@@ -53,5 +53,5 @@ def crawl(pro,cur):
         review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
         print("평점:", review_grade)
 
-    sql = "INSERT IGNORE INTO product (ssg) VALUE (%s)"
-    cur.executemany(sql, review_total)
+    query_ssg = """UPDATE product SET ssg=%s WHERE barcord_id=%s """
+    cur.execute(query_ssg, (review_total, pro[0]))

@@ -46,5 +46,5 @@ def crawl(pro,cur):
         review_total = review_total.replace("건","")
         print("리뷰 개수:",review_total)
 
-    sql = "INSERT IGNORE INTO product (lotte) VALUES (%s)"
-    cur.executemany(sql, review_total)
+    query_lotte="""UPDATE product SET lotte=%s WHERE barcord_id=%s """
+    cur.execute(query_lotte,(review_total,pro[0]))
