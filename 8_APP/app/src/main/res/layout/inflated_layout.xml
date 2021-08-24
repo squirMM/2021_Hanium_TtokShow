@@ -4,13 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="312dp"
     android:layout_height="210dp"
-    android:background="@color/white">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:text="test time"
-        android:textSize="30sp"
-        style="@style/textView_style"/>
+    android:background="@color/white"
+    android:orientation="vertical">
+    <ImageView
+        android:id="@+id/productImggggg"
+        android:layout_marginTop="15dp"
+        android:layout_width="260dp"
+        android:layout_height="160dp"
+        android:layout_gravity="center" />
 
 </LinearLayout>
