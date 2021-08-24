@@ -31,6 +31,8 @@ public class Total_Review extends AppCompatActivity {
     private int num=0;
     private Adapter adapter;
     public static Float averStar;
+    static String pm;
+    static String rf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -8,13 +8,14 @@
     android:orientation="horizontal">
     <!--평점 표현-->
     <TextView
-        android:id="@+id/grade"
+        android:id="@+id/gradef"
         android:layout_width="60dp"
         android:layout_height="24dp"
-        android:textSize="24sp"
-        android:layout_marginStart="34dp"
+        android:textSize="20sp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
         android:layout_gravity="center"
-        tools:text="3.0/5"
+        android:text="3.00/5"
         style="@style/textView_style"/>
     <!--별 모양-->
     <com.hedgehog.ratingbar.RatingBar
@@ -24,6 +25,7 @@
         android:layout_gravity="center"
         app:starImageHeight="28dp"
         app:starImageWidth="28dp"
+        android:layout_marginStart="2dp"
         hedgehog:clickable="false"
         hedgehog:starCount="5"
         hedgehog:halfstart="true"
@@ -46,6 +48,6 @@
         android:layout_height="18dp"
         android:textSize="18sp"
         android:layout_gravity="center"
-        tools:text="100명">
+        android:text="100명">
     </TextView>
 </LinearLayout>

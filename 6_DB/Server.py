@@ -18,19 +18,19 @@ def barcode(bar):
         bar = cv.getBarcode()
     bar = bar[0:13]
     sql = """select user_id, date, contents, star_rank, cite from review where barcord_id = %s order by date desc"""
-    sql2 = """select barcord_id, name, image_link, star_avg, count from product where barcord_id = %s """
+    sql2 = """select barcord_id, name, image_link, star_avg from product where barcord_id = %s """
     curs.execute(sql, [bar])
     curs2.execute(sql2,[bar])
     select = list(curs.fetchmany(1000))
-    selectp = list(curs2.fetchmany(10))
+    selectp = list(curs2.fetchmany(1))
     db.commit()
     for i in range(len(selectp[0])):
         sendD.append(str(selectp[0][i]))
+    sendD.append("0")
     for i in range(len(select)):
         for j in range(len(select[i])):
             sendD.append(str(select[i][j]))
     ret = '#'.join(sendD)
-    print(1)
     return ret
 
 def binder(client_socket, addr):
