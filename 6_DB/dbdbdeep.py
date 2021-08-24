@@ -12,13 +12,23 @@ con = db.connect(
 )
 cur = con.cursor()
 
-sql_mining="""ALTER TABLE product ADD COLUMN mining VARCHAR(255) DEFAULT 'None'"""
-sql_ssg="""ALTER TABLE product ADD COLUMN ssg INT DEFAULT 0"""
-sql_lotte="""ALTER TABLE product ADD COLUMN lotte INT DEFAULT 0"""
+# sql_mining="""ALTER TABLE product ADD COLUMN mining VARCHAR(255) DEFAULT 'None'"""
+# sql_ssg="""ALTER TABLE product ADD COLUMN ssg INT DEFAULT 0"""
+# sql_lotte="""ALTER TABLE product ADD COLUMN lotte INT DEFAULT 0"""
+#
+# cur.execute(sql_mining)
+# cur.execute(sql_ssg)
+# cur.execute(sql_lotte)
 
-cur.execute(sql_mining)
-cur.execute(sql_ssg)
-cur.execute(sql_lotte)
+# SQL="""select product.name ,review.barcord_id ,product.ssg , product.lotte,count(review.barcord_id) as 'count'
+# from product inner join review
+# on product.barcord_id = review.barcord_id
+# #where  review.cite="ssg"
+# group by review.barcord_id"""
+# cur.execute()
+
+
+sql_check=""""""
 
 # try:
 #     sql_p = """SELECT * FROM product where barcord_id = %s"""
