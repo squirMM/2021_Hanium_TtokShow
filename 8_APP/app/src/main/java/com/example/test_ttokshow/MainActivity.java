@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton open_bu;
     private Dialog dialog;
     private ImageView iv_image;
+    private ImageView pro_image;
     private ItemData item;
     public ArrayList<ItemData> list_s;
     public ArrayList<ItemData> list;
@@ -152,13 +153,13 @@ public class MainActivity extends AppCompatActivity {
         product_name.setSelected(true);      // 선택하기
 
         /**image*/
-        iv_image = (ImageView)findViewById(R.id.keywordbox);
+        //iv_image = (ImageView)findViewById(R.id.keywordbox);
+
         String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
         //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
-        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
-        loadImageTask imageTask = new loadImageTask(image_url_con);
-        imageTask.execute();
-
+//        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+//        loadImageTask imageTask = new loadImageTask(image_url_con);
+//        imageTask.execute();
 
 
         /**Error Dialog*/
@@ -190,6 +191,10 @@ public class MainActivity extends AppCompatActivity {
                     if (!open_bu.isSelected()) {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
                         open_bu.setSelected(true);
+                        pro_image=(ImageView)findViewById(R.id.productImggggg);
+                        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+                        loadImageTask imageTask = new loadImageTask(image_url);
+                        imageTask.execute();
                     } else {
                         inflatedLayout.removeAllViews();
                         open_bu.setSelected(false);
@@ -227,7 +232,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap bit) {
             super.onPostExecute(bit);
-            iv_image.setImageBitmap(bit);
+            //iv_image.setImageBitmap(bit);
+            pro_image.setImageBitmap(bit);
         }
     }
     public void showDialog(){
