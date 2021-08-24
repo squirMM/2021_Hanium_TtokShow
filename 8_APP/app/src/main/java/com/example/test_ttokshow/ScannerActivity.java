@@ -40,6 +40,8 @@ public class ScannerActivity extends AppCompatActivity {
             Client.send = re;
             Client.cam = true;
             MainActivity.client = true;
+            Intent main = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(main);
             finish();
         }
 

@@ -88,6 +88,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }.start();
        }
+        while (output[0] == "Already") {
+            continue;
+        }
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
