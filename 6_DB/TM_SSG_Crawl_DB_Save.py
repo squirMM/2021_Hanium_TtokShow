@@ -17,6 +17,8 @@ def crawl(pro,cur):
     plusUrl = urllib.parse.quote_plus(product)
     url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
     driver.get(url)
+
+    count = 2330 # 여기에 Count 넣어야해
     
     a = driver.find_element_by_css_selector('.csrch_top.v2').text
     if "상품이 없습니다." in a:
@@ -33,27 +35,6 @@ def crawl(pro,cur):
     price = driver.find_element_by_css_selector('.ssg_price').text 
     price = price.replace(",","")
     print("가격:",price)
-
-    def get_page_data():
-        users = driver.find_elements_by_css_selector('.user')  # 사용자명 수집
-        ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per')  # 평점 수집
-        reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2')  # 리뷰 수집
-        for i in range(len(reviews)):
-            user = users[i + 1].text
-            rating = ratings[i].text
-            rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
-            rating = rating.replace("개", "")
-            rating = int(rating)
-            review = reviews[i].text
-            review = review.replace("사진\n", "")
-            review = review.replace("비디오\n", "")
-            num = (2 * i + 1) % 20
-            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
-            date = date.text.replace("-", "")
-            data_tu = (pro[0], user, date, rating, review, "ssg")
-            data_list.append(data_tu)
-            #print(data_tu)
-            print("\r {0}".format(data_tu), end="")
     
     try: #리뷰 없을 때
         review_none = driver.find_element_by_css_selector('.cdtl_review_txt').text 
@@ -72,18 +53,42 @@ def crawl(pro,cur):
         print(nodata)
         return
     except Exception:
-        review_total = driver.find_element_by_css_selector('.num').text 
-        print("리뷰 개수:",review_total)
+        review_total = driver.find_element_by_css_selector('.num').text
+        review_total = int(review_total.replace(",",""))
         review_grade = driver.find_element_by_css_selector('.cdtl_grade_total').text
         print("평점:", review_grade)
-    
+        print("리뷰 개수:",review_total)
+        print("기존 리뷰 개수", count)
+        print("필요한 리뷰 개수 :", review_total-count)
+
     #페이지별 리뷰 개수
-    review_per_page = 10 
-    review_total = review_total.replace(",","")
-    print(review_total)
-    total_page = int(review_total) / review_per_page 
+    review_per_page = 10
+    total_page = (review_total-count) / review_per_page 
     total_page = math.ceil(total_page) 
-    print("리뷰 페이지 수:", total_page) 
+    print("긁어올때 필요한 페이지 수:", total_page) 
+
+    def get_page_data():
+        users = driver.find_elements_by_css_selector('.user')  # 사용자명 수집
+        ratings = driver.find_elements_by_css_selector('.sp_cdtl.cdtl_cmt_per')  # 평점 수집
+        reviews = driver.find_elements_by_css_selector('.cdtl_cmt_tx.v2')  # 리뷰 수집
+        for i in range(len(reviews)):
+            if len(data_list) == review_total - count:
+                break
+            user = users[i + 1].text
+            rating = ratings[i].text
+            rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
+            rating = rating.replace("개", "")
+            rating = int(rating)
+            review = reviews[i].text
+            review = review.replace("사진\n", "")
+            review = review.replace("비디오\n", "")
+            num = (2 * i + 1) % 20
+            date = driver.find_element_by_xpath(f'//*[@id="cdtl_cmt_tbody"]/tr[{num}]/td[5]/div')
+            date = date.text.replace("-", "")
+            data_tu = (pro[0], user, date, rating, review, "ssg")
+            data_list.append(data_tu)
+            #print(data_tu)
+            print("\r {0}".format(data_tu), end="")
 
     print("수집 시작") # 첫 페이지 수집하고 시작 
     get_page_data()
@@ -112,4 +117,6 @@ def crawl(pro,cur):
 
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
+    query_ssg = """UPDATE product SET ssg=%s WHERE barcord_id=%s """
+    cur.execute(query_ssg, (review_total, pro[0]))
 

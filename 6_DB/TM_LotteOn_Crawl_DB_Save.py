@@ -19,6 +19,8 @@ def crawl(pro,cur):
     url = f'https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q={plusUrl}&mallId=1'
     driver.get(url)
     
+    count = 515 # 여기에 Count 넣어야해
+    
     try:
         a = driver.find_element_by_css_selector('.srchResultNull.srchNullCharacter1')
         print("해당 상품 없음")
@@ -39,6 +41,30 @@ def crawl(pro,cur):
     price = price.replace("\n원","")
     price = price.replace(",", "")
     print("가격:",price)
+    
+    try: # 리뷰 없을때
+        table = driver.find_element_by_class_name('productReviewWrap')
+        nodata = table.find_element_by_tag_name('p').text
+        print(nodata)
+        return
+        #driver.quit()
+        #sys.exit()
+    except Exception: # 리뷰 있을때
+        review_total = driver.find_element_by_css_selector('.reviewCount').text 
+        review_total = review_total.replace("건","")
+        review_total = int(review_total.replace(",",""))
+        review_grade = driver.find_element_by_css_selector('.staring').text
+        review_grade = review_grade.replace("평점\n","")
+        print("평점:", review_grade) 
+        print("리뷰 개수:",review_total)
+        print("기존 리뷰 개수", count)
+        print("필요한 리뷰 개수 :", review_total-count)
+
+    #페이지별 리뷰 개수
+    review_per_page = 5
+    total_page = review_total / review_per_page 
+    total_page = math.ceil(total_page) 
+    print("긁어올때 필요한 페이지 수:", total_page)    
 
     def get_page_data(): 
         users = driver.find_elements_by_css_selector('.userName') # 사용자명 수집 
@@ -47,6 +73,8 @@ def crawl(pro,cur):
         dates = driver.find_elements_by_css_selector('.date') #날짜 수집
         hours = "시간 전"
         for i in range(len(users)):
+            if len(data_list) == review_total - count:
+                break
             user = users[i].text
             rating = ratings[i+2].text
             rating = rating.replace("평점","")
@@ -61,28 +89,7 @@ def crawl(pro,cur):
             data_tu = (pro[0], user, date, rating, review, "롯데")
             data_list.append(data_tu)
             print(data_tu)
-
-    try: # 리뷰 없을때
-        nodata = driver.find_element_by_css_selector(".dataNull.default")
-        print(nodata.text)
-        return
-        #driver.quit()
-        #sys.exit()
-    except Exception: # 리뷰 있을때
-        review_total = driver.find_element_by_css_selector('.reviewCount').text 
-        review_total = review_total.replace("건","")
-        review_grade = driver.find_element_by_css_selector('.staring').text
-        review_grade = review_grade.replace("평점\n","")
-        print("평점:", review_grade) 
-        print("리뷰 개수:",review_total)
-
-    #페이지별 리뷰 개수
-    review_per_page = 5
-    review_total = review_total.replace(",","")
-    total_page = int(review_total) / review_per_page 
-    total_page = math.ceil(total_page) 
-    print("리뷰 페이지 수:", total_page)    
-
+            
 
     print("수집 시작") # 첫 페이지 수집하고 시작
     get_page_data()
@@ -96,4 +103,6 @@ def crawl(pro,cur):
     
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
+    query_lotte="""UPDATE product SET lotte=%s WHERE barcord_id=%s """
+    cur.execute(query_lotte,(review_total,pro[0]))
 
