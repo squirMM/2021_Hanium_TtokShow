@@ -37,4 +37,15 @@ public class staticItem extends Application {
     public int getCnt() {
         return cnt;
     }
+
+    public float starRating(){
+        float fAvg= Float.parseFloat(avg);
+        int d= (int)fAvg;
+        float f = fAvg-d;
+        float half= (float)0.5;
+        if(f>=0.75) return (float)d+1;
+        else if(f<=0.25)return (float)d;
+        else return (float)d+half;
+    }
+
 }

@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView iv_image;
     private ImageView pro_image;
     private ItemData item;
+    private ImageButton tts;
     public ArrayList<ItemData> list_s;
     public ArrayList<ItemData> list;
     public ArrayList<ItemData> list_d;
@@ -110,6 +111,10 @@ public class MainActivity extends AppCompatActivity {
         ImageButton home = (ImageButton) findViewById(R.id.home_btn);
         home.setOnClickListener(onClickListener);
 
+        //tts
+        tts=(ImageButton)findViewById(R.id.ttsBtn);
+        tts.setOnClickListener(onClickListener);
+
         while (output[0] == "Already") {
             continue;
         }
@@ -147,9 +152,10 @@ public class MainActivity extends AppCompatActivity {
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        //mRatingBar.setStar(Float.parseFloat(output[3]));
-        mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
-        Total_Review.averStar = Float.parseFloat(output[3]);
+        System.out.println("rating     "+myApp.starRating());
+        mRatingBar.setStar(myApp.starRating());
+        //mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
+
 
         /**Text*/
         product_name=(TextView)findViewById(R.id.name);
@@ -208,9 +214,10 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.home_btn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
-
-
-
+                    break;
+                case R.id.ttsBtn:
+                    //TODO 여기다 쓰셈
+                    break;
             }
         }
 

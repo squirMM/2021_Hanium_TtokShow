@@ -3,11 +3,13 @@ package com.example.test_ttokshow;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.test_ttokshow.Recy.ItemData;
@@ -22,6 +24,7 @@ public class Zoom_Review extends AppCompatActivity {
     private TextView cite;
     private TextView id;
     private TextView date;
+    private ImageView perGrade;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,10 @@ public class Zoom_Review extends AppCompatActivity {
         date=(TextView)findViewById(R.id.review_date);
         date.setText(list.getSdate());
 
+        /**ImageView*/
+        perGrade=(ImageView)findViewById(R.id.per_grade);
+        perRank(Integer.parseInt(list.getSgrade()));
+
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
 
@@ -65,6 +72,27 @@ public class Zoom_Review extends AppCompatActivity {
                 case R.id.retButton:
                     finish();
             }
+        }
+    }
+
+    public void perRank(int star){
+        Drawable drawable = getResources().getDrawable(R.drawable.aver1);
+        switch (star){
+            case 5:
+                perGrade.setImageResource(R.drawable.aver5);
+                break;
+            case 4:
+                perGrade.setImageResource(R.drawable.aver4);
+                break;
+            case 3:
+                perGrade.setImageResource(R.drawable.aver3);
+                break;
+            case 2:
+                perGrade.setImageResource(R.drawable.aver2);
+                break;
+            case 1:
+                perGrade.setImageResource(R.drawable.aver1);
+                break;
         }
     }
 

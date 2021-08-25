@@ -60,7 +60,7 @@ public class Total_Review extends AppCompatActivity {
         /**custom star*/
         RatingBar mRatingBar =grade.findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
+        mRatingBar.setStar(myApp.starRating());
 
         /**Button*/
         BtnOnClickListener onClickListener = new BtnOnClickListener();
