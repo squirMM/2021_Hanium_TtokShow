@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,17 +24,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.test_ttokshow.Recy.Adapter;
 import com.example.test_ttokshow.Recy.ItemData;
 import com.example.test_ttokshow.Recy.OnReviewItemClickListener;
 import com.example.test_ttokshow.Recy.RecyclerDeco;
 import com.example.test_ttokshow.Recy.ViewType;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.hedgehog.ratingbar.RatingBar;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -52,7 +61,6 @@ public class MainActivity extends Activity {
     private ImageView iv_image;
     private ImageView pro_image;
     private ItemData item;
-    private ImageButton tts;
     public ArrayList<ItemData> list_s;
     public ArrayList<ItemData> list;
     public ArrayList<ItemData> list_d;
@@ -112,10 +120,6 @@ public class MainActivity extends Activity {
         ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
         camera.setOnClickListener(onClickListener);
 
-        //tts
-        tts=(ImageButton)findViewById(R.id.ttsBtn);
-        tts.setOnClickListener(onClickListener);
-
         while (output[0] == "Already") {
             continue;
         }
@@ -153,10 +157,9 @@ public class MainActivity extends Activity {
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        System.out.println("rating     "+myApp.starRating());
-        mRatingBar.setStar(myApp.starRating());
-        //mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
-
+        //mRatingBar.setStar(Float.parseFloat(output[3]));
+        mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
+        Total_Review.averStar = Float.parseFloat(output[3]);
 
         /**Text*/
         product_name=(TextView)findViewById(R.id.name);
@@ -164,10 +167,27 @@ public class MainActivity extends Activity {
         product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
         product_name.setSelected(true);      // 선택하기
 
-        /**image*/
-        //iv_image = (ImageView)findViewById(R.id.keywordbox);
+        /**image**/
+        iv_image = (ImageView)findViewById(R.id.keywordbox);
 
-        String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
+        /**Firebase**/
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://ttks-161718.appspot.com/");
+            StorageReference storageRef = storage.getReference();
+            storageRef.child(output[0]).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getApplicationContext())
+                            .load(uri)
+                            .into(iv_image);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull @NotNull Exception e) {
+                    Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        //String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
         //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
 //        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
 //        loadImageTask imageTask = new loadImageTask(image_url_con);
@@ -215,10 +235,9 @@ public class MainActivity extends Activity {
                 case R.id.cameraBtn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
-                    break;
-                case R.id.ttsBtn:
-                    //TODO 여기다 쓰셈
-                    break;
+
+
+
             }
         }
 

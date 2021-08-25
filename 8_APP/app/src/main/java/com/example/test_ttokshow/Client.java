@@ -13,8 +13,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
         private static String[] output;
-        static String send;
-        static Boolean cam = false;
+        static String send = "8801007160337";
+        static Boolean cam = true;
         public static void main(String... args) {
             try (Socket client = new Socket()) {
                 InetSocketAddress ipep = new InetSocketAddress("13.59.29.176", 9999);
@@ -36,7 +36,7 @@ import java.nio.ByteOrder;
                         }
 
                         byte[] data = new byte[4];
-                        sender.write(data,0,4);
+                        //sender.write(data,0,4);
                         receiver.read(data, 0, 4);
                         ByteBuffer bu = ByteBuffer.wrap(data);
                         bu.order(ByteOrder.LITTLE_ENDIAN);
@@ -47,6 +47,8 @@ import java.nio.ByteOrder;
 
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
+                        System.out.println("ABC"+output.length);
+                        System.out.println(output[4]);
                     }
 
                 }
