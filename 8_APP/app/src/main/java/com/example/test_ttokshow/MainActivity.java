@@ -1,5 +1,6 @@
 package com.example.test_ttokshow;
 
+import android.app.Activity;
 import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
@@ -42,7 +43,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     private static TextView product_name;
     private TextView grade_float;
     private TextView person_many;
@@ -108,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
         all_review.setOnClickListener(onClickListener);
 
         //scanner btn
-        ImageButton home = (ImageButton) findViewById(R.id.home_btn);
-        home.setOnClickListener(onClickListener);
+        ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
+        camera.setOnClickListener(onClickListener);
 
         //tts
         tts=(ImageButton)findViewById(R.id.ttsBtn);
@@ -211,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
                         open_bu.setSelected(false);
                     }
                     break;
-                case R.id.home_btn:
+                case R.id.cameraBtn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
                     break;
@@ -282,18 +283,20 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-    //hide
-    public void hideNavigationBar() {
-        View decorView = getWindow().getDecorView();
-        decorView.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
-    }
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            hideNavigationBar();
+           // hideNavigationBar();
+            showSystemUI();
         }
+    }
+    private void showSystemUI() {
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
 }
