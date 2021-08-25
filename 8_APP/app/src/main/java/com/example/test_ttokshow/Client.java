@@ -13,7 +13,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
         private static String[] output;
-        static String send = "8801007160337";
+        static String send = "8801007022635";
         static Boolean cam = true;
         public static void main(String... args) {
             try (Socket client = new Socket()) {

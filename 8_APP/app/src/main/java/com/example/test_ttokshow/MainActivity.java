@@ -213,9 +213,22 @@ public class MainActivity extends Activity {
                         inflater.inflate(R.layout.inflated_layout, inflatedLayout);
                         open_bu.setSelected(true);
                         pro_image=(ImageView)findViewById(R.id.productImggggg);
-                        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
-                        loadImageTask imageTask = new loadImageTask(image_url);
-                        imageTask.execute();
+                        FirebaseStorage storage2 = FirebaseStorage.getInstance("gs://ttks-161718.appspot.com/");
+                        StorageReference storageRef = storage2.getReference();
+                        storageRef.child("pro_img/"+output[0]+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(getApplicationContext())
+                                        .load(uri)
+                                        .into(pro_image);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull @NotNull Exception e) {
+                                Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     } else {
                         inflatedLayout.removeAllViews();
                         open_bu.setSelected(false);
