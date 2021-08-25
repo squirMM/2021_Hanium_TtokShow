@@ -12,7 +12,7 @@ options.add_experimental_option("excludeSwitches", ["enable_logging"])
 driver = webdriver.Chrome(options=options)
 data_list = []
 
-product = "아이스브레이커스민트"
+product = "CJ 부침가루"
 plusUrl = urllib.parse.quote_plus(product)
 url = f'http://www.ssg.com/search.ssg?target=all&query={plusUrl}'
 driver.get(url)
@@ -75,7 +75,10 @@ def get_page_data():
         if len(data_list) == review_total - count:
             break
         number = numbers[i+1].text
-        user = users[i+1].text
+        if users[1].text == '':
+            user = users[i+2].text
+        else:
+            user = users[i+1].text
         rating = ratings[i].text
         rating = rating.replace("구매 고객 평점 별 5개 중 ","")
         rating = rating.replace("개","")
