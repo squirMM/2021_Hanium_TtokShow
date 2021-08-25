@@ -56,6 +56,7 @@ def binder(client_socket, addr):
     except:
         print("except : " , addr)
     finally:
+        print("end")
         client_socket.close()
         
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

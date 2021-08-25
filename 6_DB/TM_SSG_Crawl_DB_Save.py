@@ -74,7 +74,10 @@ def crawl(pro,cur):
         for i in range(len(reviews)):
             if len(data_list) == review_total - count:
                 break
-            user = users[i + 1].text
+            if users[1].text == '':
+                user = users[i + 2].text
+            else:
+                user = users[i + 1].text
             rating = ratings[i].text
             rating = rating.replace("구매 고객 평점 별 5개 중 ", "")
             rating = rating.replace("개", "")

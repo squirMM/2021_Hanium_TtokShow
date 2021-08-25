@@ -12,9 +12,9 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
-        private static String[] output;
-        static String send;
-        static Boolean cam = false;
+        public static String[] output;
+        static String send = "8801007160337";
+        static Boolean cam = true;
         public static void main(String... args) {
             try (Socket client = new Socket()) {
                 InetSocketAddress ipep = new InetSocketAddress("18.216.76.16", 9999);
@@ -36,7 +36,7 @@ import java.nio.ByteOrder;
                         }
 
                         byte[] data = new byte[4];
-                        sender.write(data,0,4);
+                        //sender.write(data,0,4);
                         receiver.read(data, 0, 4);
                         ByteBuffer bu = ByteBuffer.wrap(data);
                         bu.order(ByteOrder.LITTLE_ENDIAN);
@@ -47,6 +47,12 @@ import java.nio.ByteOrder;
 
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
+                        System.out.println("ABC"+output.length);
+                        System.out.println(output[0]);
+                        System.out.println(output[1]);
+                        System.out.println(output[2]);
+                        System.out.println(output[3]);
+                        System.out.println(output[4]);
                     }
 
                 }
