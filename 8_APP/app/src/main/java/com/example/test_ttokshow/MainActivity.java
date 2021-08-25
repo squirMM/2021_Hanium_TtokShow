@@ -83,27 +83,27 @@ public class MainActivity extends Activity {
         list_s = new ArrayList<>();
         list = new ArrayList<>();
         list_d = new ArrayList<>();
-        if (client)
-            output[0] = "Already";
-        if (client) {
-            new Thread() {
-                @Override
-                public void run() {
-                    Client.main();
-                    String[] out = Client.getOutput();
-                    output = out;
-                    for (int i = 1; i < (output.length / 5); i++) {
-                        item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
-                        if (i < 10) list_s.add(item);
-                        list.add(item);
-                    }
-                    client = false;
+        Thread CThread = new Thread() {
+            public void run() {
+                Client.main();
+                String[] out = Client.getOutput();
+                output = out;
+                for (int i = 1; i < (output.length / 5); i++) {
+                    item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
+                    if (i < 10) list_s.add(item);
+                    list.add(item);
                 }
-            }.start();
-       }
-        while (output[0] == "Already") {
-            continue;
+            client = false;
         }
+    };
+        CThread.start();
+        try {
+        CThread.join();
+    }
+        catch (InterruptedException e) {
+        e.printStackTrace();;
+    }
+
 
         staticItem myApp = (staticItem)getApplicationContext();
         myApp.setState(output[3],output[1],output.length/5 - 1);
@@ -130,10 +130,6 @@ public class MainActivity extends Activity {
         //tts
         tts=(ImageButton)findViewById(R.id.ttsBtn);
         tts.setOnClickListener(onClickListener);
-
-        while (output[0] == "Already") {
-            continue;
-        }
 
         /**Text View*/
         product_name = (TextView)findViewById(R.id.name);
@@ -180,12 +176,6 @@ public class MainActivity extends Activity {
 
         /**image*/
         iv_image = (ImageView)findViewById(R.id.keywordbox);
-
-        String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
-        //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
-//        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
-//        loadImageTask imageTask = new loadImageTask(image_url_con);
-//        imageTask.execute();
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ttks-161718.appspot.com/");
         StorageReference storageRef = storage.getReference();
         storageRef.child(output[0]).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
