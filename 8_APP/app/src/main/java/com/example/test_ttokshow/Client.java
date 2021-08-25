@@ -12,14 +12,14 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
-        public static String[] output;
+        private static String[] output;
         static String send = "8801007160337";
         static Boolean cam = true;
         public static void main(String... args) {
             try (Socket client = new Socket()) {
-                InetSocketAddress ipep = new InetSocketAddress("13.59.29.176", 9999);
+                InetSocketAddress ipep = new InetSocketAddress("18.216.76.16", 9999);
                 //3.144.33.17
-                //13.59.29.176
+                //18.216.76.16
                 client.connect(ipep);
                 try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream()) {
 

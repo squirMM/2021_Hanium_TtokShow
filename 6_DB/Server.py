@@ -1,6 +1,7 @@
 import socket, threading;
 import pymysql
 import cvbarcode as cv
+import FirebasePushAlarm as fb
 
 def barcode(bar):
     local = 'dbtest.cuslvraxrcdc.ap-northeast-2.rds.amazonaws.com'
@@ -21,8 +22,8 @@ def barcode(bar):
     sql2 = """select barcord_id, name, image_link, star_avg from product where barcord_id = %s """
     curs.execute(sql, [bar])
     curs2.execute(sql2,[bar])
-    select = list(curs.fetchmany(1000))
-    selectp = list(curs2.fetchmany(1))
+    select = list(curs.fetchall())
+    selectp = list(curs2.fetchmany(10))
     db.commit()
     for i in range(len(selectp[0])):
         sendD.append(str(selectp[0][i]))
@@ -58,20 +59,22 @@ def binder(client_socket, addr):
     finally:
         print("end")
         client_socket.close()
-        
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-server_socket.bind(('', 9999))
-server_socket.listen()
-try:
-    print("Start")
-    while True:
-        client_socket, addr = server_socket.accept()
-        th = threading.Thread(target=binder, args = (client_socket,addr))
-        th.start()
-except:
-    print("server")
-finally:
-    server_socket.close()
+
+if __name__ == '__main__':
+    fb.sendMessage("ㅇㄹ","똑쇼")
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    server_socket.bind(('', 9999))
+    server_socket.listen()
+    try:
+        print("Start")
+        while True:
+            client_socket, addr = server_socket.accept()
+            th = threading.Thread(target=binder, args = (client_socket,addr))
+            th.start()
+    except:
+        print("server")
+    finally:
+        server_socket.close()
 
 

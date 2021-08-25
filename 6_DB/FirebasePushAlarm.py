@@ -21,4 +21,5 @@ def sendMessage(body, title):
     print(result)
 
 
-sendMessage("인식완료", "똑쇼")
+if __init__ == __main__:
+    sendMessage("인식완료", "똑쇼")
