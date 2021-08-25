@@ -61,6 +61,9 @@ public class MainActivity extends Activity {
     private ImageView iv_image;
     private ImageView pro_image;
     private ItemData item;
+    private ImageButton tts;
+    private RecyclerView recyclerView;
+    private Adapter adapter;
     public ArrayList<ItemData> list_s;
     public ArrayList<ItemData> list;
     public ArrayList<ItemData> list_d;
@@ -80,26 +83,26 @@ public class MainActivity extends Activity {
         list_s = new ArrayList<>();
         list = new ArrayList<>();
         list_d = new ArrayList<>();
-
-        Thread CThread = new Thread() {
-            public void run() {
-                Client.main();
-                String[] out = Client.getOutput();
-                output = out;
-                for (int i = 1; i < (output.length / 5); i++) {
-                    item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
-                    if (i < 10) list_s.add(item);
-                    list.add(item);
+        if (client)
+            output[0] = "Already";
+        if (client) {
+            new Thread() {
+                @Override
+                public void run() {
+                    Client.main();
+                    String[] out = Client.getOutput();
+                    output = out;
+                    for (int i = 1; i < (output.length / 5); i++) {
+                        item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
+                        if (i < 10) list_s.add(item);
+                        list.add(item);
+                    }
+                    client = false;
                 }
-                client = false;
-                }
-        };
-        CThread.start();
-        try {
-            CThread.join();
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();;
+            }.start();
+       }
+        while (output[0] == "Already") {
+            continue;
         }
 
         staticItem myApp = (staticItem)getApplicationContext();
@@ -120,6 +123,18 @@ public class MainActivity extends Activity {
         ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
         camera.setOnClickListener(onClickListener);
 
+        //home btn
+        ImageButton home =(ImageButton)findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
+
+        //tts
+        tts=(ImageButton)findViewById(R.id.ttsBtn);
+        tts.setOnClickListener(onClickListener);
+
+        while (output[0] == "Already") {
+            continue;
+        }
+
         /**Text View*/
         product_name = (TextView)findViewById(R.id.name);
         product_name.setText(myApp.getProName());
@@ -131,21 +146,20 @@ public class MainActivity extends Activity {
 
 
         /**Recycler view*/
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
+        recyclerView = findViewById(R.id.recyclerView_s);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
         RecyclerDeco decoration_Width = new RecyclerDeco(26,26,0,0);
         recyclerView.addItemDecoration(decoration_Width);
 
-        Adapter adapter = new Adapter(ViewType.small,list_s);
-        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                ItemData item = adapter.getItemPos(position);
-                Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
-                intent_Z.putExtra("Item", item);
-                startActivity(intent_Z);
-            }
+        adapter = new Adapter(ViewType.small,list_s);
+        adapter.setOnItemClickListener((v, position) -> {
+            // 클릭했을때 원하는데로 처리해주는 부분
+            ItemData item = adapter.getItemPos(position);
+            System.out.println("click "+item);
+            Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
+            intent_Z.putExtra("Item", item);
+            startActivity(intent_Z);
         });
         recyclerView.setAdapter(adapter);
 
@@ -153,9 +167,10 @@ public class MainActivity extends Activity {
         /**custom star*/
         RatingBar mRatingBar =findViewById(R.id.ratingBar);
         mRatingBar.setStarCount(5);
-        //mRatingBar.setStar(Float.parseFloat(output[3]));
-        mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
-        Total_Review.averStar = Float.parseFloat(output[3]);
+        System.out.println("rating     "+myApp.starRating());
+        mRatingBar.setStar(myApp.starRating());
+        //mRatingBar.setStar(Float.parseFloat(myApp.getAvg()));
+
 
         /**Text*/
         product_name=(TextView)findViewById(R.id.name);
@@ -163,25 +178,30 @@ public class MainActivity extends Activity {
         product_name.setEllipsize(TextUtils.TruncateAt.MARQUEE); // 흐르게 만들기
         product_name.setSelected(true);      // 선택하기
 
-        /**image**/
+        /**image*/
         iv_image = (ImageView)findViewById(R.id.keywordbox);
 
-        /**Firebase**/
+        String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
+        //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
+//        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+//        loadImageTask imageTask = new loadImageTask(image_url_con);
+//        imageTask.execute();
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://ttks-161718.appspot.com/");
-            StorageReference storageRef = storage.getReference();
-            storageRef.child(output[0]).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Glide.with(getApplicationContext())
-                            .load(uri)
-                            .into(iv_image);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull @NotNull Exception e) {
-                    Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
-                }
-            });
+        StorageReference storageRef = storage.getReference();
+        storageRef.child(output[0]).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getApplicationContext())
+                        .load(uri)
+                        .into(iv_image);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         /**Error Dialog*/
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
@@ -237,9 +257,10 @@ public class MainActivity extends Activity {
                 case R.id.cameraBtn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
-
-
-
+                    break;
+                case R.id.ttsBtn:
+                    //TODO 여기다 쓰셈
+                    break;
             }
         }
 

@@ -47,7 +47,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        int color=ContextCompat.getColor(this, R.color.red);
+        int color=ContextCompat.getColor(this, R.color.purple);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 

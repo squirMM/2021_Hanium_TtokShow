@@ -69,6 +69,14 @@ public class Total_Review extends AppCompatActivity {
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
 
+        //scanner btn
+        ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
+        camera.setOnClickListener(onClickListener);
+
+        //home btn
+        ImageButton home =(ImageButton)findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
+
         /**Recycler View*/
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -82,16 +90,13 @@ public class Total_Review extends AppCompatActivity {
 
         adapter = new Adapter(ViewType.large);
         getItem();
-        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                // 클릭했을때 원하는데로 처리해주는 부분
-                ItemData item = adapter.getItemPos(position);
-                System.out.println("click "+item);
-                Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
-                intent_Z.putExtra("Item", item);
-                startActivity(intent_Z);
-            }
+        adapter.setOnItemClickListener((v, position) -> {
+            // 클릭했을때 원하는데로 처리해주는 부분
+            ItemData item = adapter.getItemPos(position);
+            System.out.println("click "+item);
+            Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
+            intent_Z.putExtra("Item", item);
+            startActivity(intent_Z);
         });
         recyclerView.setAdapter(adapter);
 
@@ -118,6 +123,12 @@ public class Total_Review extends AppCompatActivity {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.retButton:
+                    finish();
+                case R.id.cameraBtn:
+                    Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
+                    startActivity(scan);
+                    break;
+                case R.id.home_btn:
                     finish();
             }
         }
