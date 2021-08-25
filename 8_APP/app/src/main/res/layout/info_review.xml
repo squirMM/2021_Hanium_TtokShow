@@ -8,7 +8,7 @@
         android:id="@+id/per_grade"
         android:layout_width="90dp"
         android:layout_height="18dp"
-        android:src="@drawable/per1"
+        android:src="@drawable/aver1"
         android:layout_gravity="center"/>
     <TextView
         android:id="@+id/grade_num"

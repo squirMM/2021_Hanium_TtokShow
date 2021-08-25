@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                Intent intent = new Intent(getBaseContext(), ScannerActivity.class);
                 startActivity(intent);
                 finish();
             }
