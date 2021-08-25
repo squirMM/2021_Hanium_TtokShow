@@ -17,7 +17,7 @@ import java.nio.ByteOrder;
         static Boolean cam = false;
         public static void main(String... args) {
             try (Socket client = new Socket()) {
-                InetSocketAddress ipep = new InetSocketAddress("13.59.29.176", 9999);
+                InetSocketAddress ipep = new InetSocketAddress("18.216.76.16", 9999);
                 //3.144.33.17
                 //13.59.29.176
                 client.connect(ipep);

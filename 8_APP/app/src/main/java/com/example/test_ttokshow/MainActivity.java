@@ -53,6 +53,8 @@ public class MainActivity extends Activity {
     private ImageView pro_image;
     private ItemData item;
     private ImageButton tts;
+    private RecyclerView recyclerView;
+    private Adapter adapter;
     public ArrayList<ItemData> list_s;
     public ArrayList<ItemData> list;
     public ArrayList<ItemData> list_d;
@@ -131,21 +133,20 @@ public class MainActivity extends Activity {
 
 
         /**Recycler view*/
-        RecyclerView recyclerView = findViewById(R.id.recyclerView_s);
+        recyclerView = findViewById(R.id.recyclerView_s);
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
 
         RecyclerDeco decoration_Width = new RecyclerDeco(26,26,0,0);
         recyclerView.addItemDecoration(decoration_Width);
 
-        Adapter adapter = new Adapter(ViewType.small,list_s);
-        adapter.setOnItemClickListener(new Adapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                ItemData item = adapter.getItemPos(position);
-                Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
-                intent_Z.putExtra("Item", item);
-                startActivity(intent_Z);
-            }
+        adapter = new Adapter(ViewType.small,list_s);
+        adapter.setOnItemClickListener((v, position) -> {
+            // 클릭했을때 원하는데로 처리해주는 부분
+            ItemData item = adapter.getItemPos(position);
+            System.out.println("click "+item);
+            Intent intent_Z=  new Intent(getApplicationContext(), Zoom_Review.class);
+            intent_Z.putExtra("Item", item);
+            startActivity(intent_Z);
         });
         recyclerView.setAdapter(adapter);
 
