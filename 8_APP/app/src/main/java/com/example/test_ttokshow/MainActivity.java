@@ -187,12 +187,6 @@ public class MainActivity extends Activity {
                 }
             });
 
-        //String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
-        //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
-//        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
-//        loadImageTask imageTask = new loadImageTask(image_url_con);
-//        imageTask.execute();
-
 
         /**Error Dialog*/
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
