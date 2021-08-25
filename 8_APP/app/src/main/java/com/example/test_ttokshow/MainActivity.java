@@ -123,6 +123,10 @@ public class MainActivity extends Activity {
         ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
         camera.setOnClickListener(onClickListener);
 
+        //home btn
+        ImageButton home =(ImageButton)findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
+
         //tts
         tts=(ImageButton)findViewById(R.id.ttsBtn);
         tts.setOnClickListener(onClickListener);

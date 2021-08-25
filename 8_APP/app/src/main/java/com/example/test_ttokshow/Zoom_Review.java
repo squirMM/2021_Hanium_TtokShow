@@ -62,6 +62,14 @@ public class Zoom_Review extends AppCompatActivity {
         ImageButton retBox = (ImageButton) findViewById(R.id.retButton);
         retBox.setOnClickListener(onClickListener);
 
+        //scanner btn
+        ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
+        camera.setOnClickListener(onClickListener);
+
+        //home btn
+        ImageButton home =(ImageButton)findViewById(R.id.home_btn);
+        home.setOnClickListener(onClickListener);
+
 
     }
 
@@ -71,6 +79,10 @@ public class Zoom_Review extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.retButton:
                     finish();
+                case R.id.cameraBtn:
+                    Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
+                    startActivity(scan);
+                    break;
             }
         }
     }
