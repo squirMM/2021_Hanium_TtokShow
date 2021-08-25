@@ -27,7 +27,7 @@
         android:textSize="14sp"
         android:layout_gravity="center"
         android:layout_marginStart="5dp"
-        style="@style/infoText"/>
+        style="@style/textView_style"/>
     <TextView
         android:id="@+id/reviewId"
         android:layout_width="wrap_content"

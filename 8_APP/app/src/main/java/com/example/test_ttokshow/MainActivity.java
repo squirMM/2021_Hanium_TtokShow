@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
                 String[] out = Client.getOutput();
                 output = out;
                 for (int i = 1; i < (output.length / 5); i++) {
-                    item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
+                    item = new ItemData(output[5 * i + 3], output[5 * i + 4], Client.output[5 * i], output[5 * i + 1], output[5 * i + 2]);
                     if (i < 10) list_s.add(item);
                     list.add(item);
                 }
@@ -119,6 +119,10 @@ public class MainActivity extends Activity {
         //scanner btn
         ImageButton camera = (ImageButton) findViewById(R.id.cameraBtn);
         camera.setOnClickListener(onClickListener);
+
+        while (output[0] == "Already") {
+            continue;
+        }
 
         /**Text View*/
         product_name = (TextView)findViewById(R.id.name);
@@ -182,6 +186,13 @@ public class MainActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "실패",Toast.LENGTH_SHORT).show();
                 }
             });
+
+        //String image_url_con = "https://static.megamart.com/product/image/0886/08861900/08861900_1_960.jpg";
+        //"https://drive.google.com/uc?id="+/view~이전에 있는 링크 복붙하면됨
+//        String image_url=" https://drive.google.com/uc?id=10ce-cbRdeSQynRBRlmBDR94vAdzg0-rA";
+//        loadImageTask imageTask = new loadImageTask(image_url_con);
+//        imageTask.execute();
+
 
         /**Error Dialog*/
         dialog = new Dialog(MainActivity.this);       // Dialog 초기화
