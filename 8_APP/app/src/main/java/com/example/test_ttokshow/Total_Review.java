@@ -124,12 +124,14 @@ public class Total_Review extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.retButton:
                     finish();
+                    break;
                 case R.id.cameraBtn:
                     Intent scan = new Intent(getApplicationContext(), ScannerActivity.class);
                     startActivity(scan);
                     break;
                 case R.id.home_btn:
                     finish();
+                    break;
             }
         }
     }
