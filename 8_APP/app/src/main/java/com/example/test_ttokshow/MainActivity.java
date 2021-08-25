@@ -80,26 +80,26 @@ public class MainActivity extends Activity {
         list_s = new ArrayList<>();
         list = new ArrayList<>();
         list_d = new ArrayList<>();
-        if (client)
-            output[0] = "Already";
-        if (client) {
-            new Thread() {
-                @Override
-                public void run() {
-                    Client.main();
-                    String[] out = Client.getOutput();
-                    output = out;
-                    for (int i = 1; i < (output.length / 5); i++) {
-                        item = new ItemData(output[5 * i + 3], output[5 * i + 4], output[5 * i], output[5 * i + 1], output[5 * i + 2]);
-                        if (i < 10) list_s.add(item);
-                        list.add(item);
-                    }
-                    client = false;
+
+        Thread CThread = new Thread() {
+            public void run() {
+                Client.main();
+                String[] out = Client.getOutput();
+                output = out;
+                for (int i = 1; i < (output.length / 5); i++) {
+                    item = new ItemData(output[5 * i + 3], output[5 * i + 4], Client.output[5 * i], output[5 * i + 1], output[5 * i + 2]);
+                    if (i < 10) list_s.add(item);
+                    list.add(item);
                 }
-            }.start();
-       }
-        while (output[0] == "Already") {
-            continue;
+                client = false;
+                }
+        };
+        CThread.start();
+        try {
+            CThread.join();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();;
         }
 
         staticItem myApp = (staticItem)getApplicationContext();

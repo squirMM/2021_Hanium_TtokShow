@@ -12,7 +12,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
-        private static String[] output;
+        public static String[] output;
         static String send = "8801007160337";
         static Boolean cam = true;
         public static void main(String... args) {
@@ -48,6 +48,10 @@ import java.nio.ByteOrder;
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
                         System.out.println("ABC"+output.length);
+                        System.out.println(output[0]);
+                        System.out.println(output[1]);
+                        System.out.println(output[2]);
+                        System.out.println(output[3]);
                         System.out.println(output[4]);
                     }
 
