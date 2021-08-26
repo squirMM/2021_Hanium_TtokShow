@@ -38,16 +38,18 @@ def average(pro):
 
 # 0번부터 시작
 # 후랑크 8번 / 밀가루 16 ,17 (Error) /
-num=int(input("몇 번?"))
-cnt =num
+#num=int(input("몇 번?"))
+cnt =0
 while cnt < len(result):
     pro = result[cnt]
+    if pro[0] == "8801007377926": continue
     print(pro)
     ssg.crawl(pro, cur)
     con.commit()
     lotte.crawl(pro, cur)
     con.commit()
     average(pro)
+    con.commit()
     cnt+=1
 
 # AvgAll
