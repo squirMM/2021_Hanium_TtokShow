@@ -14,7 +14,7 @@ con = db.connect(
 cur=con.cursor()
 
 #전체 프로덕트 돌림
-sql_find = "SELECT barcord_id, name ,ssg , lotte from product "
+sql_find = "SELECT barcord_id, name ,ssg , lotte FROM product ORDER BY star_avg "
 
 #리뷰테이블에 들어있는 바코드만 돌림
 # sql_find = """select review.barcord_id ,product.name ,product.ssg , product.lotte ,count(review.barcord_id) as 'count'
@@ -37,18 +37,24 @@ def average(pro):
     cur.execute(ApAvg, result_avg)
     con.commit()
 
+DelPro="""DELETE FROM product WHERE barcord_id = %s """
+
 # 0번부터 시작
 num=int(input("몇 번?"))
 cnt = num
 while cnt < len(result):
     pro = result[cnt]
     print(pro[1])
+    if pro[1]=="8801007160337" or pro[1]=="8801007377926" : continue
     SSG = ssg.crawl(pro, cur)
+    con.commit()
     LOTTE = lotte.crawl(pro, cur)
+    con.commit()
     cnt+=1
     if "없습니다" in SSG and LOTTE:
+        cur.execute(DelPro,pro[0])
+        con.commit()
         continue
-    con.commit()
     average(pro)
 
 # AvgAll
