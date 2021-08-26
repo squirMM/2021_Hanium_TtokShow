@@ -37,6 +37,7 @@ def average(pro):
     cur.execute(ApAvg, result_avg)
     con.commit()
 
+DelPro="""DELETE FROM product WHERE barcord_id=%s"""
 # 0번부터 시작
 num=int(input("몇 번?"))
 cnt = num
@@ -44,11 +45,14 @@ while cnt < len(result):
     pro = result[cnt]
     print(pro[1])
     ssg.crawl(pro, cur)
-    lotte.crawl(pro, cur)
-    cnt+=1
-    if "없습니다" in ssg.crawl(pro,cur) and lotte.crawl(pro,cur):
-        continue
     con.commit()
+    lotte.crawl(pro, cur)
+    con.commit()
+    cnt += 1
+    if "없습니다" in ssg.crawl(pro,cur) and lotte.crawl(pro,cur):
+        cur.execute(DelPro,pro[0])
+        con.commit()
+        continue
     average(pro)
 
 # AvgAll
