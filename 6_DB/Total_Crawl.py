@@ -42,13 +42,14 @@ num=int(input("몇 번?"))
 cnt = num
 while cnt < len(result):
     pro = result[cnt]
-    if pro[0] == "8801007377926" or pro[0] == "8801007160337": continue
+    print(pro[1])
     ssg.crawl(pro, cur)
-    con.commit()
     lotte.crawl(pro, cur)
+    cnt+=1
+    if "없습니다" in ssg.crawl(pro,cur) and lotte.crawl(pro,cur):
+        continue
     con.commit()
     average(pro)
-    cnt+=1
 
 # AvgAll
 # CalAvgAll="""select round(avg(star_rank),2), barcord_id  from review

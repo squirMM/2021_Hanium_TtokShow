@@ -24,7 +24,7 @@ def crawl(pro,cur):
     try:
         a = driver.find_element_by_css_selector('.srchResultNull.srchNullCharacter1')
         print("해당 상품 없음")
-        return
+        return a.text
         #driver.quit()
         #sys.exit()
     except Exception:
@@ -99,7 +99,6 @@ def crawl(pro,cur):
             time.sleep(1)
             get_page_data()
     print("수집 종료") 
-    driver.close()
     
     sql = "INSERT IGNORE INTO review (barcord_id,user_id,date, star_rank,contents,cite) VALUES (%s,%s,%s,%s,%s,%s)"
     cur.executemany(sql, data_list)
