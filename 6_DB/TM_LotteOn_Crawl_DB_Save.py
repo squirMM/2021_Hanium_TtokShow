@@ -46,7 +46,7 @@ def crawl(pro,cur):
         table = driver.find_element_by_class_name('productReviewWrap')
         nodata = table.find_element_by_tag_name('p').text
         print(nodata)
-        return
+        return nodata
         #driver.quit()
         #sys.exit()
     except Exception: # 리뷰 있을때
@@ -104,4 +104,5 @@ def crawl(pro,cur):
     cur.executemany(sql, data_list)
     query_lotte="""UPDATE product SET lotte=%s WHERE barcord_id=%s """
     cur.execute(query_lotte,(review_total,pro[0]))
-
+    b = "수집 성공"
+    return b

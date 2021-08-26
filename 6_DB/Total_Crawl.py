@@ -43,10 +43,10 @@ cnt = num
 while cnt < len(result):
     pro = result[cnt]
     print(pro[1])
-    ssg.crawl(pro, cur)
-    lotte.crawl(pro, cur)
+    SSG = ssg.crawl(pro, cur)
+    LOTTE = lotte.crawl(pro, cur)
     cnt+=1
-    if "없습니다" in ssg.crawl(pro,cur) and lotte.crawl(pro,cur):
+    if "없습니다" in SSG and LOTTE:
         continue
     con.commit()
     average(pro)

@@ -37,7 +37,7 @@ def crawl(pro,cur):
     try: #리뷰 없을 때
         review_none = driver.find_element_by_css_selector('.cdtl_review_txt').text 
         print(review_none)
-        return
+        return review_none
         
     except Exception: #리뷰 있을 때
         price = driver.find_element_by_css_selector('.ssg_price').text 
@@ -48,7 +48,7 @@ def crawl(pro,cur):
         table = driver.find_element_by_class_name('cdtl_cmt_tbl')
         nodata = table.find_element_by_tag_name('p').text
         print(nodata)
-        return
+        return nodata
     except Exception:
         # 최신순 클릭
         driver.find_element_by_css_selector('.cdtl_opt').click()
