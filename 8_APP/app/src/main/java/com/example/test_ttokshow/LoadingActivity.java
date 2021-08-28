@@ -1,6 +1,5 @@
 package com.example.test_ttokshow;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
-public class HomeActivity extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
 
     private ImageView load;
     private static final String TAG = "HomeActivity";
@@ -29,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_loading);
 
         load=(ImageView)findViewById(R.id.loading);
         Task<String> tmp= FirebaseMessaging.getInstance().getToken();
@@ -56,7 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void startLoading() {
         Handler handler = new Handler();
-        Glide.with(HomeActivity.this)
+        Glide.with(LoadingActivity.this)
                 .asGif()    // GIF 로딩
                 .load( R.raw.loading )
                 .diskCacheStrategy( DiskCacheStrategy.RESOURCE )    // Glide에서 캐싱한 리소스와 로드할 리소스가 같을때 캐싱된 리소스 사용
