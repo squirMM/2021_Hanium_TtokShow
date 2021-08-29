@@ -13,23 +13,30 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
     public class Client extends AppCompatActivity {
         private static String[] output;
-        static String send;
-        static Boolean cam = false;
+        static String send = "8801007022635";
+        static Boolean cam = true;
         public static void main(String... args) {
             try (Socket client = new Socket()) {
-                InetSocketAddress ipep = new InetSocketAddress("3.144.33.17", 9999);
+                InetSocketAddress ipep = new InetSocketAddress("18.216.76.16", 9999);
                 //3.144.33.17
+                //18.216.76.16
                 client.connect(ipep);
                 try (OutputStream sender = client.getOutputStream(); InputStream receiver = client.getInputStream()) {
 
                     for (int i = 0; i < 1; i++) {
 
-                        byte[] data = new byte[4];
                         if (cam){
+                            byte[] data = send.getBytes();
+                            ByteBuffer b = ByteBuffer.allocate(4);
+                            b.order(ByteOrder.LITTLE_ENDIAN);
+                            b.putInt(data.length);
+                            sender.write(b.array(),0,4);
+                            sender.write(data);
                             cam = false;
                         }
 
-                        sender.write(data,0,4);
+                        byte[] data = new byte[4];
+                        //sender.write(data,0,4);
                         receiver.read(data, 0, 4);
                         ByteBuffer bu = ByteBuffer.wrap(data);
                         bu.order(ByteOrder.LITTLE_ENDIAN);
@@ -40,6 +47,12 @@ import java.nio.ByteOrder;
 
                         String msg = new String(data, "UTF-8");
                         output = msg.split("#");
+                        System.out.println("ABC"+output.length);
+                        System.out.println(output[0]);
+                        System.out.println(output[1]);
+                        System.out.println(output[2]);
+                        System.out.println(output[3]);
+                        System.out.println(output[4]);
                     }
 
                 }

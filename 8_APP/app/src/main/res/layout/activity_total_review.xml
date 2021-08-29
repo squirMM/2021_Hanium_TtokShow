@@ -26,15 +26,21 @@
         android:layout_marginTop="2dp"
         app:layout_constraintTop_toBottomOf="@id/name2"
         app:layout_constraintStart_toStartOf="parent"
-        android:id="@+id/grade"/>
+        android:id="@+id/grade_total"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/grade"
+        app:layout_constraintTop_toBottomOf="@id/grade_total"
         app:layout_constraintStart_toStartOf="parent"
         android:orientation="vertical"
         >
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressTint="@color/purple"
+            />
         <androidx.recyclerview.widget.RecyclerView
             android:scrollbarThumbVertical="@color/_black"
             android:scrollbars="vertical"
@@ -47,11 +53,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/recyclerView">
         </androidx.recyclerview.widget.RecyclerView>
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
     </LinearLayout>
 
 

@@ -21,7 +21,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     private ArrayList<ItemData> itemData = new ArrayList<>();
     private ViewType sel_type = null;
     private Intent intent;
-    // 리스너 객체 참조를 저장하는 변수
 
     public Adapter(ViewType sel_type) {
         this.sel_type = sel_type;
@@ -31,25 +30,22 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         this.itemData = itemData;
     }
 
-//    private OnReviewItemClickListener listener;
-//    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
-//    public void setOnItemClickListener(OnReviewItemClickListener listener) {
-//        this.listener = listener ;
-//    }
-//    @Override
-//    public void onItemClick(ViewHolder holder, View view, int position) {
-//        if(listener != null){ listener.onItemClick(holder,view,position); }
-//    }
-
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
         void onItemClick(View v, int position) ;
     }
-
-    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener ;
+    }
+
+    @Override
+    public int getItemCount() {
+        return itemData.size();
+    }
+    public ItemData getItemPos(int position){ return itemData.get(position); }
+    public void addItem(ItemData item){
+        itemData.add(item);
     }
 
     @NonNull
@@ -93,21 +89,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         else if (Integer.parseInt(item.getSgrade()) > 0){
             holder.imageView.setImageResource(R.drawable.aver1);
         }
-
-
-
     }
-
-    @Override
-    public int getItemCount() {
-        return itemData.size();
-    }
-
-    public ItemData getItemPos(int position){ return itemData.get(position); }
-    public void addItem(ItemData item){
-        itemData.add(item);
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView contents;
         TextView date;

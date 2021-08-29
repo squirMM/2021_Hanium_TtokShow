@@ -7,6 +7,9 @@ def cre_proT(cur):
     type VARCHAR(10) NOT NULL,
     star_avg FLOAT DEFAULT 0, 
     count INT DEFAULT 0,
+    mining VARCHAR(255) DEFAULT 'None',
+    ssg INT DEFAULT 0,
+    lotte INT DEFAULT 0,
     PRIMARY KEY (barcord_id),
     UNIQUE KEY (name)
     )"""

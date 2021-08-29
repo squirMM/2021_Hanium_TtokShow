@@ -2,7 +2,9 @@ import pyzbar.pyzbar as pyzbar
 import cv2
 
 def getBarcode():
-    cap = cv2.VideoCapture('http://118.38.174.163:81/stream')
+    #url=input('url:')
+    url='http://222.110.14.84:81/stream'
+    cap = cv2.VideoCapture(url)
 
     i = 0
     while (cap.isOpened()):
@@ -25,7 +27,10 @@ def getBarcode():
 
             text = '%s (%s)' % (barcode_data, barcode_type)
             cv2.putText(img, text, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2, cv2.LINE_AA)
+            print('Done!!\ncodenumber is '+text)
             return text
+
+        #cv2.imshow('img', img)
 
         key = cv2.waitKey(1)
         if key == ord('q'):

@@ -16,6 +16,13 @@ con = db.connect(
 
 cur_tm=con.cursor()
 
+def insert_db(link,barcode):
+    #UPDATE 테이블명 SET 컬럼1 = 수정값1 [, 컬럼2 = 수정값2 ...] [WHERE 조건];
+    sql_miningLink="""UPDATE product SET mining=%s WHERE barcord_id=%s"""
+    link=link.replace("https://drive.google.com/file/d/","https://drive.google.com/uc?id=")
+    link=link.replace("/view?usp=sharing","")
+    cur_tm.execute(sql_miningLink,(link,barcode))
+
 def fetchReview(codeNum):
     sel_rev = """select contents from review where barcord_id = %s"""
     cur_tm.execute(sel_rev, [codeNum])
@@ -69,3 +76,5 @@ if __name__=="__main__":
         print(pro[0])
         excuteMining(100000,pro[0])  # #리뷰내용최대길이(전체리뷰합친길이), 바코드번호
         cnt+=1
+    con.commit()
+    cur_tm.close()

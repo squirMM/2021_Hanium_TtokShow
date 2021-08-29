@@ -1,5 +1,3 @@
-import time
-
 import TM_SSG_Crawl_DB_Save as ssg
 import TM_LotteOn_Crawl_DB_Save as lotte
 import pymysql as db
@@ -15,41 +13,54 @@ con = db.connect(
 
 cur=con.cursor()
 
-sql_find = "SELECT barcord_id, name from product "
+#전체 프로덕트 돌림
+sql_find = "SELECT barcord_id, name ,ssg , lotte FROM product ORDER BY star_avg "
+
+#리뷰테이블에 들어있는 바코드만 돌림
+# sql_find = """select review.barcord_id ,product.name ,product.ssg , product.lotte ,count(review.barcord_id) as 'count'
+# from product inner join review
+# on product.barcord_id = review.barcord_id
+# group by review.barcord_id """
+
 cur.execute(sql_find)
 result = cur.fetchall()
 print(result)
-#cur.close()
 
-CalAvg="""select round(avg(star_rank),2), barcord_id  from review
-    where barcord_id =%s
-    group by barcord_id"""
+CalAvg="""select round(avg(star_rank),2),barcord_id from review
+    where barcord_id =%s"""
 ApAvg="""UPDATE product SET star_avg=%s WHERE barcord_id =%s"""
 
 def average(pro):
-    cur.executemany(CalAvg, pro)
-    result_avg = cur.fetchall()
-    cur.executemany(ApAvg, result_avg)
+    cur.execute(CalAvg, pro[0])
+    result_avg = cur.fetchone()
+    print(result_avg)
+    cur.execute(ApAvg, result_avg)
     con.commit()
 
+DelPro="""DELETE FROM product WHERE barcord_id = %s """
+
 # 0번부터 시작
-# 후랑크 8번 / 밀가루 16 ,17 (Error) /
 num=int(input("몇 번?"))
-cnt =num
+cnt = num
 while cnt < len(result):
     pro = result[cnt]
-    print(pro)
-    ssg.crawl(pro, cur)
+    print(pro[1])
+    if pro[1]=="8801007160337" or pro[1]=="8801007377926" : continue
+    SSG = ssg.crawl(pro, cur)
     con.commit()
-    lotte.crawl(pro, cur)
+    LOTTE = lotte.crawl(pro, cur)
     con.commit()
-    average(pro)
     cnt+=1
+    if "없습니다" in SSG and LOTTE:
+        cur.execute(DelPro,pro[0])
+        con.commit()
+        continue
+    average(pro)
 
 # AvgAll
 # CalAvgAll="""select round(avg(star_rank),2), barcord_id  from review
 #     group by barcord_id"""
-# cur.executemany(CalAvg)
+# cur.execute(CalAvgAll)
 # result=cur.fetchall()
 # print(result)
 # ApAvgAll="""UPDATE product SET star_avg=%s WHERE barcord_id =%s"""
