@@ -69,12 +69,12 @@
 
 ### 1. 서비스 구성도
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181168942-e8f75a59-b33d-4f05-a10a-71e85d18a8fb.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181174491-ae2ab315-f915-41ba-838a-6ec4129e9bf4.png">
 </div>
 
 ### 2. 하드웨어 구성도
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181169618-ae58035e-a6a3-4a0e-80cd-a909aeb7cca0.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181174621-c2ce14b8-f0ed-4d79-baea-174b27432cf2.png">
 </div>
 
 ### 3. 센서 구성도
@@ -84,65 +84,104 @@
 
 ### 4. 알고리즘 명세서
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181169744-566f2245-11dd-459c-8d16-2b853f49727a.png">
+<img width="280" alt="image" src="https://user-images.githubusercontent.com/87888411/181174842-12aeb3b8-e069-431e-a2cc-700851047e0f.png">
 </div>
 
 ### 5. 메뉴 구성도
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181170000-15d7201a-6562-44a7-89cf-030b6735bf3e.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181174795-1a72b46e-1b30-4786-adbc-e8ce2e583af0.png">
 </div>
 
-### 6. 기능 처리
+### 6. 기능 처리도
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181170082-f6af9176-835c-44c8-8567-832abac520ce.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181174911-e5a58c4d-c472-4a1a-8b3c-fe72fdb91666.png">
 </div>
 
 ### 7. E-R 다이어그램
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181170285-e72597a1-5365-41fd-a242-5c88ea04f366.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181174686-c0040558-ce51-42fa-aae7-8598d591b396.png">
 </div>
 
 ### 8. 테이블 정의서
 <div align="center">
-<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181170366-ba38551e-cea1-43d1-a14f-a5eedefea4c0.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175047-27713a7c-c181-442c-9720-942f6c6c4066.png">
 </div>
 
+### 9. UI/UX 정의서
+<div align="center">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175419-1d1836ad-4673-4988-8d9c-a54979dc9b73.png">
+</div>
+<div align="center">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175506-d0b15144-2027-4fa2-b5fa-69c8becc08a0.png">
+</div>
+
+## 작품 기능
+#### 전체 기능 목록 
+<div align="center">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175749-968c8b54-c621-4336-9656-1a89108ba99e.png">
+</div>
 
 #### SW 주요 기능
 <div align="center">
-<img width="458" alt="image" src="https://user-images.githubusercontent.com/87888411/181162828-eea63340-219a-46bd-9e38-c191facea67c.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175827-8513c04d-ff36-46d0-a58a-94fd432d7c6e.png">
+</div>
+<div align="center">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175893-1efe64c4-5c8e-473c-bf5d-0bd819a0cc6a.png">
+</div>
+<div align="center">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181175980-cb7a158e-ab53-4478-b474-8bedaedc607a.png">
 </div>
 
 #### HW 주요 기능
 <div align="center">
-<img width="458" alt="image" src="https://user-images.githubusercontent.com/87888411/181162951-96f49e02-a9c2-44fa-912b-cc0a86630654.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/87888411/181176086-fb665b9d-0137-48f8-9200-e5537c6b374f.png">
 </div>
 
 ### 3. 주요 적용 기술
-1) **Crawling + Labeling** : 
-- Python Module 중 Selenium을 활용하여, Web 상에서 산불, 사람, 단풍 등의 다양한 Case image를 2,000여장 Crawling 하였다. 
-- YOLO-mark master 툴을 이용하여 학습시킬 대상을 Labeling한다. 
-- 본격적인 학습을 하기 전 중요한 데이터 전처리 작업이다. 
+#### 1) H/W
+##### ESP-32 CAM & WiFi Manager
+ESP-32 CAM는 똑쇼의 메인보드로 사용된 아두이노 보드이다. 해당 보드는 기본적으로 카메라, WiFi 모듈, 블루투스 모듈을 탑재하고 있다. 이 보드는 바코드를 촬영하고 WiFi 통신을 통해 전달하는 과정을 담당하기에 충분한 성능이라고 판단되었고, 실제로 상용화를 진행하게 되어도 저렴한 가격으로 대량생산에 용이하다는 장점이 있다. 
 
-2) **darknet- YOLOv3** : 
-- YOLO-mark master를 이용해 처리한 데이터들을 학습시키기 위한 알고리즘이다. 
-- Github에 올라와 있는 오픈소스를 활용한다. 
-- Darknet을 실행하고 train 옵션으로 darknet53.com.74 가중치 파일을 베이스로 약 33,000번 학습시킨다. 
-- CUDA의 cuDNN 라이브러리를 이용하여 GPU를 활용한 더 빠른 학습이 가능하다. 
-- 실시간으로 스트리밍 되고 있는 영상을 외부 PC 내의 Darknet detector 옵션으로 분석한다. 
+이 보드에 업로드한 WiFi Manager는 스마트폰을 이용해 특정 네트워크에 연결할 수 있도록 설계해두었다. 매번 아두이노를 재부팅할 때마다 수동으로 연결하도록 해두었으나, 특정 네트워크가 어떤 네트워크로 연결될 지 정해져있다면 해당 네트워크에 자동으로 연결할 수 있도록 변경할 수 있다.
 
-3) **RaspberryPi Ubuntu Setting + Camera 연결 + streaming** : 
-- Rasberry Pi 내에 Ubutu mate 16.04 OS를 설치 후, apt-get 버전관리 시스템을 이용하여 
-- raspberry용 camera를 연결한다. 
-- mjpg streaming을 이용하여 Rasberry Pi 카메라를 Web으로 Streaming 한다. 
+#### 2) S/W
+##### zbar & zxing
+바코드는 ESP-32 카메라를 통해 인식하거나, 스마트폰 카메라를 통해 인식할 수 있다. ESP-32 카메라를 활용하면 로컬 네트워크를 통해 실시간으로 영상을 전송하게 되고, OpenCV와 zbar 라이브러리를 사용하여 서버에서 바코드를 빠르게 스캔해낸다. 관리자가 내부망이 아닌 외부에서도 접속할 수 있도록 네트워크 포트포워딩을 활용해서 연결할 수 있도록 설계해두었다. 
 
-4) **Drone 제작** : Raspberry pi와 pixhawk을 장착한 F450 QuadCopter drone 제작
-- Pixhawk보드에 PX4 flight stack APP을 설치하여 QuadCopter 자체의 low-level control을 담당하고, Raspberry Pi에 ROS와 Ubuntu를 설치하여 Drone 제어와 영상처리를 한다. 
-- Pixhawk와 Raspberry Pi는 mavros를 통해서 통신하며, Raspberry Pi에서 position이나 traject ory 등의 명령을 PX4 펌웨어에 전송하여 두 module 간 통신이 가능하게 한다. 
-- Pixhawk가 Drone의 모터를 제어하고 Raspberry3는 ROS의 px4와 Mavros로 offboad control 을 하여 Drone의 자율비행과 회피기동 등을 제어한다. 
+스마트폰 카메라를 활용할 경우에는 어떤 바코드가 인식되는 지에 따라서 스마트안경 매칭 또는 상품 검색으로 나뉜다. 스마트안경에 미리 할당해 둔 QR코드를 인식하게 되면 해당 안경과 스마트폰 APP이 매칭이 되고, 바코드가 인식된다면 해당 상품을 바로 검색하여 상품 정보를 출력한다. 
+또한 스마트폰 카메라로 바코드를 찍게 되면 안드로이드의 zxing을 활용하여 처리하게 된다. 이 경우는 서버와 응답할 필요가 없으므로 더욱 빠른 응답속도를 나타낸다.
 
-5) **email 보내기** : 
-- Python의 smtp 라이브러리를 이용하여 E-Mail을 관리자에게 보냄. 
+##### MySQL & AWS DB
+바코드로 상품을 검색했을 때 상품 정보와 리뷰들을 보여주기 위하여 이러한 정보들을 저장해줄 데이터베이스가 필요했다. 따라서 AWS에서 제공하는 데이터베이스를 생성하여 이를 MySql에 연결시켰고, 파이썬에서 데이터베이스를 관리하기 위해 pymysql을 사용하였다. 상품정보를 데이터베이스에 저장하기 위해 대한상공회의소에서 제공하는 바코드정보 파일을 openpyxl로 엑셀에 접근하여 해당 정보들을 데이터베이스에 저장해 주었다.
+
+##### Firebase
+Firebase는 구글이 소유하고 있는 모바일 애플리케이션 개발 플랫폼으로 앱을 개발하고, 개선하고, 키워갈 수 있는 도구 모음(toolset)이다. 안경으로 상품을 인식했을 때 푸시알림을 통해 상품이 검색되었다는 것을 알려주기 위해 Firebase Cloud Messaging(FCM)기능을 사용했다. 특정 기기에만 푸시알림을 주기 위해 Firebase에서 할당해주는 기기 고유의 토큰 값을 서버에 전송하여 해당 기기에만 푸시알림을 줄 수 있도록 한다. 서버에서 FCM을 사용하기 위해 pyfcm을 사용하였다.
+
+##### TTS 
+컴퓨터 텍스트를 음성으로 디지털화 한 오디오 렌더링으로 자바의 ‘android.speech.tts.TextToSpeech’라는 패키지를 사용한다. 정보를 다양한 방식으로 전달하기 위해 음성출력을 사용했다. 언어는 한국어로 사용하고, 음량과 재생속도, 높낮이를 적절하게 설정하여 speak() 메소드를 통해 다양한 정보를 음성으로 출력한다. 상품이름 및 평점 그리고 리뷰에 자주 나온 단어 등을 음성으로 출력해준다.
+
+##### Crawling
+웹 페이지를 접근하여 원하는 데이터를 추출해내는 기술이며 동적으로 웹페이지를 접근하여 상품을 검색한 후 추출하기 위해 파이썬의 Selenium 라이브러리를 사용했다. Selenium의 Webdriver를 통해 Chromedriver를 제어하여 SSG과 LotteOn 온라인 쇼핑몰의 상품 정보와 리뷰 데이터를 추출해온다. 
+
+상품의 모든 리뷰들을 추출하기 위해서 마지막 페이지까지 순차적으로 탐색하도록 수정하였고, 조회되지 않거나 리뷰가 없는 상품은 수집하지 않도록 예외처리 하였다. 추출한 데이터를 튜플 형식으로 정리하여 2차원 리스트에 저장하였으며 이를 데이터베이스에 저장하였다.
+
+##### AWS Server
+AWS 서버 EC2를 이용하여 클라이언트에서 처리 할 수 없거나 처리 하지 않아도 되는 정보들을 서버에서 처리하게 했다. 이를 통해 어플리케이션에서는 중요한 기능만 돌아가게 하여 경량화했다.
+
+AWS 서버에서 Server.py 파일을 구동하여 socket과 threading 라이브러리를 통해 어플리케이션의 Client.java 파일과 통신하는 알고리즘을 작성하였다.
+
+Client와 통신을 성공하면 어플리케이션 정보 및 휴대폰 정보를 받아오며 스마트 안경과 매칭 시켜 데이터를 저장한다. 이를 통해 여러 개의 스마트안경이 동시에 바코드를 찍어도 데이터 혼선 없이 올바른 휴대폰에 데이터를 전송할 수 있다.
+
+스마트 안경으로 바코드를 인식한 경우, pyfcm 라이브러리의 FCMNotification을 통해 Client로부터 수신한 휴대폰 정보를 이용하여 푸시알림을 전송한다. 이로써 어플리케이션이 꺼져 있는 상태에서도 리뷰 데이터에 접근을 빠르게 할 수 있게 하였다. 또한 ESP-32에서 스트리밍한 영상에 접근하여 바코드를 인식하는 알고리즘을 작성하였으며, 인식 후 AWS Database에 접근하여 원하는 정보만을 받아와 Client 파일에 전송하였다.
+ 
+##### Glide
+Glide는 안드로이드 라이브러리로 별도의 처리를 하지 않아 빠르게 이미지를 앱 내에서 로드할 수 있게 해준다. Firebase Database에 올려둔 사진의 링크를 load 명령어로 이미지화하며 into 명령어로 원하는 위치의 View에 보여준다. 
+
+##### 텍스트마이닝
+웹쇼핑몰에서 수집한 리뷰들을 텍스트마이닝 기법을 사용하여 핵심 키워드를 추출한다. 이 과정에는 KoNLPy의 Okt 모듈을 통해 문자열을 분석하였으며, Wordcloud 모듈로 키워드를 도식화한 형태로 저장하였다. 
+
+Okt는 KoNLPy의 모듈 중 문자열 처리가 굉장히 빠른 편에 속하지만 리뷰 수가 너무 많이 쌓이면 처리시간이 많이 느려진다. 따라서 수집한 리뷰들 중 상당한 시간이 지나버린 리뷰는 최신 리뷰보다 중요도가 상대적으로 낮다고 판단하여 최신 리뷰부터 정해진 양 만큼의 문자열을 잘라서 처리하도록 설계하였다.
+
 
 ## 작품 사진
 
